@@ -5,15 +5,15 @@ title: 'Install Ubuntu Server on Qemu'
 tags: ["qemu", "ubuntu-server", "linux", "linux-kernel"]
 ---
 
-# Installtaion of ubuntu server on qemu-x86_64
+# Installation of ubuntu server on qemu-x86_64
 
-At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tikkinering with buildroot, after some days i was able to run the build on qemu. 
+At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu. 
 
-But i found out build actually dont have my basic tool like `gnu make`. Everytime i try to do something i need to find particular tool on `menuconfig` then make the build again. Learning was so slow.
+But i found out build actually didn’t have my basic tool like `gnu make`. Everytime i try to do something i need to find particular tool on `menuconfig` then make the build again. Learning was so slow.
 
 Then thankfully i found this [article](https://programmador.com/posts/2024/linux-kernel-development-using-qemu/). Which explains to install the arch linux on qemu. I followed it booted the custom kernel in image. But i was not aware of updating the grub config. So i got kernel mismatch issues. I tried to install the arch linux on GNOME Boxes. 
 
-Eventually i decided to leave the arch linux for now -> package dependency in arch breaks easlily :).
+Eventually i decided to leave the arch linux for now -> package dependency in arch breaks easily :).
 
 **Note** : Most of cmds used are well explained in article given above. Check out that too!
 
