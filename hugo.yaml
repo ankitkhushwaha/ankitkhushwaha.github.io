@@ -1,0 +1,25 @@
+baseURL: https://example.org/
+languageCode: en-us
+title: LowLevel Notes
+theme: ["PaperMod"]
+
+
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+
+params:
+  mainSections:
+    - blog
+    - docs
+  env: production
+
+  assets:
+    disableFingerprinting: true
