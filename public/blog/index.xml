@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>LowLevel Notes</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on LowLevel Notes</description>
+    <title>Blogs on LowLevel Notes</title>
+    <link>http://localhost:1313/blog/</link>
+    <description>Recent content in Blogs on LowLevel Notes</description>
     <generator>Hugo -- 0.148.2</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 16 Aug 2025 14:30:04 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install Ubuntu Server on Qemu</title>
       <link>http://localhost:1313/blog/install-ubuntu-server-on-qemu/</link>
@@ -16,14 +16,6 @@
       <description>&lt;h1 id=&#34;installtaion-of-ubuntu-server-on-qemu-x86_64&#34;&gt;Installtaion of ubuntu server on qemu-x86_64&lt;/h1&gt;
 &lt;p&gt;At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tikkinering with buildroot, after some days i was able to run the build on qemu.&lt;/p&gt;
 &lt;p&gt;But i found out build actually dont have my basic tool like &lt;code&gt;gnu make&lt;/code&gt;. Everytime i try to do something i need to find particular tool on &lt;code&gt;menuconfig&lt;/code&gt; then make the build again. Learning was so slow.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Test</title>
-      <link>http://localhost:1313/docs/test/</link>
-      <pubDate>Sat, 16 Aug 2025 11:47:42 +0530</pubDate>
-      <guid>http://localhost:1313/docs/test/</guid>
-      <description>&lt;h3 id=&#34;this-is-test-page&#34;&gt;This is test page&lt;/h3&gt;
-&lt;p&gt;hello world&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
