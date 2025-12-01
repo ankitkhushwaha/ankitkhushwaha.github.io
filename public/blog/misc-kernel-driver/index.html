@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Misc Kernel Driver | LowLevel Notes</title>
+<meta name="keywords" content="">
+<meta name="description" content="How to Write Your First Linux Kernel Driver Using the Misc Device Framework
+Introduction
+This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/blog/misc-kernel-driver/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/blog/misc-kernel-driver/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="http://localhost:1313/blog/misc-kernel-driver/">
+  <meta property="og:site_name" content="LowLevel Notes">
+  <meta property="og:title" content="Misc Kernel Driver">
+  <meta property="og:description" content="How to Write Your First Linux Kernel Driver Using the Misc Device Framework Introduction This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-12-01T22:32:00+05:30">
+    <meta property="article:modified_time" content="2025-12-01T22:32:00+05:30">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Misc Kernel Driver">
+<meta name="twitter:description" content="How to Write Your First Linux Kernel Driver Using the Misc Device Framework
+Introduction
+This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "http://localhost:1313/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Misc Kernel Driver",
+      "item": "http://localhost:1313/blog/misc-kernel-driver/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Misc Kernel Driver",
+  "name": "Misc Kernel Driver",
+  "description": "How to Write Your First Linux Kernel Driver Using the Misc Device Framework Introduction This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "How to Write Your First Linux Kernel Driver Using the Misc Device Framework Introduction This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.\nWhat is a Linux Device Driver? A device driver is kernel-level code that allows the operating system to interact with hardware or virtual devices. Instead of accessing hardware directly, user-space applications interact with a device file in /dev, and the kernel routes those operations to the driver’s functions.\nDrivers can be:\nBuilt-in: compiled into the main kernel image, or Loadable modules: compiled separately and inserted/removed at runtime with tools like insmod and rmmod.\nUsing loadable modules makes development and testing much easier because you don’t need to rebuild and reboot the entire kernel for each change. Why Use the Misc Device Framework? The misc framework provides a lightweight way to create simple character devices without manually managing major numbers, device classes, and udev rules.\nWhen you register a misc device:\nThe kernel assigns a minor number dynamically (MISC_DYNAMIC_MINOR). It automatically creates the corresponding device node under /dev (for example, /dev/task_display). You only need to define your file_operations and a struct miscdevice. This makes it ideal for:\nSmall utilities Debug or monitoring interfaces Experimental or educational drivers The File Operations (open/read/write) User-space interacts with a character device through standard system calls like open(), read(), and write(). The kernel maps these calls to the driver’s file_operations structure.\nFor example:\nwhen any user space process (or thread) opens a device file registered to this driver, the kernel Virtual Filesystem Switch (VFS) layer will take over. Without going into deep detail, suffice it to say that the VFS allocates and initializes that process’s open file data structure (struct file) for the device file.\nopen()\nCalled when a process opens the device file (e.g. open(\"/dev/task_display\", …)). read()\nTransfers data from the kernel to user space. The driver is responsible for copying data into the user buffer and updating the file offset. write()\nReceives data from user space, typically via copy_from_user(), and processes or stores it inside the driver. Defining these functions correctly ensures the driver behaves like a regular file from the user’s perspective. The function signatures must match the prototypes the kernel expects.\nUnderstanding copy_from_user() and copy_to_user() When user space interacts with a kernel driver through read() or write(), the data passed in those system calls cannot be accessed directly inside the kernel due to different address spaces.\nLinux provides two helper APIs:\n1. copy_from_user() Used inside write()\nIt copies data from user space → to kernel space.\nif (copy_from_user(kbuf, ubuf, count)) return -EFAULT; You must always validate the size and ensure you don’t read beyond user memory.\n2. copy_to_user() Used inside read()\nIt copies data from kernel space → to user space.\nif (copy_to_user(ubuf, kbuf, len)) return -EFAULT; Implementing the Minimal Misc Driver Our example driver will:\nExpose a device /dev/task_display. Accept a PID written from user space via write(). On read(), look up the corresponding task_struct and print task details into the kernel log. Internal State We keep a small per-driver structure to store the device pointer and the PID:\n#include struct tsk_display { struct device *dev; pid_t tsk_pid; }; static struct tsk_display *tskd; open() system-call int open_tsk_display(struct inode *inode, struct file *filp) { char *buf = kzalloc(PATH_MAX, GFP_KERNEL); if (unlikely(!buf)) return -ENOMEM; pr_info(\"opening '%s' now; wrt open file: f_flags = 0x%x\\n\", file_path(filp, buf, PATH_MAX), filp-\u003ef_flags); kfree(buf); /* mark this file as non-seekable */ return nonseekable_open(inode, filp); } read() system-call The read() function looks up the task corresponding to the stored PID and prints its information to the kernel log.\ncat internals It continously read and write the file with returning the numbers of bytes, it reads and write and returns 0 when EOF reached. Here we are always returing 0. so cat command thinks end-of-file has reached. and read ubuf and writes stdout only one time.\nssize_t read_tsk_display(struct file *filp, char __user *ubuf, size_t count, loff_t *off) { int len, ret = count; pid_t tpid_t = tskd-\u003etsk_pid; struct pid *pid = NULL; struct device *dev = tskd-\u003edev; struct task_struct *task = NULL; dev_info(dev, \"reading tsk info for pid: %d\", tpid_t); pid = find_get_pid(tpid_t); if (!pid) { dev_warn(dev, \"Invalid pid: %d\", tpid_t); goto out_nomem; } if (pid_has_task(pid, PIDTYPE_PID)) { task = get_pid_task(pid, PIDTYPE_PID); if (IS_ERR(task)) { ret = PTR_ERR(task); goto out_nomem; } } len = snprintf(kbuf, sizeof(kbuf), \"PID: %d\\nTGID: %d\\nComm: %s\\nrecent_used_cpu: %d\\non_rq: %d\\n\", task-\u003epid, task-\u003etgid, task-\u003ecomm, task-\u003erecent_used_cpu, task-\u003eon_rq); if (copy_to_user(ubuf, kbuf, len)) return -EFAULT; return 0; out_nomem: return ret; } Note: This is not a proper read() implementation from a userspace point of view, because it doesn’t actually return any data in ubuf. It just logs to dmesg. For a real driver, you’d build a string with the task info and use copy_to_user().\nwrite() system-call The write() function receives PID input from user space, converts it to an integer, and stores it in tskd-\u003etsk_pid.\nssize_t write_tsk_display(struct file *filp, const char __user *ubuf, size_t count, loff_t *off) { int ret = count; int tpid = 0; void *kbuf = NULL; struct device *dev = tskd-\u003edev; if (unlikely(count \u003e MAXBYTES)) { dev_warn(dev, \"exceeds write bytes limit\\n\"); goto out_nomem; } kbuf = kvmalloc(count, GFP_KERNEL); if (unlikely(!kbuf)) goto out_nomem; memset(kbuf, 0, count); if (copy_from_user(kbuf, ubuf, count)) { ret = -EFAULT; dev_warn(dev, \"copy_from_user failed\\n\"); goto out_cfu; } dev_info(dev, \"kbuf: %s\\n\", (char *)kbuf); ret = kstrtoint(kbuf, 0, \u0026tpid); if (ret) { dev_warn(dev, \"failed to convert kbuf to int\"); goto out_cfu; } tskd-\u003etsk_pid = tpid; dev_info(dev, \"pid: %d written to /dev/task_display\", tpid); ret = count; out_cfu: kvfree(kbuf); out_nomem: return ret; } file_operations Structure The file_operations structure connects the VFS to your driver’s functions:\nstatic const struct file_operations tsk_display_fops = { .open = open_tsk_display, .read = read_tsk_display, .write = write_tsk_display, .owner = THIS_MODULE; }; Whenever user space calls open(), read(), or write() on /dev/task_display, the kernel Virtual Filesystem Switch (VFS) layer will take over and allocates and initializes that process’s open file data structure (struct file) for the device file\nNote: the function signatures must match the kernel’s expected prototypes for open, read, write, etc.\nmiscdevice Structure static struct miscdevice tsk_display_dev = { .minor = MISC_DYNAMIC_MINOR, .name = \"task_display\", .mode = 0666, /*readable and writable*/ .fops = \u0026tsk_display_fops, }; MISC_DYNAMIC_MINOR → kernel picks a free minor number. name → used to create /dev/task_display file. mode → file permissions (here: 0666 -\u003e readable and writable). Init and Exit Functions The module’s init function registers the misc device and allocates the driver’s internal structure. The exit function deregisters it.\nstatic int __init task_display_init(void) { int ret; struct device *dev; ret = misc_register(\u0026tsk_display_dev); if (ret) { pr_notice(\"task display device registration failed, aborting\\n\"); return ret; } dev = tsk_display_dev.this_device; tskd = devm_kzalloc(dev, sizeof(struct tsk_display), GFP_KERNEL); if (unlikely(!tskd)) return -ENOMEM; tskd-\u003edev = dev; tskd-\u003etsk_pid = 0; pr_info(\"task display driver registered\\n\"); return 0; } static void __exit task_display_exit(void) { misc_deregister(\u0026tsk_display_dev); pr_info(\"task display driver deregistered, bye\\n\"); } module_init(task_display_init); module_exit(task_display_exit); Testing the Driver from User Space insmod task_display.ko ls -l /dev/task_display echo 1 \u003e /dev/task_display cat /dev/task_display dmesg | tail -n 20 You should see log lines showing the PID, TGID, and other task details. That confirms that your write() stored the PID and your read() successfully looked up the task_struct.\nSummary This example demonstrates how to build a small Linux kernel module using the misc device framework. By defining only a few file operations and relying on the kernel to create the device node, the driver stays minimal and easy to understand.\nThe driver shows how to:\nAccept input (a PID) from user space via write(). Use that value inside the kernel to look up a task_struct. Connect user-space system calls to kernel functions through file_operations and a miscdevice.\nFrom here, you can extend the example by returning formatted task information to user space with copy_to_user(), adding proper error paths, or exposing more fields from task_struct. ",
+  "wordCount" : "1355",
+  "inLanguage": "en",
+  "datePublished": "2025-12-01T22:32:00+05:30",
+  "dateModified": "2025-12-01T22:32:00+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/blog/misc-kernel-driver/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "LowLevel Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="LowLevel Notes (Alt + H)">LowLevel Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Misc Kernel Driver
+    </h1>
+    <div class="post-meta"><span title='2025-12-01 22:32:00 +0530 IST'>December 1, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="how-to-write-your-first-linux-kernel-driver-using-the-misc-device-framework">How to Write Your First Linux Kernel Driver Using the Misc Device Framework<a hidden class="anchor" aria-hidden="true" href="#how-to-write-your-first-linux-kernel-driver-using-the-misc-device-framework">#</a></h1>
+<h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p>This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.</p>
+<h3 id="what-is-a-linux-device-driver">What is a Linux Device Driver?<a hidden class="anchor" aria-hidden="true" href="#what-is-a-linux-device-driver">#</a></h3>
+<p>A device driver is kernel-level code that allows the operating system to interact with hardware or virtual devices. Instead of accessing hardware directly, user-space applications interact with a device file in /dev, and the kernel routes those operations to the driver’s functions.</p>
+<p>Drivers can be:</p>
+<ul>
+<li>Built-in: compiled into the main kernel image, or</li>
+<li>Loadable modules: compiled separately and inserted/removed at runtime with tools like insmod and rmmod.<br>
+Using loadable modules makes development and testing much easier because you don’t need to rebuild and reboot the entire kernel for each change.</li>
+</ul>
+<h3 id="why-use-the-misc-device-framework">Why Use the Misc Device Framework?<a hidden class="anchor" aria-hidden="true" href="#why-use-the-misc-device-framework">#</a></h3>
+<p>The misc framework provides a lightweight way to create simple character devices without manually managing major numbers, device classes, and udev rules.</p>
+<p>When you register a misc device:</p>
+<ul>
+<li>The kernel assigns a minor number dynamically (MISC_DYNAMIC_MINOR).</li>
+<li>It automatically creates the corresponding device node under /dev (for example, /dev/task_display).</li>
+<li>You only need to define your file_operations and a struct miscdevice.</li>
+</ul>
+<p>This makes it ideal for:</p>
+<ul>
+<li>Small utilities</li>
+<li>Debug or monitoring interfaces</li>
+<li>Experimental or educational drivers</li>
+</ul>
+<h3 id="the-file-operations-openreadwrite">The File Operations (open/read/write)<a hidden class="anchor" aria-hidden="true" href="#the-file-operations-openreadwrite">#</a></h3>
+<p>User-space interacts with a character device through standard system calls like open(), read(), and write(). The kernel maps these calls to the driver’s file_operations structure.</p>
+<p>For example:</p>
+<p>when any user space process (or thread) opens a device file registered to this
+driver, the kernel Virtual Filesystem Switch (VFS) layer will take over. Without going into
+deep detail, suffice it to say that the VFS allocates and initializes that process&rsquo;s open
+file data structure (struct file) for the device file.</p>
+<ul>
+<li>open()<br>
+Called when a process opens the device file (e.g. open(&quot;/dev/task_display&quot;, &hellip;)).</li>
+<li>read()<br>
+Transfers data from the kernel to user space. The driver is responsible for copying data into the user buffer and updating the file offset.</li>
+<li>write()<br>
+Receives data from user space, typically via copy_from_user(), and processes or stores it inside the driver.</li>
+</ul>
+<p>Defining these functions correctly ensures the driver behaves like a regular file from the user’s perspective. The <strong>function signatures</strong> must match the prototypes the kernel expects.</p>
+<h3 id="understanding-copy_"><strong>Understanding copy_from_user() and copy_to_user()</strong><a hidden class="anchor" aria-hidden="true" href="#understanding-copy_">#</a></h3>
+<p>When user space interacts with a kernel driver through <code>read()</code> or <code>write()</code>, the data passed in those system calls cannot be accessed directly inside the kernel due to different address spaces.</p>
+<p>Linux provides two helper APIs:</p>
+<h4 id="1-copy_"><strong>1. copy_from_user()</strong><a hidden class="anchor" aria-hidden="true" href="#1-copy_">#</a></h4>
+<p>Used inside <code>write()</code><br>
+It copies data <strong>from user space → to kernel space</strong>.</p>
+<pre tabindex="0"><code>if (copy_from_user(kbuf, ubuf, count))
+	return -EFAULT;
+</code></pre><p>You must always validate the size and ensure you don’t read beyond user memory.</p>
+<h4 id="2-copy_"><strong>2. copy_to_user()</strong><a hidden class="anchor" aria-hidden="true" href="#2-copy_">#</a></h4>
+<p>Used inside <code>read()</code><br>
+It copies data <strong>from kernel space → to user space</strong>.</p>
+<pre tabindex="0"><code>if (copy_to_user(ubuf, kbuf, len))
+	return -EFAULT;
+</code></pre><h3 id="implementing-the-minimal-misc-driver">Implementing the Minimal Misc Driver<a hidden class="anchor" aria-hidden="true" href="#implementing-the-minimal-misc-driver">#</a></h3>
+<p>Our example driver will:</p>
+<ul>
+<li>Expose a device /dev/task_display.</li>
+<li>Accept a PID written from user space via write().</li>
+<li>On read(), look up the corresponding task_struct and print task details into the kernel log.</li>
+</ul>
+<h4 id="internal-state">Internal State<a hidden class="anchor" aria-hidden="true" href="#internal-state">#</a></h4>
+<p>We keep a small per-driver structure to store the device pointer and the PID:</p>
+<pre tabindex="0"><code>#include &lt;linux/device.h&gt;
+
+struct tsk_display
+{
+ struct device *dev;
+ pid_t tsk_pid;
+};
+
+static struct tsk_display *tskd;
+</code></pre><h4 id="open-system-call">open() system-call<a hidden class="anchor" aria-hidden="true" href="#open-system-call">#</a></h4>
+<pre tabindex="0"><code> int open_tsk_display(struct inode *inode, struct file *filp)
+ {
+     char *buf = kzalloc(PATH_MAX, GFP_KERNEL);
+     if (unlikely(!buf))
+         return -ENOMEM;
+     pr_info(&#34;opening &#39;%s&#39; now; wrt open file: f_flags = 0x%x\n&#34;,
+             file_path(filp, buf, PATH_MAX), filp-&gt;f_flags);
+     kfree(buf);
+     /* mark this file as non-seekable */
+     return nonseekable_open(inode, filp);
+ }
+</code></pre><h4 id="read-system-call">read() system-call<a hidden class="anchor" aria-hidden="true" href="#read-system-call">#</a></h4>
+<p>The read() function looks up the task corresponding to the stored PID and prints its information to the kernel log.</p>
+<h5 id="cat-internals">cat internals<a hidden class="anchor" aria-hidden="true" href="#cat-internals">#</a></h5>
+<p>It continously read and write the file with returning the numbers of bytes, it reads and write and returns 0 when EOF reached.
+Here we are always returing 0. so <code>cat command</code> thinks end-of-file has reached. and read <code>ubuf</code> and writes <code>stdout</code> only one time.</p>
+<pre tabindex="0"><code> ssize_t read_tsk_display(struct file *filp, char __user *ubuf,
+                          size_t count, loff_t *off)
+ {
+     int len, ret = count;
+     pid_t tpid_t = tskd-&gt;tsk_pid;
+     struct pid *pid = NULL;
+     struct device *dev = tskd-&gt;dev;
+     struct task_struct *task = NULL;
+
+	dev_info(dev, &#34;reading tsk info for pid: %d&#34;, tpid_t);
+	pid = find_get_pid(tpid_t);
+	if (!pid)
+	{
+		 dev_warn(dev, &#34;Invalid pid: %d&#34;, tpid_t);
+		 goto out_nomem;
+	}
+	if (pid_has_task(pid, PIDTYPE_PID))
+	{
+		task = get_pid_task(pid, PIDTYPE_PID);
+		if (IS_ERR(task))
+		{
+			 ret = PTR_ERR(task);
+			 goto out_nomem;
+		}
+	}
+    len = snprintf(kbuf, sizeof(kbuf),
+                   &#34;PID: %d\nTGID: %d\nComm: %s\nrecent_used_cpu: %d\non_rq: %d\n&#34;,
+                   task-&gt;pid, task-&gt;tgid, task-&gt;comm,
+                   task-&gt;recent_used_cpu, task-&gt;on_rq);
+
+    if (copy_to_user(ubuf, kbuf, len))
+        return -EFAULT;
+
+	return 0;
+ out_nomem:
+     return ret;
+ }
+</code></pre><p><strong>Note</strong>:  This is not a proper read() implementation from a userspace point of view, because it doesn’t actually return any data in ubuf. It just logs to dmesg. For a real driver, you’d build a string with the task info and use copy_to_user().</p>
+<h4 id="write-system-call">write() system-call<a hidden class="anchor" aria-hidden="true" href="#write-system-call">#</a></h4>
+<p>The write() function receives PID input from user space, converts it to an integer, and stores it in tskd-&gt;tsk_pid.</p>
+<pre tabindex="0"><code> ssize_t write_tsk_display(struct file *filp, const char __user *ubuf,
+		                           size_t count, loff_t *off)
+ {
+     int ret = count;
+     int tpid = 0;
+     void *kbuf = NULL;
+     struct device *dev = tskd-&gt;dev;
+
+     if (unlikely(count &gt; MAXBYTES))
+     {
+         dev_warn(dev, &#34;exceeds write bytes limit\n&#34;);
+         goto out_nomem;
+     }
+     kbuf = kvmalloc(count, GFP_KERNEL);
+     if (unlikely(!kbuf))
+         goto out_nomem;
+
+     memset(kbuf, 0, count);
+     if (copy_from_user(kbuf, ubuf, count))
+     {
+         ret = -EFAULT;
+         dev_warn(dev, &#34;copy_from_user failed\n&#34;);
+         goto out_cfu;
+     }
+     dev_info(dev, &#34;kbuf: %s\n&#34;, (char *)kbuf);
+
+     ret = kstrtoint(kbuf, 0, &amp;tpid);
+     if (ret)
+     {
+         dev_warn(dev, &#34;failed to convert kbuf to int&#34;);
+         goto out_cfu;
+     }
+     tskd-&gt;tsk_pid = tpid;
+     dev_info(dev, &#34;pid: %d written to /dev/task_display&#34;, tpid);
+
+     ret = count;
+ out_cfu:
+     kvfree(kbuf);
+ out_nomem:
+     return ret;
+ }
+</code></pre><h4 id="file_operations-structure">file_operations Structure<a hidden class="anchor" aria-hidden="true" href="#file_operations-structure">#</a></h4>
+<p>The file_operations structure connects the VFS to your driver’s functions:</p>
+<pre tabindex="0"><code> static const struct file_operations tsk_display_fops = {
+     .open  = open_tsk_display,
+     .read  = read_tsk_display,
+     .write = write_tsk_display,
+     .owner = THIS_MODULE;
+ };
+</code></pre><p>Whenever user space calls open(), read(), or write() on /dev/task_display, the kernel Virtual Filesystem Switch (VFS) layer will take over and allocates and initializes that process&rsquo;s open file data structure (struct file) for the device file</p>
+<p><strong>Note</strong>: the function signatures must match the kernel’s expected prototypes for open, read, write, etc.</p>
+<h4 id="miscdevice-structure">miscdevice Structure<a hidden class="anchor" aria-hidden="true" href="#miscdevice-structure">#</a></h4>
+<pre tabindex="0"><code> static struct miscdevice tsk_display_dev = {
+     .minor = MISC_DYNAMIC_MINOR,
+     .name  = &#34;task_display&#34;,
+     .mode  = 0666,             /*readable and writable*/
+     .fops  = &amp;tsk_display_fops,
+ };
+</code></pre><ul>
+<li>MISC_DYNAMIC_MINOR → kernel picks a free minor number.</li>
+<li>name → used to create /dev/task_display file.</li>
+<li>mode → file permissions (here: 0666 -&gt; readable and writable).</li>
+</ul>
+<h4 id="init-and-exit-functions">Init and Exit Functions<a hidden class="anchor" aria-hidden="true" href="#init-and-exit-functions">#</a></h4>
+<p>The module’s init function registers the misc device and allocates the driver’s internal structure. The exit function deregisters it.</p>
+<pre tabindex="0"><code> static int __init task_display_init(void)
+ {
+     int ret;
+     struct device *dev;
+
+     ret = misc_register(&amp;tsk_display_dev);
+     if (ret)
+     {
+         pr_notice(&#34;task display device registration failed, aborting\n&#34;);
+         return ret;
+     }
+
+     dev = tsk_display_dev.this_device;
+     tskd = devm_kzalloc(dev, sizeof(struct tsk_display), GFP_KERNEL);
+
+     if (unlikely(!tskd))
+         return -ENOMEM;
+
+     tskd-&gt;dev = dev;
+
+     tskd-&gt;tsk_pid = 0;
+     pr_info(&#34;task display driver registered\n&#34;);
+     return 0;
+ }
+
+ static void __exit task_display_exit(void)
+ {
+     misc_deregister(&amp;tsk_display_dev);
+     pr_info(&#34;task display driver deregistered, bye\n&#34;);
+ }
+ 
+
+ module_init(task_display_init);
+ module_exit(task_display_exit);
+</code></pre><h3 id="testing-the-driver-from-user-space">Testing the Driver from User Space<a hidden class="anchor" aria-hidden="true" href="#testing-the-driver-from-user-space">#</a></h3>
+<pre tabindex="0"><code>insmod task_display.ko
+
+ls -l /dev/task_display
+
+echo 1 &gt; /dev/task_display
+
+cat /dev/task_display
+
+dmesg | tail -n 20
+</code></pre><p>You should see log lines showing the PID, TGID, and other task details. That confirms that your write() stored the PID and your read() successfully looked up the task_struct.</p>
+<h4 id="summary">Summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h4>
+<p>This example demonstrates how to build a small Linux kernel module using the misc device framework. By defining only a few file operations and relying on the kernel to create the device node, the driver stays minimal and easy to understand.</p>
+<p>The driver shows how to:</p>
+<ul>
+<li>Accept input (a PID) from user space via write().</li>
+<li>Use that value inside the kernel to look up a task_struct.</li>
+<li>Connect user-space system calls to kernel functions through file_operations and a miscdevice.<br>
+From here, you can extend the example by returning formatted task information to user space with copy_to_user(), adding proper error paths, or exposing more fields from task_struct.</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">LowLevel Notes</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
