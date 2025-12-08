@@ -10,11 +10,11 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
 
 Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 
-However, I checked the syzbot website and randomly chose a [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) related to the `trace` subsystem, specifically addressing the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
+However, I checked the syzbot website and randomly chose a [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) from the `trace` subsystem, related to the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
 
-I **personally advise** not to do this.
+But I **personally advise** not to do this.
 
-I also tried to solve other bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the `kselftest` subsystem and kernel build warnings with `W=1`, and that working on them is quite easy for a beginner. Backporting can also be considered -- see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
+I also tried to solve other syzbot bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the `kselftest` subsystem and kernel build warnings with `W=1`, and working on them is also quite easy for a beginner. Backporting can also be considered as beginner task -- see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
 
 There are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what and how it is fixing the bug, and why you think your approach is right.
 
@@ -80,7 +80,7 @@ de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma ret
 
 One of the things that I learned is that whenever you are writing a patch for a fix, check the previous commits for that file before writing the patch header to ensure consistency with the file's existing style.
 
-One difficulty I was experiencing was navigating the codebase and finding the definition for a particular macro in VS Code – it was taking too much time to process. However, I later found that `cscope` works fine.
+One difficulty I was experiencing was navigating the codebase and finding the definition for a particular macro in VS Code – it was taking too much time to process. However, I later found `cscope` that also works fine.
 
 **Using Cscope for Code Navigation:**  
 ```
