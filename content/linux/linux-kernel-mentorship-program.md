@@ -12,7 +12,7 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
 
 Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 
-However, I checked the syzbot website and randomly chose a simple [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) related to the `trace` subsystem, specifically addressing the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
+However, I checked the syzbot website and randomly chose a [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) related to the `trace` subsystem, specifically addressing the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
 
 I **personally advise** not to do this.
 
@@ -32,19 +32,28 @@ git format-patch HEAD~1
 ./scripts/checkpatch.pl --strict --fix-inplace hello.patch
 ./scripts/checkpatch.pl --strict --fix-inplace -f --fix hello.patch  
 ```
+
 2. **Find the List of Maintainers related to that Subsystem:**  
 ```
 ./scripts/get_maintainer.pl --separator=, --no-rolestats hello.patch  
 ```
-2. Always make sure to **double** check the patch before sending it to the mailing list. I will recommend first sending the patch with `git send-email` using the `--dry-run` option.  
+
+3. **Sending the patch**
 ```
 git send-email --to=<Maintainer Email> --cc=<Mailing list> hello.patch  
 ```
-   *(**Note:** Replace `<Maintainer Email>` and `<CC Emails>` with the actual emails obtained from `get_maintainer.pl`.)*  
-3. **Writing a Changelog for Previous Versions:**  
+   *(**Note:** Replace `<Maintainer Email>` and `<CC Emails>` with the actual emails obtained from `get_maintainer.pl`.)*
+  
+**Note**: Always make sure to **double check the patch** before sending it to the mailing list. I will recommend first sending the patch to your email or use `git send-email` using the `--dry-run` option.  
+
+4. **Writing a Changelog for Previous Versions:**  
    see:  [https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/)
 
-**Note:** For the `kselftest` subsystem, it is helpful to mention the compiler details with which you are getting the error/warning.
+**Note:** For the `kselftest` subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the `uapi` header before compiling the test.
+
+```
+make headers_install
+```
 
 see: [https://lore.kernel.org/all/20251126163046.58615-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251126163046.58615-1-ankitkhushwaha.linux@gmail.com/)
 
