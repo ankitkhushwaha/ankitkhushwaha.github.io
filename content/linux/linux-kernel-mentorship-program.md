@@ -47,9 +47,16 @@ git send-email --to=<Maintainer Email> --cc=<Mailing list> hello.patch
 **Note**: Always make sure to **double check the patch** before sending it to the mailing list. I will recommend first sending the patch to your email or use `git send-email` using the `--dry-run` option.  
 
 4. **Writing a Changelog for Previous Versions:**  
-   see:  [https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/)
+Always write the changelog in patches expect for the first version.
 
-**Note:** For the `kselftest` subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the `uapi` header before compiling the test.
+see:  [https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/)
+
+5. **Mailing list Preference**
+Each subsystem have different preference. 
+
+for example: Networking subsystem: [netdev](https://docs.kernel.org/process/maintainer-netdev.html)
+
+For the `kselftest` subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the `uapi` header before compiling the test.
 
 ```
 make headers_install
@@ -92,7 +99,7 @@ cscope.files cscope.out cscope.out.in cscope.out.po
 cscope -d
 ```
 
-`cscope` works fine. The Sublime Text editor also works well for me. Additionally, Sublime Merge was helpful for quickly finding the previous commits of a particular file.
+`cscope` works fine. The Sublime Text editor also works well for Code Navigation. Additionally, Sublime Merge was helpful for quickly finding the previous commits of a particular file.
 
 **Closing Thoughts**
 
