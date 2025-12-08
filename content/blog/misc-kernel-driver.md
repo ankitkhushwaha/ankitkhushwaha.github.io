@@ -132,6 +132,7 @@ Here we are always returing 0. so `cat command` thinks end-of-file has reached. 
  ssize_t read_tsk_display(struct file *filp, char __user *ubuf,
                           size_t count, loff_t *off)
  {
+     void *kbuf = NULL;
      int len, ret = count;
      pid_t tpid_t = tskd->tsk_pid;
      struct pid *pid = NULL;
@@ -154,6 +155,9 @@ Here we are always returing 0. so `cat command` thinks end-of-file has reached. 
 			 goto out_nomem;
 		}
 	}
+    if (*off > 0)
+        return 0;
+
     len = snprintf(kbuf, sizeof(kbuf),
                    "PID: %d\nTGID: %d\nComm: %s\nrecent_used_cpu: %d\non_rq: %d\n",
                    task->pid, task->tgid, task->comm,
@@ -162,7 +166,8 @@ Here we are always returing 0. so `cat command` thinks end-of-file has reached. 
     if (copy_to_user(ubuf, kbuf, len))
         return -EFAULT;
 
-	return 0;
+    *off += len;
+    return len;
  out_nomem:
      return ret;
  }

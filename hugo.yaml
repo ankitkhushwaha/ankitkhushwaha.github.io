@@ -19,7 +19,9 @@ params:
   mainSections:
     - blog
     - docs
+    - linux
   env: production
 
   assets:
     disableFingerprinting: true
+pluralizeListTitles: false
