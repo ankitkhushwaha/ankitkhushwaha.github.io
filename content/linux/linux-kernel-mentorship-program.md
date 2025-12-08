@@ -8,17 +8,17 @@ tags: ["kernel", "linux", "lfx", "linux-kernel", "mentorship"]
 
 ### Introduction
 
-I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall '25 application opened in August, and I was ready to apply. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first "hello world" kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.
+I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall '25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first "hello world" kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.
 
-Somehow, my application was accepted. At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
+Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 
 However, I checked the syzbot website and randomly chose a simple [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) related to the `trace` subsystem, specifically addressing the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
 
 I **personally advise** not to do this.
 
-I also tried to solve other bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the `kselftest` subsystem and kernel build warnings with `W=1`, and that working on them is quite easy for a beginner. Backporting can also be considered; see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
+I also tried to solve other bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the `kselftest` subsystem and kernel build warnings with `W=1`, and that working on them is quite easy for a beginner. Backporting can also be considered -- see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
 
-There are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what it is fixing, how it is fixing it, and why you think this is the right approach.
+There are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what and how it is fixing the bug, and why you think your approach is right.
 
 ### The Patch Submission Flow
 
@@ -87,9 +87,9 @@ cscope -d
 
 **Closing Thoughts**
 
-The learning was very rewarding, especially through the Office Hours meetings and Discord discussions. I learned that kernel development and becoming a kernel hacker isn't an easy task that you can just pick up quickly. It requires consistent, dedicated effort. We need to acquire a deeper understanding of systems programming, architecture, and a willingness to troubleshoot complex issues. It's a long but ultimately rewarding journey.
+The learning was very rewarding, especially the Office Hours meetings and Discord discussions. I learned that kernel development and becoming a kernel hacker isn't an easy task that you can just pick up quickly. It requires consistent, dedicated effort. We need to acquire a deeper understanding of systems programming, architecture, and a willingness to troubleshoot complex issues. 
 
-I learned about the development cycle of the Linux kernel. This program was a strong beginning, and the work will continue.
+It's certainly a long but ultimately rewarding journey. I also learned about the development cycle of the Linux kernel. This program was a strong beginning, and the work will continue.
 
 I will recommend this mentorship program to anyone interested in Linux kernel development. You'll learn the basics and find out if kernel development interests you in the long term. What I find most valuable is that you get a feel for the supportive open source community.
 
