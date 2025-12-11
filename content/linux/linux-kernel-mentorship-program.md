@@ -45,7 +45,7 @@ git send-email --to=<Maintainer Email> --cc=<Mailing list> hello.patch
 **Note**: Always make sure to **double check the patch** before sending it to the mailing list. I will recommend first sending the patch to your email or use `git send-email` using the `--dry-run` option.  
 
 4. **Writing a Changelog for Previous Versions:**  
-Always write the changelog in patches expect for the first version.
+Always write the changelog in patches except for the first version.
 
 see:  [https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/)
 
@@ -60,7 +60,7 @@ For the `kselftest` subsystem, it is helpful to mention the compiler details wit
 make headers_install
 ```
 
-see: [https://lore.kernel.org/all/20251126163046.58615-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251126163046.58615-1-ankitkhushwaha.linux@gmail.com/)
+see: [discussion](https://lore.kernel.org/all/aRs6EbV2gnkertzA@google.com/)
 
 ### Patch accepted
 
@@ -107,4 +107,4 @@ It's certainly a long but ultimately rewarding journey. I also learned about the
 
 I will recommend this mentorship program to anyone interested in Linux kernel development. You'll learn the basics and find out if kernel development interests you in the long term. What I find most valuable is that you get a feel for the supportive open source community.
 
-I am very thankful to Shuah Khan, David Hunter, and Khalid for this wonderful mentorship program.
+I am very thankful to Shuah, David and Khalid for this wonderful mentorship program.
