@@ -22,6 +22,12 @@ params:
     - linux
   env: production
 
+frontmatter:
+  lastmod:
+    - :git
+    - lastmod
+    - date
+
   assets:
     disableFingerprinting: true
 pluralizeListTitles: false

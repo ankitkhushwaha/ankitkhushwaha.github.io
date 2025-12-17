@@ -1,33 +1,38 @@
 {{ define "main" }}
-  <div class="post-list">
-    {{ range .Site.Sections }}
-      <article class="post-entry">
-        <header class="entry-header">
-          <h2 class="entry-hint-parent">
-            {{ .Title | default .Name | title }}
-          </h2>
-        </header>
+<div class="post-list">
+  {{ range .Site.Sections }}
+  <article class="post-entry">
+    <header class="entry-header">
+      <h2 class="entry-hint-parent">
+        {{ .Title | default .Name | title }}
+      </h2>
+    </header>
 
-        <div class="entry-content">
-          <p>
-            {{ with .Description }}
-              {{ . }}
-            {{ else }}
-              {{ .Pages | len }} {{ if eq (.Pages | len) 1 }}post{{ else }}posts{{ end }}
-            {{ end }}
-          </p>
-        </div>
-
-        <footer class="entry-footer">
-          {{ with (index (.Pages.ByDate.Reverse) 0) }}
-            <span title="{{ .Date }}">{{ .Date }}</span>
+    <div class="entry-content">
+      <p>
+        {{ with .Description }}
+          {{ . }}
+        {{ else }}
+          {{ $count := len .Pages }}
+          {{ if ne $count 0 }}
+            {{ $count }} {{ if eq $count 1 }}post{{ else }}posts{{ end }}
           {{ end }}
-        </footer>
+        {{ end }}
+      </p>
+    </div>
 
-        <a class="entry-link"
-           aria-label="section link to {{ .Title | default .Name | title }}"
-           href="{{ .Permalink }}"></a>
-      </article>
-    {{ end }}
-  </div>
+    <footer class="entry-footer">
+      {{ with .Lastmod }}
+      <span title="{{ . }}">
+        Last updated: {{ . | time.Format "2006-01-02 15:04" }}
+      </span>
+      {{ end }}
+    </footer>
+
+    <a class="entry-link"
+       aria-label="section link to {{ .Title | default .Name | title }}"
+       href="{{ .Permalink }}"></a>
+  </article>
+  {{ end }}
+</div>
 {{ end }}
