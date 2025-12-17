@@ -1,38 +1,58 @@
 {{ define "main" }}
-<div class="post-list">
-  {{ range .Site.Sections }}
-  <article class="post-entry">
-    <header class="entry-header">
-      <h2 class="entry-hint-parent">
-        {{ .Title | default .Name | title }}
-      </h2>
-    </header>
+<section class="hero">
+  <h1 class="hero-greeting">{{ .Site.Data.profile.greeting }}</h1>
 
-    <div class="entry-content">
-      <p>
-        {{ with .Description }}
-          {{ . }}
-        {{ else }}
-          {{ $count := len .Pages }}
-          {{ if ne $count 0 }}
-            {{ $count }} {{ if eq $count 1 }}post{{ else }}posts{{ end }}
-          {{ end }}
+  <p class="hero-text">
+    I’m <strong>{{ .Site.Data.profile.name }}</strong>,
+    a {{ .Site.Data.profile.headline }}.
+  </p>
+
+  <p class="hero-text">
+    {{ .Site.Data.profile.bio }}
+  </p>
+
+  <div class="hero-links">
+    <a href="{{ .Site.Data.profile.links.github }}">GitHub</a>
+    /
+    <a href="{{ .Site.Data.profile.links.linkedin }}">LinkedIn</a>
+  </div>
+</section>
+
+{{ range .Site.Sections }}
+<article class="post-entry">
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      {{ .Title | default .Name | title }}
+    </h2>
+  </header>
+
+  <div class="entry-content">
+    <p>
+      {{ with .Description }}
+        {{ . }}
+      {{ else }}
+        {{ $count := len .Pages }}
+        {{ if ne $count 0 }}
+          {{ $count }} {{ if eq $count 1 }}post{{ else }}posts{{ end }}
         {{ end }}
-      </p>
-    </div>
-
-    <footer class="entry-footer">
-      {{ with .Lastmod }}
-      <span title="{{ . }}">
-        Last updated: {{ . | time.Format "2006-01-02 15:04" }}
-      </span>
       {{ end }}
-    </footer>
+    </p>
+  </div>
 
-    <a class="entry-link"
-       aria-label="section link to {{ .Title | default .Name | title }}"
-       href="{{ .Permalink }}"></a>
-  </article>
+  <footer class="entry-footer">
+    {{ with .Lastmod }}
+    <span title="{{ . }}">
+      Last updated: {{ . | time.Format "2006-01-02 15:04" }}
+    </span>
+    {{ end }}
+  </footer>
+
+  <a
+    class="entry-link"
+    aria-label="section link to {{ .Title | default .Name | title }}"
+    href="{{ .Permalink }}">
+  </a>
+</article>
   {{ end }}
 </div>
 {{ end }}

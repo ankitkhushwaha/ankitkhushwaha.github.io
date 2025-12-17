@@ -1,0 +1,12 @@
+greeting: "Hi!"
+name: "Ankit Khushwaha"
+headline: "systems programmer, kernel contributor"
+bio: >
+  I work on Linux kernel development, device drivers,
+  and low-level systems programming.
+  I’m currently focused on learning kernel internals
+  and contributing to open-source projects.
+
+links:
+  github: "https://github.com/ankit"
+  linkedin: "https://linkedin.com/in/ankit"
