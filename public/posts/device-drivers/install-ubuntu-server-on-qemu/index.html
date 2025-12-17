@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Install Ubuntu Server on Qemu | LowLevel Notes</title>
+<meta name="keywords" content="qemu, ubuntu-server, linux, linux-kernel">
+<meta name="description" content="Installation of ubuntu server on qemu-x86_64
+At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.
+But i found out build actually didn’t have my basic tool like gnu make. Everytime i try to do something i need to find particular tool on menuconfig then make the build again. Learning was so slow.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.2211ca3164be7830024f6aad2b3a2e520843a64f8f048445c3401c1249aa051d.css" integrity="sha256-IhHKMWS&#43;eDACT2qtKzouUghDpk&#43;PBIRFw0AcEkmqBR0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/">
+  <meta property="og:site_name" content="LowLevel Notes">
+  <meta property="og:title" content="Install Ubuntu Server on Qemu">
+  <meta property="og:description" content="Installation of ubuntu server on qemu-x86_64 At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.
+But i found out build actually didn’t have my basic tool like gnu make. Everytime i try to do something i need to find particular tool on menuconfig then make the build again. Learning was so slow.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-16T14:30:04+05:30">
+    <meta property="article:modified_time" content="2025-08-16T14:30:04+05:30">
+    <meta property="article:tag" content="Qemu">
+    <meta property="article:tag" content="Ubuntu-Server">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Linux-Kernel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Install Ubuntu Server on Qemu">
+<meta name="twitter:description" content="Installation of ubuntu server on qemu-x86_64
+At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.
+But i found out build actually didn’t have my basic tool like gnu make. Everytime i try to do something i need to find particular tool on menuconfig then make the build again. Learning was so slow.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Device-Drivers",
+      "item": "http://localhost:1313/posts/device-drivers/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Install Ubuntu Server on Qemu",
+      "item": "http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Install Ubuntu Server on Qemu",
+  "name": "Install Ubuntu Server on Qemu",
+  "description": "Installation of ubuntu server on qemu-x86_64 At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.\nBut i found out build actually didn’t have my basic tool like gnu make. Everytime i try to do something i need to find particular tool on menuconfig then make the build again. Learning was so slow.\n",
+  "keywords": [
+    "qemu", "ubuntu-server", "linux", "linux-kernel"
+  ],
+  "articleBody": "Installation of ubuntu server on qemu-x86_64 At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.\nBut i found out build actually didn’t have my basic tool like gnu make. Everytime i try to do something i need to find particular tool on menuconfig then make the build again. Learning was so slow.\nThen thankfully i found this article. Which explains to install the arch linux on qemu. I followed it booted the custom kernel in image. But i was not aware of updating the grub config. So i got kernel mismatch issues. I tried to install the arch linux on GNOME Boxes.\nEventually i decided to leave the arch linux for now -\u003e package dependency in arch breaks easily :).\nNote : Most of cmds used are well explained in article given above. Check out that too!\nDownload the iso file You can download it from here.\nCreate qemu image qemu-img create -f raw 10G example: kush.img, myimage.qcow2\nthe creates a image file for the qemu.\nThis cmd create the image file with 10 Gb. You can choose according to your requirement.\nWorth mentioning is the alternative qcow2 image format. While slower than a raw formatted image, the qcow2 image size increases during VM usage. You set a limit in gigabytes on the size of the qcow2 image during creation.\nInstallting the Distro qemu-system-x86_64 \\ -enable-kvm \\ -cdrom \\ -boot order=d \\ -drive file=,format=raw \\ -m 4G Do not give space between file=,format=raw. Otherwise it will fail.\nOption Description -enable-kvm Enable hypervisor support using the Linux KVM. -cdrom Points to what image will be inserted into the emulated CD slot. -boot Tells QEMU to boot from CD-ROM. -drive Specifies a drive on the system (e.g., image file and its format). -m Sets the amount of RAM allocated to the VM (the more, the better). After complete installtion it asks for reboot and remove the bootable medium -\u003e you can safely kill the process.\nRunning the ubuntu-server qemu-system-x86_64 \\ -enable-kvm \\ -drive file=kush.img,format=raw,if=virtio \\ -m 4G \\ -nic user,hostfwd=tcp::2222-:22 \\ -serial stdio ",
+  "wordCount" : "380",
+  "inLanguage": "en",
+  "datePublished": "2025-08-16T14:30:04+05:30",
+  "dateModified": "2025-08-16T14:30:04+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "LowLevel Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="LowLevel Notes (Alt + H)">LowLevel Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Install Ubuntu Server on Qemu
+    </h1>
+    <div class="post-meta"><span title='2025-08-16 14:30:04 +0530 IST'>August 16, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="installation-of-ubuntu-server-on-qemu-x86_64">Installation of ubuntu server on qemu-x86_64<a hidden class="anchor" aria-hidden="true" href="#installation-of-ubuntu-server-on-qemu-x86_64">#</a></h1>
+<p>At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.</p>
+<p>But i found out build actually didn’t have my basic tool like <code>gnu make</code>. Everytime i try to do something i need to find particular tool on <code>menuconfig</code> then make the build again. Learning was so slow.</p>
+<p>Then thankfully i found this <a href="https://programmador.com/posts/2024/linux-kernel-development-using-qemu/">article</a>. Which explains to install the arch linux on qemu. I followed it booted the custom kernel in image. But i was not aware of updating the grub config. So i got kernel mismatch issues. I tried to install the arch linux on GNOME Boxes.</p>
+<p>Eventually i decided to leave the arch linux for now -&gt; package dependency in arch breaks easily :).</p>
+<p><strong>Note</strong> : Most of cmds used are well explained in article given above. Check out that too!</p>
+<h2 id="download-the-iso-file">Download the iso file<a hidden class="anchor" aria-hidden="true" href="#download-the-iso-file">#</a></h2>
+<p>You can download it from <a href="https://ubuntu.com/download/server">here</a>.</p>
+<h2 id="create-qemu-image">Create qemu image<a hidden class="anchor" aria-hidden="true" href="#create-qemu-image">#</a></h2>
+<pre tabindex="0"><code>qemu-img create -f raw &lt;MY_IMAGE&gt; 10G
+</code></pre><p>example: <code>kush.img, myimage.qcow2</code></p>
+<p>the creates a image file for the qemu.</p>
+<p>This cmd create the image file with 10 Gb. You can choose according to your requirement.</p>
+<p>Worth mentioning is the alternative qcow2 image format. While slower than a raw formatted image, the qcow2 image size increases during VM usage. You set a limit in gigabytes on the size of the qcow2 image during creation.</p>
+<h2 id="installting-the-distro">Installting the Distro<a hidden class="anchor" aria-hidden="true" href="#installting-the-distro">#</a></h2>
+<pre tabindex="0"><code>qemu-system-x86_64 \
+    -enable-kvm \
+    -cdrom &lt;ubuntu_server_ISO&gt; \
+    -boot order=d \
+    -drive file=&lt;MY_IMAGE&gt;,format=raw \
+    -m 4G
+</code></pre><p>Do not give space between <code>file=&lt;MY_IMAGE&gt;,format=raw</code>.  Otherwise it will fail.</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Option</strong></th>
+          <th><strong>Description</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-enable-kvm</code></td>
+          <td>Enable hypervisor support using the Linux KVM.</td>
+      </tr>
+      <tr>
+          <td><code>-cdrom</code></td>
+          <td>Points to what image will be inserted into the emulated CD slot.</td>
+      </tr>
+      <tr>
+          <td><code>-boot</code></td>
+          <td>Tells QEMU to boot from CD-ROM.</td>
+      </tr>
+      <tr>
+          <td><code>-drive</code></td>
+          <td>Specifies a drive on the system (e.g., image file and its format).</td>
+      </tr>
+      <tr>
+          <td><code>-m</code></td>
+          <td>Sets the amount of RAM allocated to the VM (the more, the better).</td>
+      </tr>
+  </tbody>
+</table>
+<p>After complete installtion it asks for reboot and remove the bootable medium -&gt; you can safely kill the process.</p>
+<h2 id="running-the-ubuntu-server">Running the ubuntu-server<a hidden class="anchor" aria-hidden="true" href="#running-the-ubuntu-server">#</a></h2>
+<pre tabindex="0"><code>qemu-system-x86_64 \
+  -enable-kvm \
+  -drive file=kush.img,format=raw,if=virtio \
+  -m 4G \
+  -nic user,hostfwd=tcp::2222-:22 \
+  -serial stdio
+</code></pre><p><img alt="alt text" loading="lazy" src="/qemu.png"></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/qemu/">Qemu</a></li>
+      <li><a href="http://localhost:1313/tags/ubuntu-server/">Ubuntu-Server</a></li>
+      <li><a href="http://localhost:1313/tags/linux/">Linux</a></li>
+      <li><a href="http://localhost:1313/tags/linux-kernel/">Linux-Kernel</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">LowLevel Notes</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -17,9 +17,7 @@ menu:
 
 params:
   mainSections:
-    - blog
-    - docs
-    - linux
+    - posts
   env: production
 
 frontmatter:

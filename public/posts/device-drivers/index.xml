@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>LowLevel Notes</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on LowLevel Notes</description>
+    <title>Device-Drivers on LowLevel Notes</title>
+    <link>http://localhost:1313/posts/device-drivers/</link>
+    <description>Recent content in Device-Drivers on LowLevel Notes</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 10:35:09 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Linux Kernel Mentorship Program</title>
-      <link>http://localhost:1313/posts/linux/linux-kernel-mentorship-program/</link>
-      <pubDate>Mon, 08 Dec 2025 10:35:09 +0530</pubDate>
-      <guid>http://localhost:1313/posts/linux/linux-kernel-mentorship-program/</guid>
-      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &amp;lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &amp;ldquo;hello world&amp;rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.&lt;/p&gt;</description>
-    </item>
+    <lastBuildDate>Mon, 01 Dec 2025 22:32:00 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/device-drivers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Misc Kernel Driver</title>
       <link>http://localhost:1313/posts/device-drivers/misc-kernel-driver/</link>

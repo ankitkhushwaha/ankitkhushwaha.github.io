@@ -1,10 +1,10 @@
 {{ define "main" }}
 <section class="hero">
-  <h1 class="hero-greeting">{{ .Site.Data.profile.greeting }}</h1>
+  <h3 class="hero-greeting">{{ .Site.Data.profile.greeting }}</h3>
 
   <p class="hero-text">
     I’m <strong>{{ .Site.Data.profile.name }}</strong>,
-    a {{ .Site.Data.profile.headline }}.
+    {{ .Site.Data.profile.headline }}.
   </p>
 
   <p class="hero-text">
@@ -12,12 +12,11 @@
   </p>
 
   <div class="hero-links">
-    <a href="{{ .Site.Data.profile.links.github }}">GitHub</a>
+    <a href="{{ .Site.Data.profile.links.github }}" style="text-decoration: underline;">GitHub</a>
     /
-    <a href="{{ .Site.Data.profile.links.linkedin }}">LinkedIn</a>
+    <a href="{{ .Site.Data.profile.links.linkedin }}" style="text-decoration: underline;">LinkedIn</a>
   </div>
 </section>
-
 {{ range .Site.Sections }}
 <article class="post-entry">
   <header class="entry-header">
@@ -30,11 +29,6 @@
     <p>
       {{ with .Description }}
         {{ . }}
-      {{ else }}
-        {{ $count := len .Pages }}
-        {{ if ne $count 0 }}
-          {{ $count }} {{ if eq $count 1 }}post{{ else }}posts{{ end }}
-        {{ end }}
       {{ end }}
     </p>
   </div>

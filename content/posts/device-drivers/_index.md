@@ -1,6 +1,6 @@
 ---
 draft: False
 description: "articles on device drivers, and systems programming."
-title: 'Blogs'
+title: 'Device-Drivers'
 weight: 2
 ---

@@ -10,9 +10,9 @@
     <atom:link href="http://localhost:1313/tags/mentorship/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux Kernel Mentorship Program</title>
-      <link>http://localhost:1313/linux/linux-kernel-mentorship-program/</link>
+      <link>http://localhost:1313/posts/linux/linux-kernel-mentorship-program/</link>
       <pubDate>Mon, 08 Dec 2025 10:35:09 +0530</pubDate>
-      <guid>http://localhost:1313/linux/linux-kernel-mentorship-program/</guid>
+      <guid>http://localhost:1313/posts/linux/linux-kernel-mentorship-program/</guid>
       <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &amp;lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &amp;ldquo;hello world&amp;rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.&lt;/p&gt;</description>
     </item>
