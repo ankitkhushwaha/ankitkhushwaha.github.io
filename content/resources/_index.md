@@ -10,4 +10,7 @@ weight: 2
 
 - The x86 NMI iret problem(Issue With NMI interrupts) - https://lwn.net/Articles/484932/
 
-    
+
+# C++
+
+- learn cpp the hard way - https://learncodethehardway.com/courses/learn-cpp-the-hard-way/
