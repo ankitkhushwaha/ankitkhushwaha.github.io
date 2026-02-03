@@ -30,10 +30,20 @@ weight: 2
 # ABI
 https://kaiwantech.wordpress.com/2018/05/07/application-binary-interface-abi-docs-and-their-meaning/
 
+# RED ZONE MEMORY
+- https://alex.dzyoba.com/blog/redzone/
+
 # DSA
 
 ## Sliding Window Pattern
 - https://medium.com/@manikmudholkar831995/master-the-sliding-window-technique-your-ultimate-guide-to-efficient-array-and-string-problems-2a1c02db7fb8
+
+## I2C Protocol
+https://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/
+
+
+
+https://www.agner.org/optimize/#manual_instr_tab
 
 https://venam.net/blog/unix/2025/11/27/input_devices_linux.html#the-logical-input-device-topological-path
 
