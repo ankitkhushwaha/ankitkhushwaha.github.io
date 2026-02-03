@@ -11,7 +11,7 @@
 Introduction
 This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/blog/misc-kernel-driver/">
+<link rel="canonical" href="http://localhost:1313/blog/device-drivers/misc-kernel-driver/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.2211ca3164be7830024f6aad2b3a2e520843a64f8f048445c3401c1249aa051d.css" integrity="sha256-IhHKMWS&#43;eDACT2qtKzouUghDpk&#43;PBIRFw0AcEkmqBR0=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
@@ -20,7 +20,7 @@ This article explains how to write a simple Linux kernel driver using the misc d
 <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/blog/misc-kernel-driver/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/blog/device-drivers/misc-kernel-driver/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,7 @@ This article explains how to write a simple Linux kernel driver using the misc d
         }
 
     </style>
-</noscript><meta property="og:url" content="http://localhost:1313/blog/misc-kernel-driver/">
+</noscript><meta property="og:url" content="http://localhost:1313/blog/device-drivers/misc-kernel-driver/">
   <meta property="og:site_name" content="LowLevel Notes">
   <meta property="og:title" content="Misc Kernel Driver">
   <meta property="og:description" content="How to Write Your First Linux Kernel Driver Using the Misc Device Framework Introduction This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.">
@@ -87,8 +87,14 @@ This article explains how to write a simple Linux kernel driver using the misc d
     {
       "@type": "ListItem",
       "position":  2 ,
+      "name": "Device-Drivers",
+      "item": "http://localhost:1313/blog/device-drivers/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
       "name": "Misc Kernel Driver",
-      "item": "http://localhost:1313/blog/misc-kernel-driver/"
+      "item": "http://localhost:1313/blog/device-drivers/misc-kernel-driver/"
     }
   ]
 }
@@ -110,7 +116,7 @@ This article explains how to write a simple Linux kernel driver using the misc d
   "dateModified": "2025-12-01T22:32:00+05:30",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/blog/misc-kernel-driver/"
+    "@id": "http://localhost:1313/blog/device-drivers/misc-kernel-driver/"
   },
   "publisher": {
     "@type": "Organization",
@@ -164,11 +170,6 @@ This article explains how to write a simple Linux kernel driver using the misc d
             </div>
         </div>
         <ul id="menu">
-            <li>
-                <a href="http://localhost:1313/blog/" title="Blog">
-                    <span>Blog</span>
-                </a>
-            </li>
             <li>
                 <a href="http://localhost:1313/categories/" title="categories">
                     <span>categories</span>

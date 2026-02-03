@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>LowLevel Notes</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on LowLevel Notes</description>
+    <title>Device-Drivers on LowLevel Notes</title>
+    <link>http://localhost:1313/blog/device-drivers/</link>
+    <description>Recent content in Device-Drivers on LowLevel Notes</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 10:35:09 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Linux Kernel Mentorship Program</title>
-      <link>http://localhost:1313/blog/linux-kernel-mentorship-program/</link>
-      <pubDate>Mon, 08 Dec 2025 10:35:09 +0530</pubDate>
-      <guid>http://localhost:1313/blog/linux-kernel-mentorship-program/</guid>
-      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &amp;lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &amp;ldquo;hello world&amp;rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.&lt;/p&gt;</description>
-    </item>
+    <lastBuildDate>Mon, 01 Dec 2025 22:32:00 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/device-drivers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Misc Kernel Driver</title>
-      <link>http://localhost:1313/blog/misc-kernel-driver/</link>
+      <link>http://localhost:1313/blog/device-drivers/misc-kernel-driver/</link>
       <pubDate>Mon, 01 Dec 2025 22:32:00 +0530</pubDate>
-      <guid>http://localhost:1313/blog/misc-kernel-driver/</guid>
+      <guid>http://localhost:1313/blog/device-drivers/misc-kernel-driver/</guid>
       <description>&lt;h1 id=&#34;how-to-write-your-first-linux-kernel-driver-using-the-misc-device-framework&#34;&gt;How to Write Your First Linux Kernel Driver Using the Misc Device Framework&lt;/h1&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Install Ubuntu Server on Qemu</title>
-      <link>http://localhost:1313/blog/install-ubuntu-server-on-qemu/</link>
+      <link>http://localhost:1313/blog/device-drivers/install-ubuntu-server-on-qemu/</link>
       <pubDate>Sat, 16 Aug 2025 14:30:04 +0530</pubDate>
-      <guid>http://localhost:1313/blog/install-ubuntu-server-on-qemu/</guid>
+      <guid>http://localhost:1313/blog/device-drivers/install-ubuntu-server-on-qemu/</guid>
       <description>&lt;h1 id=&#34;installation-of-ubuntu-server-on-qemu-x86_64&#34;&gt;Installation of ubuntu server on qemu-x86_64&lt;/h1&gt;
 &lt;p&gt;At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.&lt;/p&gt;
 &lt;p&gt;But i found out build actually didn’t have my basic tool like &lt;code&gt;gnu make&lt;/code&gt;. Everytime i try to do something i need to find particular tool on &lt;code&gt;menuconfig&lt;/code&gt; then make the build again. Learning was so slow.&lt;/p&gt;</description>

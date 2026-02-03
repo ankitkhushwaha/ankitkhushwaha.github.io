@@ -2,17 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/linux/</loc>
-    <lastmod>2025-12-08T10:35:09+05:30</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>http://localhost:1313/blog/</loc>
     <lastmod>2025-12-08T10:35:09+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/resources/</loc>
     <lastmod>2025-12-17T10:48:03+05:30</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/device-drivers/</loc>
-    <lastmod>2025-12-01T22:32:00+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2025-12-17T10:48:03+05:30</lastmod>
@@ -26,7 +20,7 @@
     <loc>http://localhost:1313/tags/linux/</loc>
     <lastmod>2025-12-08T10:35:09+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/linux/linux-kernel-mentorship-program/</loc>
+    <loc>http://localhost:1313/blog/linux-kernel-mentorship-program/</loc>
     <lastmod>2025-12-08T10:35:09+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/linux-kernel/</loc>
@@ -38,10 +32,10 @@
     <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-12-08T10:35:09+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/device-drivers/misc-kernel-driver/</loc>
+    <loc>http://localhost:1313/blog/misc-kernel-driver/</loc>
     <lastmod>2025-12-01T22:32:00+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/device-drivers/install-ubuntu-server-on-qemu/</loc>
+    <loc>http://localhost:1313/blog/install-ubuntu-server-on-qemu/</loc>
     <lastmod>2025-08-16T14:30:04+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/qemu/</loc>
