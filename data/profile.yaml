@@ -11,6 +11,6 @@ links:
   github: "https://github.com/ankitkhushwaha"
   linkedin: "https://www.linkedin.com/in/ankit-khushwaha/"
   patches: "https://lore.kernel.org/all/?q=ankitkhushwaha.linux@gmail.com"
-  commits-kernel: "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=ankitkhushwaha.linux%40gmail.com"
+  kernel_commits: "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=ankitkhushwaha.linux%40gmail.com"
 Contact:
   Email: "ankitkhushwaha.dev@gmail.com"
