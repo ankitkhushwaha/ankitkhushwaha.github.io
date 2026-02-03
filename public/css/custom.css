@@ -1,0 +1,59 @@
+.recent-articles-header {
+  padding: 16px;
+}
+
+.profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.profile-image {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.post-entry.profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  height: auto;
+  min-height: unset;
+}
+
+.profile-text {
+  max-width: 100%;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.post-entry {
+  width:110%;
+}
+
+.hero-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-link {
+  text-decoration: underline;
+  color: inherit;
+}
+
+.hero-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.hero-separator {
+  opacity: 0.6;
+}
+
+li > ul {
+  padding-left: 1.5rem;
+}

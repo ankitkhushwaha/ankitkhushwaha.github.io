@@ -79,6 +79,8 @@
   ]
 }
 </script>
+<link rel="stylesheet" href="/css/custom.css" >
+
 </head>
 
 <body class="list" id="top">
@@ -122,8 +124,18 @@
         </div>
         <ul id="menu">
             <li>
+                <a href="http://localhost:1313/resume-ankit-khushwaha.pdf" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+            <li>
                 <a href="http://localhost:1313/blog/" title="Blog">
                     <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/resources" title="Resources">
+                    <span>Resources</span>
                 </a>
             </li>
             <li>
@@ -141,22 +153,45 @@
 </header>
 <main class="main">
 <section class="hero">
-  
-  <h3 class="hero-greeting">Ankit Khushwaha</h3>
-  
-  <div class="post-entry">
-    I’m <strong>Ankit Khushwaha</strong>,
-    Aspiring Kernel Hacker.
 
-    I work on Linux kernel development, device drivers, and low-level systems programming. I’m currently focused on learning kernel internals and contributing to Linux-Kernel.
+  <div class="recent-articles-header">
+    <h3 class="hero-greeting">Ankit Khushwaha</h3>
+  </div>
+
+  <div class="post-entry profile">
+    <img src="/images/linux.jpeg" alt="Ankit Khushwaha" class="profile-image" />
+
+    <div class="profile-text">
+      I’m Ankit Khushwaha,
+      Aspiring Kernel Hacker.
+
+      I work on Linux kernel development, device drivers, and low-level systems programming. I’m currently focused on learning kernel internals and contributing to Linux-Kernel.
+
+    </div>
 
   </div>
 
-  <div class="hero-links">
-    <a href="https://github.com/ankitkhushwaha" style="text-decoration: underline;">GitHub</a>
-    /
-    <a href="https://www.linkedin.com/in/ankit-khushwaha/" style="text-decoration: underline;">LinkedIn</a>
+  <div style="padding: 16px;">
+    <h4>Open Source Contributions
+    </h4>
   </div>
+  <ul>
+    <li>
+      <a href="" class="hero-link">Upstream Linux Kernel commits</a>
+    </li>
+    <li> <a href="https://lore.kernel.org/all/?q=ankitkhushwaha.linux@gmail.com" class="hero-link">Patches</a></li>
+    <li>
+      Astrophysics Libraries
+      <span class="tech-tag">[Python]</span>
+      <ul>
+        <li><a href="https://github.com/sunpy/sunpy/pulls?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha"
+           class="hero-link">Sunpy</a></li>
+           <li><a href="https://github.com/StingraySoftware/stingray/pulls?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha"
+            class="hero-link">Stingray</a></li>
+      </ul>
+    </li>
+  </ul>
+
 </section>
 
 <div class="recent-articles-header">
@@ -165,39 +200,45 @@
 
 <ul class="recent-articles">
   
-    <li>
-      12/08/2025 –
-      <a href="http://localhost:1313/blog/linux-kernel-mentorship-program/">
-        Linux Kernel Mentorship Program
-      </a>
-    </li>
+  <li>
+    12/08/2025 –
+    <a href="http://localhost:1313/blog/linux-kernel-mentorship-program/" class="hero-link">
+      Linux Kernel Mentorship Program
+    </a>
+  </li>
   
-    <li>
-      12/01/2025 –
-      <a href="http://localhost:1313/blog/misc-kernel-driver/">
-        Misc Kernel Driver
-      </a>
-    </li>
+  <li>
+    12/01/2025 –
+    <a href="http://localhost:1313/blog/misc-kernel-driver/" class="hero-link">
+      Misc Kernel Driver
+    </a>
+  </li>
   
-    <li>
-      08/16/2025 –
-      <a href="http://localhost:1313/blog/install-ubuntu-server-on-qemu/">
-        Install Ubuntu Server on Qemu
-      </a>
-    </li>
+  <li>
+    08/16/2025 –
+    <a href="http://localhost:1313/blog/install-ubuntu-server-on-qemu/" class="hero-link">
+      Install Ubuntu Server on Qemu
+    </a>
+  </li>
   
 </ul>
 
-  
+
 <ul class="recent-articles">
   
 </ul>
 
-  
+
 
 <div style="padding: 16px;">
-  <h4>Recent Articles</h4>
+  <h4>Quick Links
+  </h4>
 </div>
+<ul>
+  <li><a href="https://github.com/ankitkhushwaha" class="hero-link">Github</a></li>
+  <li><a href="https://www.linkedin.com/in/ankit-khushwaha/" class="hero-link">Linkedin</a></li>
+  <li><a href="mailto:ankitkhushwaha.dev@gmail.com" class="hero-link">Email</a></li>
+</ul>
 
 
     </main>
@@ -208,7 +249,7 @@
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+        <a href="https://github.com/ankitkhushwaha/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
 <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">

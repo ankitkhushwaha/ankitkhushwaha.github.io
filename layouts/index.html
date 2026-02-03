@@ -1,24 +1,43 @@
-{{ define "head" }}
-<link rel="stylesheet" href="{{ "main.css" | relURL }}">
-{{ end }}
-
 {{ define "main" }}
 <section class="hero">
-  
-  <h3 class="hero-greeting">{{ .Site.Data.profile.name }}</h3>
-  
-  <div class="post-entry">
-    I’m <strong>{{ .Site.Data.profile.name }}</strong>,
-    {{ .Site.Data.profile.headline }}.
 
-    {{ .Site.Data.profile.bio }}
+  <div class="recent-articles-header">
+    <h3 class="hero-greeting">{{ .Site.Data.profile.name }}</h3>
   </div>
 
-  <div class="hero-links">
-    <a href="{{ .Site.Data.profile.links.github }}" style="text-decoration: underline;">GitHub</a>
-    /
-    <a href="{{ .Site.Data.profile.links.linkedin }}" style="text-decoration: underline;">LinkedIn</a>
+  <div class="post-entry profile">
+    <img src="/images/linux.jpeg" alt="{{ .Site.Data.profile.name }}" class="profile-image" />
+
+    <div class="profile-text">
+      I’m {{ .Site.Data.profile.name }},
+      {{ .Site.Data.profile.headline }}.
+
+      {{ .Site.Data.profile.bio }}
+    </div>
+
   </div>
+
+  <div style="padding: 16px;">
+    <h4>Open Source Contributions
+    </h4>
+  </div>
+  <ul>
+    <li>
+      <a href="{{ .Site.Data.profile.links.kernel_commits}}" class="hero-link">Upstream Linux Kernel commits</a>
+    </li>
+    <li> <a href="{{ .Site.Data.profile.links.patches}}" class="hero-link">Patches</a></li>
+    <li>
+      Astrophysics Libraries
+      <span class="tech-tag">[Python]</span>
+      <ul>
+        <li><a href="https://github.com/sunpy/sunpy/pulls?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha"
+           class="hero-link">Sunpy</a></li>
+           <li><a href="https://github.com/StingraySoftware/stingray/pulls?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha"
+            class="hero-link">Stingray</a></li>
+      </ul>
+    </li>
+  </ul>
+
 </section>
 
 <div class="recent-articles-header">
@@ -27,19 +46,25 @@
 {{ range .Site.Sections }}
 <ul class="recent-articles">
   {{ range .Pages }}
-    <li>
-      {{ .Date | time.Format "01/02/2006" }} –
-      <a href="{{ .Permalink }}">
-        {{ .Title }}
-      </a>
-    </li>
+  <li>
+    {{ .Date | time.Format "01/02/2006" }} –
+    <a href="{{ .Permalink }}" class="hero-link">
+      {{ .Title }}
+    </a>
+  </li>
   {{ end }}
 </ul>
 
-  {{ end }}
+{{ end }}
 
 <div style="padding: 16px;">
-  <h4>Recent Articles</h4>
+  <h4>Quick Links
+  </h4>
 </div>
+<ul>
+  <li><a href="{{ .Site.Data.profile.links.github }}" class="hero-link">Github</a></li>
+  <li><a href="{{ .Site.Data.profile.links.linkedin }}" class="hero-link">Linkedin</a></li>
+  <li><a href="mailto:{{ .Site.Data.profile.Contact.Email }}" class="hero-link">Email</a></li>
+</ul>
 
 {{ end }}
