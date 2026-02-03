@@ -1,3 +1,7 @@
+{{ define "head" }}
+<link rel="stylesheet" href="{{ "main.css" | relURL }}">
+{{ end }}
+
 {{ define "main" }}
 <section class="hero">
   
@@ -17,7 +21,7 @@
   </div>
 </section>
 
-<div style="padding: 16px;">
+<div class="recent-articles-header">
   <h4>Recent Articles</h4>
 </div>
 {{ range .Site.Sections }}
@@ -33,4 +37,9 @@
 </ul>
 
   {{ end }}
+
+<div style="padding: 16px;">
+  <h4>Recent Articles</h4>
+</div>
+
 {{ end }}
