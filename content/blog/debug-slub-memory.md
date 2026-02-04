@@ -11,21 +11,27 @@ Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
 leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/
 execute) illegal memory regions. 
 
+and memory is allocated in following hierarchy
+```
+Page allocator → gives pages
+SLUB → splits pages into objects
+SLUB debug → adds metadata + checks
+```
+
 Since memory is dynamically allocated and freed via the kernel's engine – the
 page allocator. This can lead to serious wastage (internal fragmentation) of memory.
 To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two
 primary tasks – providing fragments of pages efficiently (within the kernel, allocation
-requests for small pieces of memory, from a few bytes to a couple of kilobytes, tend to be
-very common), and serving as a cache for commonly used data structures.
+requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.
 
-This blog will explain to debug slab memory corruption via SLUB debug.
+This blog will explain to debug a slab memory corruption via SLUB debug.
 
 # Requirements
 
 We will be using the code example from `https://github.com/ankitkhushwaha/Linux-Kernel-Debugging-tutorials`
 So make sure to clone it.
 
-# Configuring the kernel for SLUB debug
+# Enable CONFIG_SLUB_DEBUG
 
 Following configs are needed to use this feature. 
 
@@ -36,8 +42,7 @@ CONFIG_SLUB_DEBUG=y
 ```
 
 This config implies that SLUB debugging is available but disabled by default (as CONFIG_
-SLUB_DEBUG_ON is off). While enabling it can cause performance issues. It should be turned on by default
-on production kernel.
+SLUB_DEBUG_ON is off). It is Usually disabled in production due to overhead; enable only for debugging.
 
 # The slub_debug Kernel Parameter
 
@@ -73,6 +78,7 @@ The poison flags defined by the kernel are defined as follows:
 - The POISON_INUSE value (0x5a equals ASCII Z) is used to denote padding zones, before or after red zones.
 - The last legal byte of the slab memory object is set to POISON_END, 0xa5.
 
+
 # Boot the Kernel  
 
 Boot the kernel with `slub_debug=FZPU`
@@ -86,13 +92,12 @@ BOOT_IMAGE=(hd0,gpt2)/vmlinuz-6.18.7-200.fc43.x86_64 root=UUID=94fc6fde-521c-4d2
 Note: if kernel is build with KASAN support then it will catch the bug[discussed below] first. 
 Try this in Production kernel built without KASAN support.
 
-# Running the SLUB debug test cases
+# Reproduce the bug
+All test cases are defined in: `ch5/kmembugs_test/kmembugs_test.c`
 
-All test cases are in the (same) module here: `ch5/kmembugs_test/kmembugs_test.c`
 ```
 $ cd ch5/kmembugs_test
 $ sudo ./load_testmod     # build & load the kernel module
-$ 
 $ sudo ./run_tests        # input the test number
 5.2
 [  160.928464] testcase to run: 5.2
