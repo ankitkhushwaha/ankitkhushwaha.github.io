@@ -6,17 +6,26 @@ tags: ["kernel", "linux", "lfx", "linux-kernel", "mentorship"]
 ---
 ### Introduction
 
-I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall '25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first "hello world" kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.
+I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
 
-Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
+Somehow, my application was accepted ;-). 
+![alt text](lfx-acceptance.png)
 
-However, I checked the syzbot website and randomly chose a [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) from the `trace` subsystem, related to the kernel ring buffer and somehow I ended up sending a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for this fix. 
+At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 
-But I **personally advise** not to do this.
 
-I also tried to solve other syzbot bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the `kselftest` subsystem and kernel build warnings with `W=1`, and working on them is also quite easy for a beginner. Backporting can also be considered as beginner task -- see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
+I initially attempted to work on syzbot-reported [bug](https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb) in the trace subsystem and submitted a [patch](https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/) for the kernel ring buffer. However, I later realized that starting directly with complex bugs without understanding subsystem internals slows progress.
 
-There are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what and how it is fixing the bug, and why you think your approach is right.
+And I **personally advise** not to do this.
+
+I instead focused on beginner-friendly tasks such as fixing warnings in kselftest, addressing build issues with W=1, and backporting small fixes. These helped me understand the workflow and codebase more effectively.
+Backporting can also be considered as beginner task -- see **Hanne-Lotta's Blog -** [link](https://hannis.link/linux-kernel/backporting.html).
+
+When submitting patches, it is important to clearly explain:
+
+- what the patch changes
+- why the change is needed
+- how it fixes the issue
 
 ### The Patch Submission Flow
 
@@ -25,13 +34,13 @@ There are some key details that you have to look out for when working on kernel 
 git format-patch HEAD~1
 ```
 
-**Check the Patch for Typographical Errors and Format Correctness:** (Run the check and then apply fixes if needed)  
+**Check style:** (Run the check and then apply fixes if needed)  
 ```
 ./scripts/checkpatch.pl --strict --fix-inplace hello.patch
 ./scripts/checkpatch.pl --strict --fix-inplace -f --fix hello.patch  
 ```
 
-2. **Find the List of Maintainers related to that Subsystem:**  
+2. **Find maintainers:**  
 ```
 ./scripts/get_maintainer.pl --separator=, --no-rolestats hello.patch  
 ```
@@ -49,7 +58,7 @@ Always write the changelog in patches except for the first version.
 
 see:  [https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/](https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/)
 
-5. **Mailing list Preference**
+5. **Subsystem-specific rules**
 Each subsystem have different preference. 
 
 for example: Networking subsystem: [netdev](https://docs.kernel.org/process/maintainer-netdev.html)
@@ -62,11 +71,13 @@ make headers_install
 
 see: [discussion](https://lore.kernel.org/all/aRs6EbV2gnkertzA@google.com/)
 
-### Patch accepted
+### Contributions
 
-During the mentorship total of 7 patch was accepted in mainline kernel. 
+During the mentorship total of 8 patch was accepted in mainline kernel. 
 
 ```
+2fa98059fd5a0936d0951bd14f8990ae0aa5272a selftests: mptcp: Mark xerror and die_perror __noreturn
+9580f6d47dd6156c6d16e988d28faa74e5a0b8ba selftests: tls: fix warning of uninitialized variable
 0384c8ea96bfe49e82e624e53bfd5f80c3230ea9 selftests/mm/uffd: initialize char variable to Null
 af7273cc7ae01f5b3e34e62f59588ce79fe50f79 selftests/net: initialize char variable to null
 3b12a53b64d0c86cf68cab772bd4137e451b17a5 selftest/mm: fix pointer comparison in mremap_test
@@ -76,18 +87,14 @@ afb8f6567a5b4bb4e673608048939fef854b8709 selftest: net: fix socklen_t type misma
 de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma return value to caller
 ```
 
-### Tips and Tools
+### Tools
 
-One of the things that I learned is that whenever you are writing a patch for a fix, check the previous commits for that file before writing the patch header to ensure consistency with the file's existing style.
-
-One difficulty I was experiencing was navigating the codebase and finding the definition for a particular macro in VS Code – it was taking too much time to process. However, I later found `cscope` that also works fine.
-
-**Using Cscope for Code Navigation:**  
+**Cscope:**  
 ```
 cd linux/
 
 # Generate Cscope Database:
-make cscope \-j8  
+make cscope -j8  
 
 # This will generate files like
 ls csocpe*
@@ -96,8 +103,7 @@ cscope.files cscope.out cscope.out.in cscope.out.po
 # Enter Cscope Interactive Mode
 cscope -d
 ```
-
-`cscope` works fine. The Sublime Text editor also works well for Code Navigation. Additionally, Sublime Merge was helpful for quickly finding the previous commits of a particular file.
+This significantly improves symbol lookup compared to standard editor indexing.
 
 **Closing Thoughts**
 
