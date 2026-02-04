@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Posts | Ankit K</title>
+<title>Blog Articals | Ankit K</title>
 <meta name="keywords" content="">
-<meta name="description" content="Posts - Ankit K">
+<meta name="description" content="Blog Articals - Ankit K">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/blog/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.2211ca3164be7830024f6aad2b3a2e520843a64f8f048445c3401c1249aa051d.css" integrity="sha256-IhHKMWS&#43;eDACT2qtKzouUghDpk&#43;PBIRFw0AcEkmqBR0=" rel="preload stylesheet" as="style">
@@ -58,11 +58,11 @@
     </style>
 </noscript><meta property="og:url" content="http://localhost:1313/blog/">
   <meta property="og:site_name" content="Ankit K">
-  <meta property="og:title" content="Posts">
+  <meta property="og:title" content="Blog Articals">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Posts">
+<meta name="twitter:title" content="Blog Articals">
 <meta name="twitter:description" content="">
 
 
@@ -74,7 +74,7 @@
     {
       "@type": "ListItem",
       "position":  1 ,
-      "name": "Posts",
+      "name": "Blog Articals",
       "item": "http://localhost:1313/blog/"
     }
   ]
@@ -155,9 +155,23 @@
 <main class="main"> 
 <header class="page-header">
   <h1>
-    Posts
+    Blog Articals
   </h1>
 </header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Debug Slab Memory Corruption via SLUB debug
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Introduction Memory corruption can occur due to various bugs or defects: Uninitialized Memory Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/ execute) illegal memory regions.
+Since memory is dynamically allocated and freed via the kernel’s engine – the page allocator. This can lead to serious wastage (internal fragmentation) of memory. To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two primary tasks – providing fragments of pages efficiently (within the kernel, allocation requests for small pieces of memory, from a few bytes to a couple of kilobytes, tend to be very common), and serving as a cache for commonly used data structures.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-02-04 16:45:19 +0530 IST'>February 4, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to Debug Slab Memory Corruption via SLUB debug" href="http://localhost:1313/blog/debug-slub-memory/"></a>
+</article>
 
 <article class="post-entry"> 
   <header class="entry-header">
