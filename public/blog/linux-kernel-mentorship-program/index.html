@@ -8,7 +8,10 @@
 <title>Linux Kernel Mentorship Program | Ankit K</title>
 <meta name="keywords" content="kernel, linux, lfx, linux-kernel, mentorship">
 <meta name="description" content="Introduction
-I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &ldquo;hello world&rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.">
+I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
+Somehow, my application was accepted ;-).
+
+At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/blog/linux-kernel-mentorship-program/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.2211ca3164be7830024f6aad2b3a2e520843a64f8f048445c3401c1249aa051d.css" integrity="sha256-IhHKMWS&#43;eDACT2qtKzouUghDpk&#43;PBIRFw0AcEkmqBR0=" rel="preload stylesheet" as="style">
@@ -59,7 +62,8 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
 </noscript><meta property="og:url" content="http://localhost:1313/blog/linux-kernel-mentorship-program/">
   <meta property="og:site_name" content="Ankit K">
   <meta property="og:title" content="Linux Kernel Mentorship Program">
-  <meta property="og:description" content="Introduction I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall ‘25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first “hello world” kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.">
+  <meta property="og:description" content="Introduction I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
+Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -73,7 +77,10 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Kernel Mentorship Program">
 <meta name="twitter:description" content="Introduction
-I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &ldquo;hello world&rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.">
+I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
+Somehow, my application was accepted ;-).
+
+At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.">
 
 
 <script type="application/ld+json">
@@ -102,12 +109,12 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
   "@type": "BlogPosting",
   "headline": "Linux Kernel Mentorship Program",
   "name": "Linux Kernel Mentorship Program",
-  "description": "Introduction I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall \u0026lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first \u0026ldquo;hello world\u0026rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.\n",
+  "description": "Introduction I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.\nSomehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.\n",
   "keywords": [
     "kernel", "linux", "lfx", "linux-kernel", "mentorship"
   ],
-  "articleBody": "Introduction I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall ‘25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first “hello world” kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.\nSomehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.\nHowever, I checked the syzbot website and randomly chose a bug from the trace subsystem, related to the kernel ring buffer and somehow I ended up sending a patch for this fix.\nBut I personally advise not to do this.\nI also tried to solve other syzbot bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the kselftest subsystem and kernel build warnings with W=1, and working on them is also quite easy for a beginner. Backporting can also be considered as beginner task – see Hanne-Lotta’s Blog - link.\nThere are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what and how it is fixing the bug, and why you think your approach is right.\nThe Patch Submission Flow Create the Patch: git format-patch HEAD~1 Check the Patch for Typographical Errors and Format Correctness: (Run the check and then apply fixes if needed)\n./scripts/checkpatch.pl --strict --fix-inplace hello.patch ./scripts/checkpatch.pl --strict --fix-inplace -f --fix hello.patch Find the List of Maintainers related to that Subsystem: ./scripts/get_maintainer.pl --separator=, --no-rolestats hello.patch Sending the patch git send-email --to= --cc= hello.patch (Note: Replace and with the actual emails obtained from get_maintainer.pl.)\nNote: Always make sure to double check the patch before sending it to the mailing list. I will recommend first sending the patch to your email or use git send-email using the --dry-run option.\nWriting a Changelog for Previous Versions:\nAlways write the changelog in patches except for the first version. see: https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/\nMailing list Preference Each subsystem have different preference. for example: Networking subsystem: netdev\nFor the kselftest subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the uapi header before compiling the test.\nmake headers_install see: discussion\nPatch accepted During the mentorship total of 7 patch was accepted in mainline kernel.\n0384c8ea96bfe49e82e624e53bfd5f80c3230ea9 selftests/mm/uffd: initialize char variable to Null af7273cc7ae01f5b3e34e62f59588ce79fe50f79 selftests/net: initialize char variable to null 3b12a53b64d0c86cf68cab772bd4137e451b17a5 selftest/mm: fix pointer comparison in mremap_test 6ae0f2072768fb3db7846cee08b611a96310930d docs: parse-headers.rst: Fix a typo 216158f063fe24fb003bd7da0cd92cd6e2c4d48b selftests/user_events: fix type cast for write_index packed member in perf_test afb8f6567a5b4bb4e673608048939fef854b8709 selftest: net: fix socklen_t type mismatch in sctp_collision test de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma return value to caller Tips and Tools One of the things that I learned is that whenever you are writing a patch for a fix, check the previous commits for that file before writing the patch header to ensure consistency with the file’s existing style.\nOne difficulty I was experiencing was navigating the codebase and finding the definition for a particular macro in VS Code – it was taking too much time to process. However, I later found cscope that also works fine.\nUsing Cscope for Code Navigation:\ncd linux/ # Generate Cscope Database: make cscope \\-j8 # This will generate files like ls csocpe* cscope.files cscope.out cscope.out.in cscope.out.po # Enter Cscope Interactive Mode cscope -d cscope works fine. The Sublime Text editor also works well for Code Navigation. Additionally, Sublime Merge was helpful for quickly finding the previous commits of a particular file.\nClosing Thoughts\nThe learning was very rewarding, especially the Office Hours meetings and Discord discussions. I learned that kernel development and becoming a kernel hacker isn’t an easy task that you can just pick up quickly. It requires consistent, dedicated effort. We need to acquire a deeper understanding of systems programming, architecture, and a willingness to troubleshoot complex issues.\nIt’s certainly a long but ultimately rewarding journey. I also learned about the development cycle of the Linux kernel. This program was a strong beginning, and the work will continue.\nI will recommend this mentorship program to anyone interested in Linux kernel development. You’ll learn the basics and find out if kernel development interests you in the long term. What I find most valuable is that you get a feel for the supportive open source community.\nI am very thankful to Shuah, David and Khalid for this wonderful mentorship program.\n",
-  "wordCount" : "846",
+  "articleBody": "Introduction I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.\nSomehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.\nI initially attempted to work on syzbot-reported bug in the trace subsystem and submitted a patch for the kernel ring buffer. However, I later realized that starting directly with complex bugs without understanding subsystem internals slows progress.\nAnd I personally advise not to do this.\nI instead focused on beginner-friendly tasks such as fixing warnings in kselftest, addressing build issues with W=1, and backporting small fixes. These helped me understand the workflow and codebase more effectively. Backporting can also be considered as beginner task – see Hanne-Lotta’s Blog - link.\nWhen submitting patches, it is important to clearly explain:\nwhat the patch changes why the change is needed how it fixes the issue The Patch Submission Flow Create the Patch: git format-patch HEAD~1 Check style: (Run the check and then apply fixes if needed)\n./scripts/checkpatch.pl --strict --fix-inplace hello.patch ./scripts/checkpatch.pl --strict --fix-inplace -f --fix hello.patch Find maintainers: ./scripts/get_maintainer.pl --separator=, --no-rolestats hello.patch Sending the patch git send-email --to= --cc= hello.patch (Note: Replace and with the actual emails obtained from get_maintainer.pl.)\nNote: Always make sure to double check the patch before sending it to the mailing list. I will recommend first sending the patch to your email or use git send-email using the --dry-run option.\nWriting a Changelog for Previous Versions:\nAlways write the changelog in patches except for the first version. see: https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/\nSubsystem-specific rules Each subsystem have different preference. for example: Networking subsystem: netdev\nFor the kselftest subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the uapi header before compiling the test.\nmake headers_install see: discussion\nContributions During the mentorship total of 8 patch was accepted in mainline kernel.\n2fa98059fd5a0936d0951bd14f8990ae0aa5272a selftests: mptcp: Mark xerror and die_perror __noreturn 9580f6d47dd6156c6d16e988d28faa74e5a0b8ba selftests: tls: fix warning of uninitialized variable 0384c8ea96bfe49e82e624e53bfd5f80c3230ea9 selftests/mm/uffd: initialize char variable to Null af7273cc7ae01f5b3e34e62f59588ce79fe50f79 selftests/net: initialize char variable to null 3b12a53b64d0c86cf68cab772bd4137e451b17a5 selftest/mm: fix pointer comparison in mremap_test 6ae0f2072768fb3db7846cee08b611a96310930d docs: parse-headers.rst: Fix a typo 216158f063fe24fb003bd7da0cd92cd6e2c4d48b selftests/user_events: fix type cast for write_index packed member in perf_test afb8f6567a5b4bb4e673608048939fef854b8709 selftest: net: fix socklen_t type mismatch in sctp_collision test de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma return value to caller Tools Cscope:\ncd linux/ # Generate Cscope Database: make cscope -j8 # This will generate files like ls csocpe* cscope.files cscope.out cscope.out.in cscope.out.po # Enter Cscope Interactive Mode cscope -d This significantly improves symbol lookup compared to standard editor indexing.\nClosing Thoughts\nThe learning was very rewarding, especially the Office Hours meetings and Discord discussions. I learned that kernel development and becoming a kernel hacker isn’t an easy task that you can just pick up quickly. It requires consistent, dedicated effort. We need to acquire a deeper understanding of systems programming, architecture, and a willingness to troubleshoot complex issues.\nIt’s certainly a long but ultimately rewarding journey. I also learned about the development cycle of the Linux kernel. This program was a strong beginning, and the work will continue.\nI will recommend this mentorship program to anyone interested in Linux kernel development. You’ll learn the basics and find out if kernel development interests you in the long term. What I find most valuable is that you get a feel for the supportive open source community.\nI am very thankful to Shuah, David and Khalid for this wonderful mentorship program.\n",
+  "wordCount" : "625",
   "inLanguage": "en",
   "datePublished": "2025-12-08T10:35:09+05:30",
   "dateModified": "2025-12-08T10:35:09+05:30",
@@ -210,22 +217,30 @@ I’ve been using Linux for the last 2 years. At first, I was amazed how perfect
 </div>
   </header> 
   <div class="post-content"><h3 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h3>
-<p>I’ve been using Linux for the last 2 years. At first, I was amazed how perfectly and smoothly it worked on my computer. Since then, I started using Linux as my primary machine for development work. Last summer, I gained interest in C. The Summer Application was open, but I decided not to apply and worked on improving my proficiency in C. The Fall &lsquo;25 application opened in August, and I appiled. The prerequisites for the mentorship included some basic tasks like building and booting the Linux Kernel, writing the first &ldquo;hello world&rdquo; kernel module, learning to decode a stack trace, and changing the kernel version in source code and booting with that change.</p>
-<p>Somehow, my application was accepted ;-). At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.</p>
-<p>However, I checked the syzbot website and randomly chose a <a href="https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb">bug</a> from the <code>trace</code> subsystem, related to the kernel ring buffer and somehow I ended up sending a <a href="https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/">patch</a> for this fix.</p>
-<p>But I <strong>personally advise</strong> not to do this.</p>
-<p>I also tried to solve other syzbot bugs, but couldn’t, mainly because I wasn’t aware of the details – what was going on under the hood. So, I paused those attempts for some time. David Hunter first told us to solve the easy fixes, like warning fixes in the <code>kselftest</code> subsystem and kernel build warnings with <code>W=1</code>, and working on them is also quite easy for a beginner. Backporting can also be considered as beginner task &ndash; see <strong>Hanne-Lotta&rsquo;s Blog -</strong> <a href="https://hannis.link/linux-kernel/backporting.html">link</a>.</p>
-<p>There are some key details that you have to look out for when working on kernel development, like sending the patch with a clear explanation: what the patch was for, what and how it is fixing the bug, and why you think your approach is right.</p>
+<p>I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.</p>
+<p>Somehow, my application was accepted ;-).
+<img alt="alt text" loading="lazy" src="/lfx-acceptance.png"></p>
+<p>At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.</p>
+<p>I initially attempted to work on syzbot-reported <a href="https://syzkaller.appspot.com/bug?id=194151be8eaebd826005329b2e123aecae714bdb">bug</a> in the trace subsystem and submitted a <a href="https://lore.kernel.org/all/20251008172516.20697-1-ankitkhushwaha.linux@gmail.com/">patch</a> for the kernel ring buffer. However, I later realized that starting directly with complex bugs without understanding subsystem internals slows progress.</p>
+<p>And I <strong>personally advise</strong> not to do this.</p>
+<p>I instead focused on beginner-friendly tasks such as fixing warnings in kselftest, addressing build issues with W=1, and backporting small fixes. These helped me understand the workflow and codebase more effectively.
+Backporting can also be considered as beginner task &ndash; see <strong>Hanne-Lotta&rsquo;s Blog -</strong> <a href="https://hannis.link/linux-kernel/backporting.html">link</a>.</p>
+<p>When submitting patches, it is important to clearly explain:</p>
+<ul>
+<li>what the patch changes</li>
+<li>why the change is needed</li>
+<li>how it fixes the issue</li>
+</ul>
 <h3 id="the-patch-submission-flow">The Patch Submission Flow<a hidden class="anchor" aria-hidden="true" href="#the-patch-submission-flow">#</a></h3>
 <ol>
 <li><strong>Create the Patch:</strong></li>
 </ol>
 <pre tabindex="0"><code>git format-patch HEAD~1
-</code></pre><p><strong>Check the Patch for Typographical Errors and Format Correctness:</strong> (Run the check and then apply fixes if needed)</p>
+</code></pre><p><strong>Check style:</strong> (Run the check and then apply fixes if needed)</p>
 <pre tabindex="0"><code>./scripts/checkpatch.pl --strict --fix-inplace hello.patch
 ./scripts/checkpatch.pl --strict --fix-inplace -f --fix hello.patch  
 </code></pre><ol start="2">
-<li><strong>Find the List of Maintainers related to that Subsystem:</strong></li>
+<li><strong>Find maintainers:</strong></li>
 </ol>
 <pre tabindex="0"><code>./scripts/get_maintainer.pl --separator=, --no-rolestats hello.patch  
 </code></pre><ol start="3">
@@ -240,30 +255,30 @@ Always write the changelog in patches except for the first version.</li>
 </ol>
 <p>see:  <a href="https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/">https://lore.kernel.org/all/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com/</a></p>
 <ol start="5">
-<li><strong>Mailing list Preference</strong>
+<li><strong>Subsystem-specific rules</strong>
 Each subsystem have different preference.</li>
 </ol>
 <p>for example: Networking subsystem: <a href="https://docs.kernel.org/process/maintainer-netdev.html">netdev</a></p>
 <p>For the <code>kselftest</code> subsystem, it is helpful to mention the compiler details with which you are getting the error/warning. Installing the <code>uapi</code> header before compiling the test.</p>
 <pre tabindex="0"><code>make headers_install
 </code></pre><p>see: <a href="https://lore.kernel.org/all/aRs6EbV2gnkertzA@google.com/">discussion</a></p>
-<h3 id="patch-accepted">Patch accepted<a hidden class="anchor" aria-hidden="true" href="#patch-accepted">#</a></h3>
-<p>During the mentorship total of 7 patch was accepted in mainline kernel.</p>
-<pre tabindex="0"><code>0384c8ea96bfe49e82e624e53bfd5f80c3230ea9 selftests/mm/uffd: initialize char variable to Null
+<h3 id="contributions">Contributions<a hidden class="anchor" aria-hidden="true" href="#contributions">#</a></h3>
+<p>During the mentorship total of 8 patch was accepted in mainline kernel.</p>
+<pre tabindex="0"><code>2fa98059fd5a0936d0951bd14f8990ae0aa5272a selftests: mptcp: Mark xerror and die_perror __noreturn
+9580f6d47dd6156c6d16e988d28faa74e5a0b8ba selftests: tls: fix warning of uninitialized variable
+0384c8ea96bfe49e82e624e53bfd5f80c3230ea9 selftests/mm/uffd: initialize char variable to Null
 af7273cc7ae01f5b3e34e62f59588ce79fe50f79 selftests/net: initialize char variable to null
 3b12a53b64d0c86cf68cab772bd4137e451b17a5 selftest/mm: fix pointer comparison in mremap_test
 6ae0f2072768fb3db7846cee08b611a96310930d docs: parse-headers.rst: Fix a typo
 216158f063fe24fb003bd7da0cd92cd6e2c4d48b selftests/user_events: fix type cast for write_index packed member in perf_test
 afb8f6567a5b4bb4e673608048939fef854b8709 selftest: net: fix socklen_t type mismatch in sctp_collision test
 de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma return value to caller
-</code></pre><h3 id="tips-and-tools">Tips and Tools<a hidden class="anchor" aria-hidden="true" href="#tips-and-tools">#</a></h3>
-<p>One of the things that I learned is that whenever you are writing a patch for a fix, check the previous commits for that file before writing the patch header to ensure consistency with the file&rsquo;s existing style.</p>
-<p>One difficulty I was experiencing was navigating the codebase and finding the definition for a particular macro in VS Code – it was taking too much time to process. However, I later found <code>cscope</code> that also works fine.</p>
-<p><strong>Using Cscope for Code Navigation:</strong></p>
+</code></pre><h3 id="tools">Tools<a hidden class="anchor" aria-hidden="true" href="#tools">#</a></h3>
+<p><strong>Cscope:</strong></p>
 <pre tabindex="0"><code>cd linux/
 
 # Generate Cscope Database:
-make cscope \-j8  
+make cscope -j8  
 
 # This will generate files like
 ls csocpe*
@@ -271,7 +286,7 @@ cscope.files cscope.out cscope.out.in cscope.out.po
 
 # Enter Cscope Interactive Mode
 cscope -d
-</code></pre><p><code>cscope</code> works fine. The Sublime Text editor also works well for Code Navigation. Additionally, Sublime Merge was helpful for quickly finding the previous commits of a particular file.</p>
+</code></pre><p>This significantly improves symbol lookup compared to standard editor indexing.</p>
 <p><strong>Closing Thoughts</strong></p>
 <p>The learning was very rewarding, especially the Office Hours meetings and Discord discussions. I learned that kernel development and becoming a kernel hacker isn&rsquo;t an easy task that you can just pick up quickly. It requires consistent, dedicated effort. We need to acquire a deeper understanding of systems programming, architecture, and a willingness to troubleshoot complex issues.</p>
 <p>It&rsquo;s certainly a long but ultimately rewarding journey. I also learned about the development cycle of the Linux kernel. This program was a strong beginning, and the work will continue.</p>

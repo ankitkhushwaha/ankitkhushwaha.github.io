@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Debug Slab Memory Corruption via SLUB debug | Ankit K</title>
+<title>Basics of debugging slab memory corruption via SLUB debug | Ankit K</title>
 <meta name="keywords" content="">
 <meta name="description" content="Introduction
 Memory corruption can occur due to various bugs or defects: Uninitialized Memory
@@ -70,7 +70,7 @@ requests for small pieces of memory, from a few bytes to a couple of kilobytes),
     </style>
 </noscript><meta property="og:url" content="http://localhost:1313/blog/debug-slub-memory/">
   <meta property="og:site_name" content="Ankit K">
-  <meta property="og:title" content="Debug Slab Memory Corruption via SLUB debug">
+  <meta property="og:title" content="Basics of debugging slab memory corruption via SLUB debug">
   <meta property="og:description" content="Introduction Memory corruption can occur due to various bugs or defects: Uninitialized Memory Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/ execute) illegal memory regions.
 and memory is allocated in following hierarchy
 Page allocator → gives pages SLUB → splits pages into objects SLUB debug → adds metadata &#43; checks Since memory is dynamically allocated and freed via the kernel’s engine – the page allocator. This can lead to serious wastage (internal fragmentation) of memory. To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two primary tasks – providing fragments of pages efficiently (within the kernel, allocation requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.">
@@ -80,7 +80,7 @@ Page allocator → gives pages SLUB → splits pages into objects SLUB debug →
     <meta property="article:published_time" content="2026-02-04T16:45:19+05:30">
     <meta property="article:modified_time" content="2026-02-04T16:45:19+05:30">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Debug Slab Memory Corruption via SLUB debug">
+<meta name="twitter:title" content="Basics of debugging slab memory corruption via SLUB debug">
 <meta name="twitter:description" content="Introduction
 Memory corruption can occur due to various bugs or defects: Uninitialized Memory
 Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
@@ -111,7 +111,7 @@ requests for small pieces of memory, from a few bytes to a couple of kilobytes),
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Debug Slab Memory Corruption via SLUB debug",
+      "name": "Basics of debugging slab memory corruption via SLUB debug",
       "item": "http://localhost:1313/blog/debug-slub-memory/"
     }
   ]
@@ -121,8 +121,8 @@ requests for small pieces of memory, from a few bytes to a couple of kilobytes),
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Debug Slab Memory Corruption via SLUB debug",
-  "name": "Debug Slab Memory Corruption via SLUB debug",
+  "headline": "Basics of debugging slab memory corruption via SLUB debug",
+  "name": "Basics of debugging slab memory corruption via SLUB debug",
   "description": "Introduction Memory corruption can occur due to various bugs or defects: Uninitialized Memory Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/ execute) illegal memory regions.\nand memory is allocated in following hierarchy\nPage allocator → gives pages SLUB → splits pages into objects SLUB debug → adds metadata + checks Since memory is dynamically allocated and freed via the kernel\u0026rsquo;s engine – the page allocator. This can lead to serious wastage (internal fragmentation) of memory. To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two primary tasks – providing fragments of pages efficiently (within the kernel, allocation requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.\n",
   "keywords": [
     
@@ -224,7 +224,7 @@ requests for small pieces of memory, from a few bytes to a couple of kilobytes),
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      Debug Slab Memory Corruption via SLUB debug
+      Basics of debugging slab memory corruption via SLUB debug
     </h1>
     <div class="post-meta"><span title='2026-02-04 16:45:19 +0530 IST'>February 4, 2026</span>
 
