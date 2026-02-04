@@ -1,7 +1,7 @@
 ---
 date: '2026-02-04T16:45:19+05:30'
 draft: False
-title: 'Debug Slab Memory Corruption via SLUB debug'
+title: 'Basics of debugging slab memory corruption via SLUB debug'
 ---
 
 # Introduction
