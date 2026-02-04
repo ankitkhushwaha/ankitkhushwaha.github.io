@@ -11,24 +11,25 @@ Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
 leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/
 execute) illegal memory regions. 
 
-and memory is allocated in following hierarchy
-```
-Page allocator → gives pages
-SLUB → splits pages into objects
-SLUB debug → adds metadata + checks
-```
-
 Since memory is dynamically allocated and freed via the kernel's engine – the
 page allocator. This can lead to serious wastage (internal fragmentation) of memory.
 To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two
 primary tasks – providing fragments of pages efficiently (within the kernel, allocation
 requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.
 
-This blog will explain to debug a slab memory corruption via SLUB debug.
+Note: memory is allocated in following hierarchy
+```
+Page allocator → gives pages
+SLUB → splits pages into objects
+SLUB debug → adds metadata + checks
+```
+
+This blog will explain to basics of debugging a slab memory corruption via SLUB debug.
 
 # Requirements
 
-We will be using the code example from `https://github.com/ankitkhushwaha/Linux-Kernel-Debugging-tutorials`
+We will be using the code example from 
+`https://github.com/ankitkhushwaha/Linux-Kernel-Debugging-tutorials`
 So make sure to clone it.
 
 # Enable CONFIG_SLUB_DEBUG
@@ -168,9 +169,18 @@ int dynamic_mem_oob_right(int mode)
 }
 ```
 
-Test case performed a dynamic memory allocation of 32 bytes memory, and write a out of bound (OOB) region.
-First INFO line spits out the start and end of the corrupted memory region. Note
-that these kernel virtual addresses are hashed here, for security, preventing info leaks.
+Test case does the following:
+- performed a dynamic memory allocation of 32 bytes memory.
+- write a out of bound (OOB) region.
+
+First INFO line spits out the start and end of the corrupted memory region.
+```
+[  160.928479] [Right Redzone overwritten] 0xffff8de137751680-0xffff8de137751683 @offset=1664. First byte 0x78 instead of 0xcc
+```
+
+
+Note that these kernel virtual addresses are hashed here, for security, preventing info leaks.
+
 Second INFO line shows where the buggy access took place in the code – via the
 usual <func>+0xoff_from_func/0xlen_of_func [modname] notation. (Here,
 it happens to be dynamic_mem_oob_right+0x57/0xb0.
@@ -178,27 +188,29 @@ it happens to be dynamic_mem_oob_right+0x57/0xb0.
 We haven't shown the full stack call trace here. Read it bottom-up, ignoring any lines that
 begin with '?'.
 
-![alt text](/slab-memory.png)
-
-The poison values are used if the poison flag (P) is set for the slab, as is the case here. Here, the poison value 0x6b denotes the value that's used to initialize the valid slab memory region, 0xa5
-denotes the end poisoning marker byte, and 0x5a denotes use-uninitialized poisoning. 
 We have allocated a memory of 32 bytes shown by 
 ```
 [  160.928588] Object   ffff8de137751660: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
 [  160.928590] Object   ffff8de137751670: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b a5  kkkkkkkkkkkkkkk.
 ```
-The last byte was initialized with POISON_END bit (0xa5) and the value 0x78 is our x character being (wrongly) written by the test case outside of the allocated memory(circled the incorrect writes in the figure). 
+The poison value 0x6b denotes the value that's used to initialize the valid slab memory region, 0xa5
+denotes the end poisoning marker byte, and 0x5a denotes use-uninitialized poisoning. 
+
+The last byte was initialized with POISON_END bit (0xa5) and the value 0x78 is our x character being (wrongly) written by the test case outside of the allocated memory.
 
 ```
 [  160.928591] Redzone  ffff8de137751680: 78 cc cc 78 cc cc cc cc                          x..x....
 ```
+This tell us that Right redzone of concerned memory was being overwritten with value '0x78' in ascii 'x'.
+In last Lines of logs We can see that Slab framework corrected the memory by restoring it to previous POISON_FLAG.
 
 # Conclusion
 
-With SLUB_DEBUG enabled, it can be used to debug slab memory corruption. While it fails to catch some of the bugs.
-![alt text](/slab-memory-detect.png)
+while the kernel SLUB debug framework seems to catch most of the memory corruption issues on slab memory, 
+it doesn't seem to catch the read OOB accesses on slab memory. Though it is reliable tool to detect memory corruption in production kernels.
 
-It is usefull in the production kernel to catch slab memory corruption without too much performance impact.
+It can catch the following bugs-
+![alt text](/slab-memory-detect.png)
 
 # References
 

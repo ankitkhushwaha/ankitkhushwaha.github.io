@@ -9,7 +9,7 @@ tags: ["kernel", "linux", "lfx", "linux-kernel", "mentorship"]
 I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
 
 Somehow, my application was accepted ;-). 
-![alt text](lfx-acceptance.png)
+![alt text](/lfx-acceptance.png)
 
 At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 

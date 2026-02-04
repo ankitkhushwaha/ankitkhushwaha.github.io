@@ -166,8 +166,7 @@
   </header>
   <div class="entry-content">
     <p>Introduction Memory corruption can occur due to various bugs or defects: Uninitialized Memory Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/ execute) illegal memory regions.
-and memory is allocated in following hierarchy
-Page allocator → gives pages SLUB → splits pages into objects SLUB debug → adds metadata &#43; checks Since memory is dynamically allocated and freed via the kernel’s engine – the page allocator. This can lead to serious wastage (internal fragmentation) of memory. To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two primary tasks – providing fragments of pages efficiently (within the kernel, allocation requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.
+Since memory is dynamically allocated and freed via the kernel’s engine – the page allocator. This can lead to serious wastage (internal fragmentation) of memory. To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two primary tasks – providing fragments of pages efficiently (within the kernel, allocation requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2026-02-04 16:45:19 +0530 IST'>February 4, 2026</span></footer>

@@ -18,11 +18,7 @@
 Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
 leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/
 execute) illegal memory regions.&lt;/p&gt;
-&lt;p&gt;and memory is allocated in following hierarchy&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Page allocator → gives pages
-SLUB → splits pages into objects
-SLUB debug → adds metadata + checks
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Since memory is dynamically allocated and freed via the kernel&amp;rsquo;s engine – the
+&lt;p&gt;Since memory is dynamically allocated and freed via the kernel&amp;rsquo;s engine – the
 page allocator. This can lead to serious wastage (internal fragmentation) of memory.
 To mitigate this, the slab allocator (or slab cache) is layered upon it, serving two
 primary tasks – providing fragments of pages efficiently (within the kernel, allocation
