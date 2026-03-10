@@ -1,6 +1,6 @@
 greeting: "Hi!"
 name: "Ankit Khushwaha"
-headline: "Aspiring Kernel Hacker"
+# headline: "Aspiring Kernel Hacker"
 bio: >
   I work on Linux kernel development, device drivers,
   and low-level systems programming.
