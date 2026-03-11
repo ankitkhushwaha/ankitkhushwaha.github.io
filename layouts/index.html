@@ -10,7 +10,7 @@
 
     <div class="profile-text">
       I’m {{ .Site.Data.profile.name }},
-      <!-- {{ .Site.Data.profile.headline }}. -->
+      {{ .Site.Data.profile.headline }}.
 
       {{ .Site.Data.profile.bio }}
     </div>
@@ -62,9 +62,10 @@
   </h4>
 </div>
 <ul>
-  <li><a href="{{ .Site.Data.profile.links.github }}" class="hero-link">Github</a></li>
-  <li><a href="{{ .Site.Data.profile.links.linkedin }}" class="hero-link">Linkedin</a></li>
   <li><a href="mailto:{{ .Site.Data.profile.Contact.Email }}" class="hero-link">Email</a></li>
+  <li><a href="mailto:{{ .Site.Data.profile.Contact.X }}" class="hero-link">X (Twitter)</a></li>
+  <li><a href="{{ .Site.Data.profile.links.linkedin }}" class="hero-link">Linkedin</a></li>
+  <li><a href="{{ .Site.Data.profile.links.github }}" class="hero-link">Github</a></li>
 </ul>
 
 {{ end }}

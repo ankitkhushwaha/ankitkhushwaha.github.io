@@ -1,6 +1,6 @@
 greeting: "Hi!"
 name: "Ankit Khushwaha"
-# headline: "Aspiring Kernel Hacker"
+headline: "Linux Kernel Contributor"
 bio: >
   I work on Linux kernel development, device drivers,
   and low-level systems programming.
@@ -14,3 +14,4 @@ links:
   kernel_commits: "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=ankitkhushwaha.linux%40gmail.com"
 Contact:
   Email: "ankitkhushwaha.dev@gmail.com"
+  X: "https://x.com/ankit_kdev"
