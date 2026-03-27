@@ -41,7 +41,23 @@ https://kaiwantech.wordpress.com/2018/05/07/application-binary-interface-abi-doc
 ## I2C Protocol
 https://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/
 
+## SPI Protocol
+https://www.analog.com/en/resources/analog-dialogue/articles/introduction-to-spi-interface.html
 
+## Github actions review
+https://www.iankduncan.com/engineering/2026-02-05-github-actions-killing-your-team/
+
+
+## Page owner debugging
+https://mfo.dev.br/posts/2026-02-23-page_owner-part-1-quick-introduction/
+
+## USB Power Management
+https://www.baeldung.com/linux/control-usb-power-supply
+
+**Kernel bug statistics** - https://pebblebed.com/blog/kernel-bugs
+---
+
+https://pagedout.institute/
 
 https://www.agner.org/optimize/#manual_instr_tab
 
