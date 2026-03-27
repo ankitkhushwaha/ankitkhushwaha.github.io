@@ -1,10 +1,10 @@
 greeting: "Hi!"
 name: "Ankit Khushwaha"
-headline: "Aspiring Kernel Hacker"
+headline: "Linux Kernel Contributor"
 bio: >
   I work on Linux kernel development, device drivers,
   and low-level systems programming.
-  I’m currently focused on learning kernel internals
+  I’m currently focused on kernel internals
   and contributing to Linux-Kernel.
 
 links:

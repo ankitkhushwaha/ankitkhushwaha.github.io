@@ -31,6 +31,7 @@ menu:
       weight: 20
 
 params:
+  author: "Ankit"
   mainSections:
     - 'Blog Articles'
   env: production
