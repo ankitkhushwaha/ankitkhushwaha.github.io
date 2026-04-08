@@ -3,14 +3,13 @@
 
   <div class="recent-articles-header">
     <h3 class="hero-greeting">{{ .Site.Data.profile.name }}</h3>
+    <p class="hero-greeting work">{{.Site.Data.profile.work}}</p>
   </div>
 
   <div class="post-entry profile">
     <img src="/images/linux.jpeg" alt="{{ .Site.Data.profile.name }}" class="profile-image" />
 
     <div class="profile-text">
-      I’m {{ .Site.Data.profile.name }},
-      {{ .Site.Data.profile.headline }}.
 
       {{ .Site.Data.profile.bio }}
     </div>

@@ -1,11 +1,12 @@
 greeting: "Hi!"
 name: "Ankit Khushwaha"
 headline: "Linux Kernel Contributor"
+work:  "LFX’25 mentee (Linux kernel), IIT Dharwad ’26"
+
 bio: >
-  I work on Linux kernel development, device drivers,
-  and low-level systems programming.
-  I’m currently focused on kernel internals
-  and contributing to Linux-Kernel.
+  Linux kernel contributor (upstream patches), LFX’25 mentee. 
+  I build and debug low-level systems, 
+  focusing on kernel internals and device drivers.
 
 links:
   github: "https://github.com/ankitkhushwaha"
