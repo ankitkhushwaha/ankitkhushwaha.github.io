@@ -35,6 +35,7 @@ You can use mainline or TI’s kernel. For stability on BBB, We will use `beagle
     mkdir build
 
 Checkout a stable branch:
+
     git checkout 6.6.20-ti-arm64-r3
 
 Note: Choose the kernel repository based on your board’s processor architecture. Since the BeagleBone Black uses a 32-bit ARM processor, we’ll use the corresponding ARM (armhf) kernel.
@@ -61,6 +62,7 @@ This will Build the zImage, modules, and device tree blobs:
 ## 6. Connect the sd card with host machine.
 
 check whether it mounted or not.
+
     lsblk
         sda           8:0    1  29.7G  0 disk 
         ├─sda1        8:1    1    36M  0 part /run/media/ankit/BOOT
