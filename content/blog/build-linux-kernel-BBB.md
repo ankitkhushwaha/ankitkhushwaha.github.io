@@ -36,7 +36,7 @@ You can use mainline or TI’s kernel. For stability on BBB, We will use `beagle
 
 Checkout a stable branch:
 
-    git checkout 6.6.20-ti-arm64-r3
+    git checkout 6.6.20-ti-rt-arm32-r3
 
 Note: Choose the kernel repository based on your board’s processor architecture. Since the BeagleBone Black uses a 32-bit ARM processor, we’ll use the corresponding ARM (armhf) kernel.
 
