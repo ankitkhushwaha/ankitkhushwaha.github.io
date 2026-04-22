@@ -6,6 +6,11 @@ theme: ["PaperMod"]
 
 menu:
   main:
+    - identifier: me
+      name: about
+      url: /me/
+      weight: 30
+
     - identifier: Blog
       name: Blog
       url: /blog/
