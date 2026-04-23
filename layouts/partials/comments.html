@@ -1,0 +1,59 @@
+{{- /* Giscus comments for Hugo PaperMod */ -}}
+{{ with .Site.Params.giscus }}
+<div class="comments">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="{{ .repo }}"
+    data-repo-id="{{ .repoId }}"
+    data-category="{{ .category }}"
+    data-category-id="{{ .categoryId }}"
+    data-mapping="{{ default "pathname" .mapping }}"
+    data-strict="{{ default "0" .strict }}"
+    data-reactions-enabled="{{ default "1" .reactionsEnabled }}"
+    data-emit-metadata="{{ default "0" .emitMetadata }}"
+    data-input-position="{{ default "bottom" .inputPosition }}"
+    data-theme="preferred_color_scheme"
+    data-lang="{{ default "en" .lang }}"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+{{/* Sync giscus theme with PaperMod's dark/light toggle */}}
+<script>
+  function setGiscusTheme(theme) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme } } },
+      'https://giscus.app'
+    );
+  }
+
+  // Set theme on initial load
+  const savedTheme = localStorage.getItem('pref-theme');
+  if (savedTheme === 'dark') {
+    setGiscusTheme('dark');
+  } else if (savedTheme === 'light') {
+    setGiscusTheme('light');
+  }
+
+  // Watch for PaperMod theme toggle button clicks
+  const toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+      // PaperMod toggles *after* the click, so flip it
+      setGiscusTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Also wait for giscus iframe to load, then apply correct theme
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://giscus.app') return;
+    if (event.data?.giscus?.discussion !== undefined) return; // skip non-setup messages
+    const isDark = document.body.classList.contains('dark');
+    setGiscusTheme(isDark ? 'dark' : 'light');
+  });
+</script>
+{{ end }}

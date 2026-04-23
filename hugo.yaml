@@ -41,6 +41,15 @@ params:
     - 'Blog Articles'
   env: production
 
+  comments: true
+  giscus:
+      repo: "ankitkhushwaha/ankitkhushwaha.github.io"
+      repoID: "R_kgDOPe0hYg"
+      category: "General"
+      categoryID: "DIC_kwDOPe0hYs4C6oBB"
+      mapping: "pathname"
+      inputPosition: "top"
+
 frontmatter:
   lastmod:
     - :git
