@@ -50,6 +50,10 @@ params:
       mapping: "pathname"
       inputPosition: "top"
 
+services:
+  googleAnalytics:
+    ID: G-KDBTYJV77L
+
 frontmatter:
   lastmod:
     - :git
