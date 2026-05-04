@@ -34,7 +34,7 @@
 </div>
 {{ range .Site.Sections }}
 <ul class="recent-articles">
-  {{ range .Pages }}
+  {{ range first 5 .Pages }}
   <li>
     {{ .Date | time.Format "01/02/2006" }} –
     <a href="{{ .Permalink }}" class="hero-link">
@@ -43,7 +43,6 @@
   </li>
   {{ end }}
 </ul>
-
 {{ end }}
 
 <div style="padding: 16px;">
