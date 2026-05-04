@@ -2,6 +2,7 @@
 date: '2026-04-22T15:02:44+05:30'
 draft: false
 title: 'Configure U-boot For Beaglebone Black'
+tags: ["u-boot", "bootloader", "beaglebone-black", "embedded-systems", "arm-architecture", "kernel-bootloader", "system-configuration"]
 ---
 
 # Overview

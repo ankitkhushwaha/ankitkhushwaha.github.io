@@ -2,6 +2,7 @@
 date: '2026-04-08T22:31:16+05:30'
 draft: false
 title: 'Build and Install Linux Kernel For Beaglebone Black'
+tags: ["linux-kernel", "beaglebone-black", "kernel-compilation", "embedded-systems", "arm-architecture", "kernel-building", "cross-compilation"]
 ---
 
 # Overview
