@@ -47,6 +47,7 @@ params:
   env: production
 
   defaultTheme: auto
+  ShowReadingTime: true
 
   comments: true
   giscus:
@@ -77,3 +78,9 @@ frontmatter:
   assets:
     disableFingerprinting: true
 pluralizeListTitles: false
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
