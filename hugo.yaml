@@ -46,6 +46,8 @@ params:
     - 'Blog Articles'
   env: production
 
+  defaultTheme: auto
+
   comments: true
   giscus:
       repo: "ankitkhushwaha/ankitkhushwaha.github.io"
