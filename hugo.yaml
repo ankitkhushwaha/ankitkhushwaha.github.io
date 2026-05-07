@@ -11,6 +11,11 @@ menu:
       url: /me/
       weight: 30
 
+    - identifier: "rss feed"
+      name: "Rss"
+      url: /index.xml
+      weight: 6
+
     - identifier: Blog
       name: Blog
       url: /blog/
@@ -24,7 +29,7 @@ menu:
     - identifier: Resource
       name: Resources
       url: /resources
-      weight: 6
+      weight: 7
 
     - identifier: categories
       name: categories
