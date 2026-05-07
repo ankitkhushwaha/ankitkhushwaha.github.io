@@ -1,30 +1,51 @@
 {{ define "main" }}
+
 <section class="hero">
 
   <div class="recent-articles-header">
-    <h3 class="hero-greeting">{{ .Site.Data.profile.name }}</h3>
-    <p class="hero-greeting work">{{.Site.Data.profile.work}}</p>
+    <h3 class="hero-greeting">
+      {{ .Site.Data.profile.name }}
+    </h3>
+
+    <p class="hero-greeting work">
+      {{ .Site.Data.profile.work }}
+    </p>
   </div>
 
   <div class="post-entry profile">
-    <img src="/images/linux.jpeg" alt="{{ .Site.Data.profile.name }}" class="profile-image" />
+
+    <img
+      src="/images/linux.jpeg"
+      alt="{{ .Site.Data.profile.name }}"
+      class="profile-image"
+    />
 
     <div class="profile-text">
-
-      {{ .Site.Data.profile.bio }}
+      {{ .Site.Data.profile.bio | safeHTML }}
     </div>
 
   </div>
 
-  <div style="padding: 16px;">
-    <h4>Open Source Contributions
-    </h4>
+  <div class="section-header">
+    <h4>Open Source Contributions</h4>
   </div>
+
   <ul>
+    {{ with .Site.Data.profile.links.kernel_commits }}
     <li>
-      <a href="{{ .Site.Data.profile.links.kernel_commits}}" class="hero-link">Upstream Linux Kernel commits</a>
+      <a href="{{ . }}" class="hero-link">
+        Upstream Linux Kernel commits
+      </a>
     </li>
-    <li> <a href="{{ .Site.Data.profile.links.patches}}" class="hero-link">Patches</a></li>
+    {{ end }}
+
+    {{ with .Site.Data.profile.links.patches }}
+    <li>
+      <a href="{{ . }}" class="hero-link">
+        Patches
+      </a>
+    </li>
+    {{ end }}
   </ul>
 
 </section>
@@ -32,28 +53,62 @@
 <div class="recent-articles-header">
   <h4>Recent Articles</h4>
 </div>
-{{ range .Site.Sections }}
+
 <ul class="recent-articles">
-  {{ range first 5 .Pages }}
+
+  {{ range first 5 (where .Site.RegularPages "Section" "blog") }}
+
   <li>
-    {{ .Date | time.Format "01/02/2006" }} –
-    <a href="{{ .Permalink }}" class="hero-link">
+    {{ .Date.Format "Jan 02, 2006" }} –
+
+    <a href="{{ .RelPermalink }}" class="hero-link">
       {{ .Title }}
     </a>
   </li>
-  {{ end }}
-</ul>
-{{ end }}
 
-<div style="padding: 16px;">
-  <h4>Quick Links
-  </h4>
+  {{ end }}
+
+</ul>
+
+
+<div class="section-header">
+  <h4>Quick Links</h4>
 </div>
+
 <ul>
-  <li><a href="{{ .Site.Data.profile.links.github }}" class="hero-link">Github</a></li>
-  <li><a href="{{ .Site.Data.profile.links.linkedin }}" class="hero-link">Linkedin</a></li>
-  <li><a href="{{ .Site.Data.profile.links.X }}" class="hero-link">X(twitter)</a></li>
-  <li><a href="mailto:{{ .Site.Data.profile.Contact.Email }}" class="hero-link">Email</a></li>
+
+  {{ with .Site.Data.profile.links.github }}
+  <li>
+    <a href="{{ . }}" class="hero-link">
+      Github
+    </a>
+  </li>
+  {{ end }}
+
+  {{ with .Site.Data.profile.links.linkedin }}
+  <li>
+    <a href="{{ . }}" class="hero-link">
+      Linkedin
+    </a>
+  </li>
+  {{ end }}
+
+  {{ with .Site.Data.profile.links.X }}
+  <li>
+    <a href="{{ . }}" class="hero-link">
+      X (Twitter)
+    </a>
+  </li>
+  {{ end }}
+
+  {{ with .Site.Data.profile.Contact.Email }}
+  <li>
+    <a href="mailto:{{ . }}" class="hero-link">
+      Email
+    </a>
+  </li>
+  {{ end }}
+
 </ul>
 
 {{ end }}
