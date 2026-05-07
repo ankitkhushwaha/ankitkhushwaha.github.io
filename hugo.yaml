@@ -48,6 +48,7 @@ params:
 
   defaultTheme: auto
   ShowReadingTime: true
+  ShowToc: true
 
   comments: true
   giscus:
