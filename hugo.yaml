@@ -11,10 +11,10 @@ menu:
       url: /me/
       weight: 30
 
-    - identifier: "rss feed"
-      name: "Rss"
-      url: /index.xml
-      weight: 6
+    - identifier: "Search"
+      name: "Search"
+      url: /search
+      weight: 1
 
     - identifier: Blog
       name: Blog
@@ -24,13 +24,8 @@ menu:
     - identifier: Resume
       name: Resume
       url: /resume-ankit-khushwaha.pdf
-      weight: 1
+      weight: 2
     
-    - identifier: Resource
-      name: Resources
-      url: /resources
-      weight: 7
-
     - identifier: categories
       name: categories
       url: /categories/
