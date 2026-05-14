@@ -3,6 +3,8 @@ languageCode: en-us
 title: ankit_kdev
 theme: ["PaperMod"]
 
+links:
+  resume: &resume_path https://docs.google.com/viewerng/viewer?url=https://raw.githubusercontent.com/ankitkhushwaha/resume.tex/main/build/resume.pdf
 
 menu:
   main:
@@ -23,7 +25,7 @@ menu:
     
     - identifier: Resume
       name: Resume
-      url: /resume-ankit-khushwaha.pdf
+      url: *resume_path
       weight: 2
     
     - identifier: categories
