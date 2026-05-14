@@ -2,7 +2,17 @@
 date: '2026-05-04T13:30:05+05:30'
 draft: false
 title: 'C Memory Layout: Structs, Unions, and a Linux Kernel Patch'
-tags: ["c-programming", "memory-layout", "linux-kernel", "flexible-array-members", "structs-unions", "compiler-warnings", "kernel-development", "low-level-c"]
+categories:
+  - C Programming
+  - Linux Kernel
+
+tags:
+  - structs
+  - unions
+  - flexible-array-member
+  - memory-layout
+  - compiler-warning
+  - kernel-patch
 ---
 
 # Overview

@@ -2,7 +2,16 @@
 date: '2026-04-22T15:02:44+05:30'
 draft: false
 title: 'Configure U-boot For Beaglebone Black'
-tags: ["u-boot", "bootloader", "beaglebone-black", "embedded-systems", "arm-architecture", "kernel-bootloader", "system-configuration"]
+categories:
+  - Embedded Systems
+  - Bootloaders
+
+tags:
+  - u-boot
+  - beaglebone-black
+  - cross-compilation
+  - boot-process
+  - arm
 ---
 
 # Overview

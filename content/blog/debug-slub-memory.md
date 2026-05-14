@@ -2,7 +2,17 @@
 date: '2026-02-04T16:45:19+05:30'
 draft: False
 title: 'Basics of debugging slab memory corruption via SLUB debug'
-tags: ["linux-kernel", "memory-debugging", "slub-allocator", "kernel-internals", "systems-programming", "debugging", "performance-tuning"]
+categories:
+  - Linux Kernel
+  - Debugging
+
+tags:
+  - slab
+  - slub
+  - memory-corruption
+  - uaf
+  - debugging
+  - allocator
 ---
 
 # Introduction

@@ -2,7 +2,16 @@
 date: '2025-08-16T14:30:04+05:30'
 draft: False
 title: 'Install Ubuntu Server on Qemu'
-tags: ["qemu", "ubuntu-server", "linux", "linux-kernel"]
+categories:
+  - Virtualization
+  - Linux
+
+tags:
+  - qemu
+  - ubuntu-server
+  - virtual-machine
+  - buildroot
+  - testing
 ---
 
 # Installation of ubuntu server on qemu-x86_64

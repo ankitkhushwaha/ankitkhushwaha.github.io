@@ -2,7 +2,16 @@
 date: '2025-12-08T10:35:09+05:30'
 draft: False
 title: 'Linux Kernel Mentorship Program'
-tags: ["kernel", "linux", "lfx", "linux-kernel", "mentorship"]
+categories:
+  - Career
+  - Linux Kernel
+
+tags:
+  - mentorship
+  - lfx
+  - linux-foundation
+  - open-source
+  - learning
 ---
 ### Introduction
 
