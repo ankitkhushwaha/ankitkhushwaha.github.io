@@ -1,6 +1,6 @@
 ---
 date: '2025-12-01T22:32:00+05:30'
-draft: false
+draft: true
 title: 'Misc Kernel Driver'
 categories:
   - Linux Kernel
@@ -13,6 +13,7 @@ tags:
   - char-device
   - kernel-api
 ---
+WIP
 
 # How to Write Your First Linux Kernel Driver Using the Misc Device Framework
 
