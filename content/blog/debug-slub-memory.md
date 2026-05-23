@@ -1,7 +1,7 @@
 ---
-date: '2026-02-04T16:45:19+05:30'
+date: "2026-02-04T16:45:19+05:30"
 draft: False
-title: 'Basics of debugging slab memory corruption via SLUB debug'
+title: "Basics of debugging slab memory corruption via SLUB debug"
 categories:
   - Linux Kernel
   - Debugging
@@ -20,7 +20,7 @@ tags:
 Memory corruption can occur due to various bugs or defects: Uninitialized Memory
 Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
 leakage, or illegal Out Of Bounds (OOB) accesses that attempt to work upon (read/write/
-execute) illegal memory regions. 
+execute) illegal memory regions.
 
 Since memory is dynamically allocated and freed via the kernel's engine – the
 page allocator. This can lead to serious wastage (internal fragmentation) of memory.
@@ -29,6 +29,7 @@ primary tasks – providing fragments of pages efficiently (within the kernel, a
 requests for small pieces of memory, from a few bytes to a couple of kilobytes), and serving as a cache for commonly used data structures.
 
 Note: memory is allocated in following hierarchy
+
 ```
 Page allocator → gives pages
 SLUB → splits pages into objects
@@ -39,44 +40,45 @@ This blog will explain to basics of debugging a slab memory corruption via SLUB 
 
 # Requirements
 
-We will be using the code example from 
+We will be using the code example from
 `https://github.com/ankitkhushwaha/Linux-Kernel-Debugging-tutorials`
 So make sure to clone it.
 
 # Enable CONFIG_SLUB_DEBUG
 
-Following configs are needed to use this feature. 
+Following configs are needed to use this feature.
 
 ```
-$ grep SLUB_DEBUG /boot/config-6.18.7-200.fc43.x86_64 
+$ grep SLUB_DEBUG /boot/config-6.18.7-200.fc43.x86_64
 CONFIG_SLUB_DEBUG=y
 # CONFIG_SLUB_DEBUG_ON is not set
 ```
 
-This config implies that SLUB debugging is available but disabled by default (as CONFIG_
+This config implies that SLUB debugging is available but disabled by default (as CONFIG\_
 SLUB_DEBUG_ON is off). It is Usually disabled in production due to overhead; enable only for debugging.
 
 # The slub_debug Kernel Parameter
 
 To leverage SLUB debug features we need to boot the kernel with slub_debug parameter.
 
-| Flag | Description                                                                                                                                                                                             |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Null(empty after slub_debug=)   | Switch all Slub debugging On.                                                         |
-| F    | Sanity checks (consistency checks) on SLUB objects. Detects basic corruption of the freelist or slab structure.                                                                                         |
-| Z    | Red zoning around objects (guard zones). Detects out-of-bounds (OOB) writes into adjacent memory areas.                                                                                                 |
-| P    | Poisoning (object and padding areas). Detects access to uninitialized memory or use-after-free (UAF) errors when reallocating an object.                                                                |
-| U    | User tracking (store user info for alloc/free). Provides stack traces of the last allocation and free operations in bug reports, aiding root cause analysis.                                            |
-| T    | Trace all allocations/frees. Use only on single slabs due to high verbosity. Provides detailed, continuous tracing of memory operations for a specific cache.                                           |
-| A    | Toggle failslab filter mark for the cache. Used for testing error handling by simulating allocation failures.                                                                                           |
-| O    | Switch debugging off for caches that would cause higher minimum slab orders. Prevents debugging from forcing large page allocations, which can cause memory allocation errors in low-memory situations. |
-| -    | Switch all debugging off (useful if the kernel is compiled with CONFIG_SLUB_DEBUG_ON). Disables all debugging for specified caches or globally.                                                         |
+| Flag                          | Description                                                                                                                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Null(empty after slub_debug=) | Switch all Slub debugging On.                                                                                                                                                                           |
+| F                             | Sanity checks (consistency checks) on SLUB objects. Detects basic corruption of the freelist or slab structure.                                                                                         |
+| Z                             | Red zoning around objects (guard zones). Detects out-of-bounds (OOB) writes into adjacent memory areas.                                                                                                 |
+| P                             | Poisoning (object and padding areas). Detects access to uninitialized memory or use-after-free (UAF) errors when reallocating an object.                                                                |
+| U                             | User tracking (store user info for alloc/free). Provides stack traces of the last allocation and free operations in bug reports, aiding root cause analysis.                                            |
+| T                             | Trace all allocations/frees. Use only on single slabs due to high verbosity. Provides detailed, continuous tracing of memory operations for a specific cache.                                           |
+| A                             | Toggle failslab filter mark for the cache. Used for testing error handling by simulating allocation failures.                                                                                           |
+| O                             | Switch debugging off for caches that would cause higher minimum slab orders. Prevents debugging from forcing large page allocations, which can cause memory allocation errors in low-memory situations. |
+| -                             | Switch all debugging off (useful if the kernel is compiled with CONFIG_SLUB_DEBUG_ON). Disables all debugging for specified caches or globally.                                                         |
 
 Note - Kernel also provides way to enable flags for Specific slub inside '/sys/kernel/slab/slabname' folder.
 
 # Understanding the SLUB layer's poison flags
 
 The poison flags defined by the kernel are defined as follows:
+
 ```
 // include/linux/poison.h
 
@@ -90,21 +92,22 @@ The poison flags defined by the kernel are defined as follows:
 - The POISON_INUSE value (0x5a equals ASCII Z) is used to denote padding zones, before or after red zones.
 - The last legal byte of the slab memory object is set to POISON_END, 0xa5.
 
-
-# Boot the Kernel  
+# Boot the Kernel
 
 Boot the kernel with `slub_debug=FZPU`
 
 After booting the kernel You should see something like this.
+
 ```
-$ cat /proc/cmdline 
+$ cat /proc/cmdline
 BOOT_IMAGE=(hd0,gpt2)/vmlinuz-6.18.7-200.fc43.x86_64 root=UUID=94fc6fde-521c-4d20-9cba-84dba8146a75 ro rootflags=subvol=root slub_debug=FZPU quiet splash crashkernel=2G-64G:256M,64G-:512M
 ```
 
-Note: if kernel is build with KASAN support then it will catch the bug[discussed below] first. 
+Note: if kernel is build with KASAN support then it will catch the bug[discussed below] first.
 Try this in Production kernel built without KASAN support.
 
 # Reproduce the bug
+
 All test cases are defined in: `ch5/kmembugs_test/kmembugs_test.c`
 
 ```
@@ -152,43 +155,45 @@ $ sudo ./run_tests        # input the test number
 [  160.928950] FIX kmalloc-rnd-04-32: Object at 0xffff8de137751660 not freed
 ```
 
-Test case 
+Test case
+
 ```
 int dynamic_mem_oob_right(int mode)
 {
 	volatile char *kptr, ch = 0;
 	char *volatile ptr;
 	size_t sz = 32;
-	
+
 	kptr = kmalloc(sz, GFP_KERNEL);
 	if (unlikely(!kptr))
 		return -ENOMEM;
-	
+
 	ptr = (char *)kptr + sz + 3; // right OOB
-	
+
 	if (mode == READ) {
 	ch = *(volatile char *)ptr;
 	ch = kptr[sz+3];
-	}	
+	}
 	else if (mode == WRITE)	{
 		*(volatile char *)ptr = 'x';  // invalid, OOB right write
 		kptr[sz] = 'x';	// invalid, OOB right write
 	}
-	
+
 	kfree((char *)kptr);
 	return 0;
 }
 ```
 
 Test case does the following:
+
 - performed a dynamic memory allocation of 32 bytes memory.
 - write a out of bound (OOB) region.
 
 First INFO line spits out the start and end of the corrupted memory region.
+
 ```
 [  160.928479] [Right Redzone overwritten] 0xffff8de137751680-0xffff8de137751683 @offset=1664. First byte 0x78 instead of 0xcc
 ```
-
 
 Note that these kernel virtual addresses are hashed here, for security, preventing info leaks.
 
@@ -199,25 +204,28 @@ it happens to be dynamic_mem_oob_right+0x57/0xb0.
 We haven't shown the full stack call trace here. Read it bottom-up, ignoring any lines that
 begin with '?'.
 
-We have allocated a memory of 32 bytes shown by 
+We have allocated a memory of 32 bytes shown by
+
 ```
 [  160.928588] Object   ffff8de137751660: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
 [  160.928590] Object   ffff8de137751670: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b a5  kkkkkkkkkkkkkkk.
 ```
+
 The poison value 0x6b denotes the value that's used to initialize the valid slab memory region, 0xa5
-denotes the end poisoning marker byte, and 0x5a denotes use-uninitialized poisoning. 
+denotes the end poisoning marker byte, and 0x5a denotes use-uninitialized poisoning.
 
 The last byte was initialized with POISON_END bit (0xa5) and the value 0x78 is our x character being (wrongly) written by the test case outside of the allocated memory.
 
 ```
 [  160.928591] Redzone  ffff8de137751680: 78 cc cc 78 cc cc cc cc                          x..x....
 ```
+
 This tell us that Right redzone of concerned memory was being overwritten with value '0x78' in ascii 'x'.
 In last Lines of logs We can see that Slab framework corrected the memory by restoring it to previous POISON_FLAG.
 
 # Conclusion
 
-while the kernel SLUB debug framework seems to catch most of the memory corruption issues on slab memory, 
+while the kernel SLUB debug framework seems to catch most of the memory corruption issues on slab memory,
 it doesn't seem to catch the read OOB accesses on slab memory. Though it is reliable tool to detect memory corruption in production kernels.
 
 It can catch the following bugs-

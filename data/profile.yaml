@@ -1,7 +1,7 @@
 greeting: "Hi!"
 name: "Ankit Khushwaha"
 headline: "Linux Kernel Contributor"
-work:  "LFX’25 mentee (Linux kernel), IIT Dharwad ’26"
+work: "LFX’25 mentee (Linux kernel), IIT Dharwad ’26"
 
 bio: >
   Linux kernel contributor (upstream patches), LFX’25 mentee. 

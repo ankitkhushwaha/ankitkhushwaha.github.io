@@ -1,7 +1,7 @@
 ---
-date: '2025-12-01T22:32:00+05:30'
+date: "2025-12-01T22:32:00+05:30"
 draft: true
-title: 'Misc Kernel Driver'
+title: "Misc Kernel Driver"
 categories:
   - Linux Kernel
   - Device Drivers
@@ -13,63 +13,67 @@ tags:
   - char-device
   - kernel-api
 ---
+
 WIP
 
 # How to Write Your First Linux Kernel Driver Using the Misc Device Framework
 
 ## Introduction
 
- This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.
+This article explains how to write a simple Linux kernel driver using the misc device framework. The misc framework is a good starting point because it automatically creates the device node when the driver registers, reducing setup complexity. In this example driver, a PID written from user space is stored in the kernel, and reading from the device triggers the driver to look up and display information about the corresponding task.
 
 ### What is a Linux Device Driver?
 
- A device driver is kernel-level code that allows the operating system to interact with hardware or virtual devices. Instead of accessing hardware directly, user-space applications interact with a device file in /dev, and the kernel routes those operations to the driver’s functions.
+A device driver is kernel-level code that allows the operating system to interact with hardware or virtual devices. Instead of accessing hardware directly, user-space applications interact with a device file in /dev, and the kernel routes those operations to the driver’s functions.
 
- Drivers can be:
+Drivers can be:
 
-- Built-in: compiled into the main kernel image, or  
+- Built-in: compiled into the main kernel image, or
 - Loadable modules: compiled separately and inserted/removed at runtime with tools like insmod and rmmod.  
- Using loadable modules makes development and testing much easier because you don’t need to rebuild and reboot the entire kernel for each change.
+  Using loadable modules makes development and testing much easier because you don’t need to rebuild and reboot the entire kernel for each change.
 
 ### Why Use the Misc Device Framework?
 
- The misc framework provides a lightweight way to create simple character devices without manually managing major numbers, device classes, and udev rules.
+The misc framework provides a lightweight way to create simple character devices without manually managing major numbers, device classes, and udev rules.
 
- When you register a misc device:
-- The kernel assigns a minor number dynamically (MISC_DYNAMIC_MINOR).  
-- It automatically creates the corresponding device node under /dev (for example, /dev/task_display).  
--  You only need to define your file_operations and a struct miscdevice.  
+When you register a misc device:
 
- This makes it ideal for:
--  Small utilities  
--  Debug or monitoring interfaces  
--  Experimental or educational drivers  
+- The kernel assigns a minor number dynamically (MISC_DYNAMIC_MINOR).
+- It automatically creates the corresponding device node under /dev (for example, /dev/task_display).
+- You only need to define your file_operations and a struct miscdevice.
+
+This makes it ideal for:
+
+- Small utilities
+- Debug or monitoring interfaces
+- Experimental or educational drivers
 
 ### The File Operations (open/read/write)
 
 User-space interacts with a character device through standard system calls like open(), read(), and write(). The kernel maps these calls to the driver’s file_operations structure.
 
-For example: 
+For example:
 
 when any user space process (or thread) opens a device file registered to this
 driver, the kernel Virtual Filesystem Switch (VFS) layer will take over. Without going into
 deep detail, suffice it to say that the VFS allocates and initializes that process's open
-file data structure (struct file) for the device file. 
+file data structure (struct file) for the device file.
 
--  open()  
-    Called when a process opens the device file (e.g. open("/dev/task_display", ...)).  
--  read()  
-    Transfers data from the kernel to user space. The driver is responsible for copying data into the user buffer and updating the file offset.  
--  write()  
-    Receives data from user space, typically via copy_from_user(), and processes or stores it inside the driver.  
+- open()  
+   Called when a process opens the device file (e.g. open("/dev/task_display", ...)).
+- read()  
+   Transfers data from the kernel to user space. The driver is responsible for copying data into the user buffer and updating the file offset.
+- write()  
+   Receives data from user space, typically via copy_from_user(), and processes or stores it inside the driver.
 
- Defining these functions correctly ensures the driver behaves like a regular file from the user’s perspective. The **function signatures** must match the prototypes the kernel expects.
+Defining these functions correctly ensures the driver behaves like a regular file from the user’s perspective. The **function signatures** must match the prototypes the kernel expects.
 
 ### **Understanding copy_from_user() and copy_to_user()**
 
 When user space interacts with a kernel driver through `read()` or `write()`, the data passed in those system calls cannot be accessed directly inside the kernel due to different address spaces.
 
 Linux provides two helper APIs:
+
 #### **1. copy_from_user()**
 
 Used inside `write()`  
@@ -94,15 +98,15 @@ if (copy_to_user(ubuf, kbuf, len))
 
 ### Implementing the Minimal Misc Driver
 
- Our example driver will:
+Our example driver will:
 
--  Expose a device /dev/task_display.  
--  Accept a PID written from user space via write().  
--  On read(), look up the corresponding task_struct and print task details into the kernel log.  
+- Expose a device /dev/task_display.
+- Accept a PID written from user space via write().
+- On read(), look up the corresponding task_struct and print task details into the kernel log.
 
 #### Internal State
 
- We keep a small per-driver structure to store the device pointer and the PID:
+We keep a small per-driver structure to store the device pointer and the PID:
 
 ```
 #include <linux/device.h>
@@ -137,8 +141,10 @@ static struct tsk_display *tskd;
 The read() function looks up the task corresponding to the stored PID and prints its information to the kernel log.
 
 ##### cat internals
+
 It continously read and write the file with returning the numbers of bytes, it reads and write and returns 0 when EOF reached.
 Here we are always returing 0. so `cat command` thinks end-of-file has reached. and read `ubuf` and writes `stdout` only one time.
+
 ```
  ssize_t read_tsk_display(struct file *filp, char __user *ubuf,
                           size_t count, loff_t *off)
@@ -184,11 +190,12 @@ Here we are always returing 0. so `cat command` thinks end-of-file has reached. 
  }
 ```
 
- **Note**:  This is not a proper read() implementation from a userspace point of view, because it doesn’t actually return any data in ubuf. It just logs to dmesg. For a real driver, you’d build a string with the task info and use copy_to_user().
+**Note**: This is not a proper read() implementation from a userspace point of view, because it doesn’t actually return any data in ubuf. It just logs to dmesg. For a real driver, you’d build a string with the task info and use copy_to_user().
 
 #### write() system-call
 
- The write() function receives PID input from user space, converts it to an integer, and stores it in tskd->tsk_pid.
+The write() function receives PID input from user space, converts it to an integer, and stores it in tskd->tsk_pid.
+
 ```
  ssize_t write_tsk_display(struct file *filp, const char __user *ubuf,
 		                           size_t count, loff_t *off)
@@ -232,7 +239,7 @@ Here we are always returing 0. so `cat command` thinks end-of-file has reached. 
      return ret;
  }
 ```
-  
+
 #### file_operations Structure
 
 The file_operations structure connects the VFS to your driver’s functions:
@@ -246,9 +253,9 @@ The file_operations structure connects the VFS to your driver’s functions:
  };
 ```
 
- Whenever user space calls open(), read(), or write() on /dev/task_display, the kernel Virtual Filesystem Switch (VFS) layer will take over and allocates and initializes that process's open file data structure (struct file) for the device file
+Whenever user space calls open(), read(), or write() on /dev/task_display, the kernel Virtual Filesystem Switch (VFS) layer will take over and allocates and initializes that process's open file data structure (struct file) for the device file
 
- **Note**: the function signatures must match the kernel’s expected prototypes for open, read, write, etc.
+**Note**: the function signatures must match the kernel’s expected prototypes for open, read, write, etc.
 
 #### miscdevice Structure
 
@@ -260,10 +267,10 @@ The file_operations structure connects the VFS to your driver’s functions:
      .fops  = &tsk_display_fops,
  };
 ```
-  
--  MISC_DYNAMIC_MINOR → kernel picks a free minor number.  
--  name → used to create /dev/task_display file.  
--  mode → file permissions (here: 0666 -> readable and writable).  
+
+- MISC_DYNAMIC_MINOR → kernel picks a free minor number.
+- name → used to create /dev/task_display file.
+- mode → file permissions (here: 0666 -> readable and writable).
 
 #### Init and Exit Functions
 
@@ -300,14 +307,13 @@ The module’s init function registers the misc device and allocates the driver�
      misc_deregister(&tsk_display_dev);
      pr_info("task display driver deregistered, bye\n");
  }
- 
+
 
  module_init(task_display_init);
  module_exit(task_display_exit);
 ```
 
 ### Testing the Driver from User Space
-
 
 ```
 insmod task_display.ko
@@ -321,15 +327,15 @@ cat /dev/task_display
 dmesg | tail -n 20
 ```
 
-
- You should see log lines showing the PID, TGID, and other task details. That confirms that your write() stored the PID and your read() successfully looked up the task_struct.
+You should see log lines showing the PID, TGID, and other task details. That confirms that your write() stored the PID and your read() successfully looked up the task_struct.
 
 #### Summary
 
- This example demonstrates how to build a small Linux kernel module using the misc device framework. By defining only a few file operations and relying on the kernel to create the device node, the driver stays minimal and easy to understand.
+This example demonstrates how to build a small Linux kernel module using the misc device framework. By defining only a few file operations and relying on the kernel to create the device node, the driver stays minimal and easy to understand.
 
- The driver shows how to:
--  Accept input (a PID) from user space via write().  
--  Use that value inside the kernel to look up a task_struct.  
--  Connect user-space system calls to kernel functions through file_operations and a miscdevice.  
-From here, you can extend the example by returning formatted task information to user space with copy_to_user(), adding proper error paths, or exposing more fields from task_struct.
+The driver shows how to:
+
+- Accept input (a PID) from user space via write().
+- Use that value inside the kernel to look up a task_struct.
+- Connect user-space system calls to kernel functions through file_operations and a miscdevice.  
+  From here, you can extend the example by returning formatted task information to user space with copy_to_user(), adding proper error paths, or exposing more fields from task_struct.

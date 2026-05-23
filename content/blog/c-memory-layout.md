@@ -1,7 +1,7 @@
 ---
-date: '2026-05-04T13:30:05+05:30'
+date: "2026-05-04T13:30:05+05:30"
 draft: false
-title: 'C Memory Layout: Structs, Unions, and a Linux Kernel Patch'
+title: "C Memory Layout: Structs, Unions, and a Linux Kernel Patch"
 categories:
   - C Programming
   - Linux Kernel
@@ -427,9 +427,9 @@ index 0ccf484b1d9d..f4afef51b930 100644
 --- a/tools/testing/selftests/net/ipsec.c
 +++ b/tools/testing/selftests/net/ipsec.c
 @@ -43,6 +43,10 @@
- 
+
  #define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
- 
+
 +#ifndef offsetof
 +#define offsetof(TYPE, MEMBER)	__builtin_offsetof(TYPE, MEMBER)
 +#endif

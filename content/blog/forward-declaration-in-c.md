@@ -1,16 +1,16 @@
 ---
-date: '2026-05-17T17:00:31+05:30'
+date: "2026-05-17T17:00:31+05:30"
 draft: false
-title: 'Understanding Forward Declarations in C'
+title: "Understanding Forward Declarations in C"
 tags:
- - forward-declaration
- - c-programming
- - compiler
- - kernel-api
+  - forward-declaration
+  - c-programming
+  - compiler
+  - kernel-api
 categories:
- - C Programming
- - Linux Kernel
- - Embedded Systems
+  - C Programming
+  - Linux Kernel
+  - Embedded Systems
 ---
 
 One of the best ways to learn systems programming is by reading real-world code. Recently, while reading the Linux kernel source, I noticed something interesting inside `drivers/pinctrl/core.h`:
@@ -52,15 +52,15 @@ This is different from including a full definition:
 
 When you write a forward declaration, the compiler learns:
 
-* `struct device` is a valid type name
-* you can create pointers to it
-* you can pass references to it
+- `struct device` is a valid type name
+- you can create pointers to it
+- you can pass references to it
 
 However, the compiler still does not know:
 
-* the size of the structure
-* what fields it contains
-* how it is laid out in memory
+- the size of the structure
+- what fields it contains
+- how it is laid out in memory
 
 Because of this limited knowledge, you can only perform certain operations with forward declared types.
 
@@ -87,9 +87,9 @@ core.h includes device.h
 
 Each file gets parsed, tokenized, and processed. For large projects like the Linux kernel:
 
-* A single include can expand to thousands of lines of code
-* In projects with thousands of header files, this expansion can make compilation take minutes or even hours
-* Using forward declarations breaks these chains and reduces recompilation time significantly
+- A single include can expand to thousands of lines of code
+- In projects with thousands of header files, this expansion can make compilation take minutes or even hours
+- Using forward declarations breaks these chains and reduces recompilation time significantly
 
 In large C projects, forward declarations can reduce compile times by 20 to 40 percent in some cases.
 
@@ -229,9 +229,11 @@ In these cases, you must include the full definition.
 Here is a practical rule that works well:
 
 In header files:
+
 > prefer forward declarations when possible
 
 In source files:
+
 > include the actual headers when you need full definitions
 
 This keeps your interfaces small and clean while allowing implementation code full access to what it needs.
@@ -280,16 +282,16 @@ But in the actual implementation file `drivers/pinctrl/core.c`, all the full def
 
 This shows the pattern clearly:
 
-* In the header file: use forward declarations for types you only pass as pointers
-* In the source file: include everything you actually need to work with those types
+- In the header file: use forward declarations for types you only pass as pointers
+- In the source file: include everything you actually need to work with those types
 
 This design:
 
-* Keeps the header file minimal and stable
-* Allows the implementation full access to all definitions it needs
-* Reduces recompilation when other files change
-* Makes the public interface cleaner and more maintainable
-* Lets developers using the library avoid unnecessary includes
+- Keeps the header file minimal and stable
+- Allows the implementation full access to all definitions it needs
+- Reduces recompilation when other files change
+- Makes the public interface cleaner and more maintainable
+- Lets developers using the library avoid unnecessary includes
 
 ---
 

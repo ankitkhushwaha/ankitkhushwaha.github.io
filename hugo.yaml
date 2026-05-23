@@ -22,12 +22,12 @@ menu:
       name: Blog
       url: /blog/
       weight: 5
-    
+
     - identifier: Resume
       name: Resume
       url: *resume_path
       weight: 2
-    
+
     - identifier: categories
       name: categories
       url: /categories/
@@ -40,7 +40,7 @@ menu:
 params:
   author: "Ankit"
   mainSections:
-    - 'Blog Articles'
+    - "Blog Articles"
   env: production
 
   defaultTheme: auto
@@ -50,12 +50,12 @@ params:
 
   comments: true
   giscus:
-      repo: "ankitkhushwaha/ankitkhushwaha.github.io"
-      repoID: "R_kgDOPe0hYg"
-      category: "General"
-      categoryID: "DIC_kwDOPe0hYs4C6oBB"
-      mapping: "pathname"
-      inputPosition: "top"
+    repo: "ankitkhushwaha/ankitkhushwaha.github.io"
+    repoID: "R_kgDOPe0hYg"
+    category: "General"
+    categoryID: "DIC_kwDOPe0hYs4C6oBB"
+    mapping: "pathname"
+    inputPosition: "top"
 
   assets:
     favicon: "/img/favicon.ico"

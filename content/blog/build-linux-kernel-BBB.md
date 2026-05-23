@@ -1,7 +1,7 @@
 ---
-date: '2026-04-08T22:31:16+05:30'
+date: "2026-04-08T22:31:16+05:30"
 draft: false
-title: 'Build and Install Linux Kernel For Beaglebone Black'
+title: "Build and Install Linux Kernel For Beaglebone Black"
 categories:
   - Linux Kernel
   - Embedded Systems
@@ -15,9 +15,11 @@ tags:
 ---
 
 # Overview
-The BeagleBone Black (BBB) uses an ARM Cortex-A8 32 bit processor, so the kernel must be cross-compiled on an x86 machine and then deployed to the board. This blog will assume that you already have a os[debian/ubuntu] installed on your sd card.  
+
+The BeagleBone Black (BBB) uses an ARM Cortex-A8 32 bit processor, so the kernel must be cross-compiled on an x86 machine and then deployed to the board. This blog will assume that you already have a os[debian/ubuntu] installed on your sd card.
 
 We’ll:
+
 - set up toolchain
 - fetch kernel source
 - configure for BBB
@@ -56,10 +58,11 @@ Note: Choose the kernel repository based on your board’s processor architectur
     export CROSS_COMPILE=arm-linux-gnueabihf-
 
 ## 4. Configure the default Board's config file
+
     make bb.org_defconfig
 
 Optional: Customize configuration:
-    make menuconfig
+make menuconfig
 
 ## 5. Build the Kernel
 
@@ -74,10 +77,10 @@ This will Build the zImage, modules, and device tree blobs:
 check whether it mounted or not.
 
     lsblk
-        sda           8:0    1  29.7G  0 disk 
+        sda           8:0    1  29.7G  0 disk
         ├─sda1        8:1    1    36M  0 part /run/media/ankit/BOOT
-        ├─sda2        8:2    1   512M  0 part 
-        └─sda3        8:3    1  29.2G  0 part 
+        ├─sda2        8:2    1   512M  0 part
+        └─sda3        8:3    1  29.2G  0 part
 
 In our case sda3 has rootfs partition, mount it.
 
@@ -105,7 +108,7 @@ Note: build is symlink that points to build directory of kernel source. copy tha
     cd /mnt/rootfs/lib/modules/6.6.6
     rm build    # dont add the /, it can delete the files in build/ dir.
     mkdir -p build
-    sudo cp -r linux-src/build .  
+    sudo cp -r linux-src/build .
 
 ## 8. Copy the zImage and dtb blob files
 
@@ -126,7 +129,7 @@ Use this kernel Build verison while copying the zImage file.
 ### Copy the dts file
 
     sudo mkdir -p /mnt/rootfs/boot/dtbs/6.6.20/
-    
+
     cd linux-src/build/arch/arm/boot/dts/ti/omap/
     sudo cp * /mnt/rootfs/boot/dtbs/6.6.20/
 
@@ -135,6 +138,7 @@ Use this kernel Build verison while copying the zImage file.
 Boot the BBB
 
 ### Install dracut
+
     sudo apt install dracut
     sudo dracut -v -f --kver 6.6.20 /boot/initrd.img-6.6.20
 
@@ -148,7 +152,7 @@ this cmd will build Initramfs inside /boot.
     +++ b/uEnv.txt
     @@ -1,6 +1,6 @@
     #Docs: http://elinux.org/Beagleboard:U-boot_partitioning_layout_2.0
-    
+
     -uname_r=6.19.11-bone14
     +uname_r=6.6.20
     #uuid=
@@ -157,7 +161,7 @@ this cmd will build Initramfs inside /boot.
 ## 11. Reboot the BBB
 
     $ sudo reboot
-        
+
     $ uname -r
         6.6.20
 

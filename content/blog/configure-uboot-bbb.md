@@ -1,7 +1,7 @@
 ---
-date: '2026-04-22T15:02:44+05:30'
+date: "2026-04-22T15:02:44+05:30"
 draft: false
-title: 'Configure U-boot For Beaglebone Black'
+title: "Configure U-boot For Beaglebone Black"
 categories:
   - Embedded Systems
   - Bootloaders
@@ -39,11 +39,11 @@ Before starting, make sure you have the following ready:
 
 Before touching the SD card, it helps to understand the partition structure this guide uses:
 
-| Partition | Device (Host) | Device (BBB) | Type | Size | Contents |
-|---|---|---|---|---|---|
-| 1 | `/dev/sda1` | `/dev/mmcblk0p1` | FAT32 | 64 MB | `MLO`, `u-boot.img`, `uEnv.txt` |
-| 2 | `/dev/sda2` | `/dev/mmcblk0p2` | ext4 | 512 MB | (optional swap/data) |
-| 3 | `/dev/sda3` | `/dev/mmcblk0p3` | ext4 | Remaining | Root filesystem (`/`) |
+| Partition | Device (Host) | Device (BBB)     | Type  | Size      | Contents                        |
+| --------- | ------------- | ---------------- | ----- | --------- | ------------------------------- |
+| 1         | `/dev/sda1`   | `/dev/mmcblk0p1` | FAT32 | 64 MB     | `MLO`, `u-boot.img`, `uEnv.txt` |
+| 2         | `/dev/sda2`   | `/dev/mmcblk0p2` | ext4  | 512 MB    | (optional swap/data)            |
+| 3         | `/dev/sda3`   | `/dev/mmcblk0p3` | ext4  | Remaining | Root filesystem (`/`)           |
 
 > **Note:** On your host machine, the SD card appears as `/dev/sdaX`. On the BBB itself, the same SD card appears as `/dev/mmcblkX`. U-Boot refers to the SD card as `mmc 0` and the onboard eMMC as `mmc 1`.
 
@@ -133,10 +133,10 @@ make -j$(nproc)
 
 After a successful build, you will find these files in the source directory:
 
-| File | Description |
-|---|---|
-| `MLO` | First-stage bootloader (SPL) |
-| `u-boot.img` | Main U-Boot image |
+| File             | Description                  |
+| ---------------- | ---------------------------- |
+| `MLO`            | First-stage bootloader (SPL) |
+| `u-boot.img`     | Main U-Boot image            |
 | `u-boot-dtb.img` | U-Boot with device tree blob |
 
 ---
@@ -301,13 +301,13 @@ saveenv
 
 ### Common Mistakes
 
-| Mistake | Result |
-|---|---|
-| Using `load` instead of `ext4load` for ext4 partitions | File not found / load failure |
-| Wrong partition number (`0:1` vs `0:3`) | Boot files or rootfs not found |
-| Incorrect DTB path or filename | Early boot failure or hang |
+| Mistake                                                      | Result                           |
+| ------------------------------------------------------------ | -------------------------------- |
+| Using `load` instead of `ext4load` for ext4 partitions       | File not found / load failure    |
+| Wrong partition number (`0:1` vs `0:3`)                      | Boot files or rootfs not found   |
+| Incorrect DTB path or filename                               | Early boot failure or hang       |
 | Wrong root device in `bootargs` (`mmcblk0p2` vs `mmcblk0p3`) | Kernel panic , cannot mount root |
-| Overlapping `loadaddr` and `fdtaddr` in RAM | Kernel or DTB corruption |
+| Overlapping `loadaddr` and `fdtaddr` in RAM                  | Kernel or DTB corruption         |
 
 ---
 
