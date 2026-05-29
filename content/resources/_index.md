@@ -9,3 +9,5 @@ weight: 2
 Linux Kernel Study Resources - https://kernelmeet.com/topic/2/linux-kernel-study-resources
 
 Kernel Core Analysis - http://jake.dothome.co.kr/
+
+Javier Carrasco blog - https://hackerbikepacker.com/
