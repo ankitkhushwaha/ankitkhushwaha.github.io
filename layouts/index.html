@@ -28,7 +28,7 @@
     </li>
     {{ end }} {{ with .Site.Data.profile.links.patches }}
     <li>
-      <a href="{{ . }}" class="hero-link"> Patches </a>
+      <a href="{{ . }}" class="hero-link"> Kernel Patches </a>
     </li>
     {{ end }}
   </ul>
@@ -59,17 +59,15 @@
     <a href="/resources" class="hero-link"> Resources </a>
   </li>
 
-  {{ with .Site.Data.profile.links.github }}
-  <li>
-    <a href="{{ . }}" class="hero-link"> Github </a>
-  </li>
-  {{ end }}
-
   <li>
     <a href="/index.xml" class="hero-link"> Rss Feed </a>
   </li>
 
-  {{ with .Site.Data.profile.links.linkedin }}
+  {{ with .Site.Data.profile.links.github }}
+  <li>
+    <a href="{{ . }}" class="hero-link"> Github </a>
+  </li>
+  {{ end }} {{ with .Site.Data.profile.links.linkedin }}
   <li>
     <a href="{{ . }}" class="hero-link"> Linkedin </a>
   </li>
