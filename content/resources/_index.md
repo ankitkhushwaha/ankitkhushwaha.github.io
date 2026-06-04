@@ -11,3 +11,5 @@ Linux Kernel Study Resources - https://kernelmeet.com/topic/2/linux-kernel-study
 Kernel Core Analysis - http://jake.dothome.co.kr/
 
 Javier Carrasco blog - https://hackerbikepacker.com/
+
+A Linux Kernel Developer’s Notes[Moon Hee Lee] - https://www.linkedin.com/pulse/linux-kernel-developers-notes-moon-hee-lee-xzs6c
