@@ -1,5 +1,6 @@
 {{- $date := .Get "date" -}}
 {{- $type := .Get "type" | default "note" -}}
+{{- $title := .Get "title" -}}
 {{- $slug := .Get "slug" | default ($date | replaceRE "[^0-9]" "") -}}
 <div class="kf-note" id="note-{{ $slug }}">
   <div class="kf-header">
@@ -8,6 +9,9 @@
   </div>
   <div class="kf-body">
     <div class="kf-bubble" data-type="{{ $type }}">
+      {{ if $title }}
+      <h3 class="kf-title">{{ $title }}</h3>
+      {{ end }}
       <div class="kf-text">{{ .Inner | markdownify }}</div>
     </div>
   </div>
