@@ -67,3 +67,93 @@ li > ul {
   padding: 16px 0;
   margin-top: 16px;
 }
+
+.kf-bubble {
+  flex: 1;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-left: 3px solid #4a9eff;
+  border-radius: 4px;
+  padding: 8px 14px;
+  background-color: color-mix(in srgb, currentColor 4%, transparent); /* near-transparent tint */
+}
+
+.kf-text {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  /* no hardcoded color — inherits from theme */
+}
+
+.kf-tux {
+  font-size: 0.78em;
+  white-space: nowrap;
+  font-family: monospace;
+  color: currentColor;             /* inherits theme text color */
+}
+
+.kf-note {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.kf-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 18px;
+  margin-bottom: 4px;
+}
+
+.kf-anchor {
+  opacity: 0;
+  font-size: 0.75em;
+  color: #4a9eff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.kf-header:hover .kf-anchor {
+  opacity: 1;                  /* only shows on hover */
+}
+
+.kf-note:target .kf-bubble {
+  border-left-color: #ffaa4a;           /* amber highlight */
+  background-color: color-mix(in srgb, #ffaa4a 8%, transparent);
+  transition: background-color 0.3s, border-left-color 0.3s;
+}
+
+.kf-note.kf-highlighted .kf-bubble {
+  border-left-color: #ffaa4a;
+  background-color: color-mix(in srgb, #ffaa4a 8%, transparent);
+  transition: background-color 0.3s, border-left-color 0.3s;
+}
+
+
+.kf-body {
+  display: flex;
+  flex-direction: row;
+  padding-left: 18px;          /* same as spacer padding */
+}
+
+.kf-spacer {
+  display: flex;
+  height: 70px;
+  padding-left: 21px;          /* line aligns with bubble left edge */
+}
+
+.kf-spacer-line {
+  width: 2px;                  /* slightly thicker */
+  height: 100%;
+  background: #4a9eff;         /* solid blue, matches bubble border */
+  opacity: 0.4;                /* subtle but visible on white */
+  border-radius: 1px;
+}
+
+.kf-spacer:last-of-type .kf-spacer-line {
+  display: none;
+}
+
+.kf-bubble[data-type="bug"]   { border-left-color: #ff4a4a; }
+.kf-bubble[data-type="patch"] { border-left-color: #4aff91; }
+.kf-bubble[data-type="warn"]  { border-left-color: #ffaa4a; }

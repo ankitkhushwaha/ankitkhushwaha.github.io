@@ -1,0 +1,17 @@
+{{- $date := .Get "date" -}}
+{{- $type := .Get "type" | default "note" -}}
+{{- $slug := .Get "slug" | default ($date | replaceRE "[^0-9]" "") -}}
+<div class="kf-note" id="note-{{ $slug }}">
+  <div class="kf-header">
+    <span class="kf-tux">🐧{{ if $date }}: <time class="kf-date" datetime="{{ $date }}">{{ dateFormat "Jan 02, 2006" $date }}</time>{{ end }}</span>
+    <a class="kf-anchor" href="#note-{{ $slug }}" title="Link to this note">#</a>
+  </div>
+  <div class="kf-body">
+    <div class="kf-bubble" data-type="{{ $type }}">
+      <div class="kf-text">{{ .Inner | markdownify }}</div>
+    </div>
+  </div>
+</div>
+<div class="kf-spacer">
+  <div class="kf-spacer-line"></div>
+</div>
