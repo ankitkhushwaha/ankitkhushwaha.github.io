@@ -41,7 +41,7 @@ tl'dr: Close the processes respectfully in Linux. Learned this the hard way.
 
 
 
-{{< kf title="C Memory Layout--Linux Kernel Patch" date="2026-05-05" slug="3"  >}}
+{{< kf title="C Memory Layout--Understanding through Linux Kernel Patch" date="2026-05-05" slug="3"  >}}
 One of the biggest advantages of contributing to the Linux kernel is the rigor it demands. Every patch requires rock-solid reasoning, clear documentation, and thorough review. During the Linux kernel mentorship program, I submitted a patch for the IPsec selftest that forced me to think deeply about C memory layout, structs, unions, and flexible array members.
 
 The patch itself was small, but understanding why it worked required grasping how the compiler lays out memory when you combine these features. That patch taught me more about C memory layout than any tutorial ever could.
