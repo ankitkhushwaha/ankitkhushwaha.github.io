@@ -40,7 +40,10 @@ menu:
 params:
   author: "Ankit"
   mainSections:
-    - "Blog Articles"
+    - blog
+    - me
+    - resources
+    - ""
   env: production
 
   defaultTheme: auto
@@ -82,4 +85,8 @@ outputs:
   home:
     - HTML
     - RSS
-    - JSON # necessary for search
+    - JSON # Keep it only here
+  page:
+    - HTML
+  section:
+    - HTML
