@@ -2,6 +2,7 @@
 date: "2025-12-08T10:35:09+05:30"
 draft: False
 title: "Linux Kernel Mentorship Program"
+searchHidden: true
 ---
 
 ### Introduction
