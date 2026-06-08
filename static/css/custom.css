@@ -64,7 +64,6 @@ li > ul {
 }
 
 .section-header {
-  padding: 16px 0;
   margin-top: 16px;
 }
 
@@ -157,3 +156,12 @@ li > ul {
 .kf-bubble[data-type="bug"]   { border-left-color: #ff4a4a; }
 .kf-bubble[data-type="patch"] { border-left-color: #4aff91; }
 .kf-bubble[data-type="warn"]  { border-left-color: #ffaa4a; }
+
+.klog h4 {
+  display:inline
+}
+
+.klog a {
+  text-decoration: underline;
+  font-style: italic
+}
