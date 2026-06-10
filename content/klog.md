@@ -8,6 +8,24 @@ ShowToc: false
 ShowBreadCrumbs: false
 hideMeta: true
 ---
+
+{{< kf title="Debugging the 'GPIO PINS'" date="2026-06-10" slug="5" >}}
+Last week, i was working on my JHD659 LCD 16*2 display project. I have connected the display to Beaglebone black(BBB) gpio pins, and analying the pins values using USB Analyzer("heavy wiring!"). Intitally USB Analyzer seem to works fine detecting the pin value. 
+
+But While ago, i noticed a strange pattern, even after changing the pin value from low to high or vice-versa. USB Analyzer was detecting value as high of all pins. Out of curiosity i checked "ground pin" of BBB, which was giving minor shock. ;-
+
+I was using the pins that was reserved for lcd screen, configured them to work as "gpio".
+
+I checked the voltage reading with the multimeter, reading was ~2.62V(even after driving pin value high to low).
+In actual, gpio pin voltage should be ~3.3V(high) and 0V(low) when configured as gpios.
+
+The actual problem turned out the current leakage for the barrel jack power supply. I replaced it with USB one. But still got the same issue. The issue was fixed when i left the BBB turned off for sometime. Maybe Floating Ground issue might be the culprit.
+
+tl'dr: If u think gpio pins of hardware not working or faulty, check its voltage of related pin. Leakage current might be the issue.
+{{< /kf >}}
+
+
+
 {{< kf title="Reading logs through serial debug console" date="2026-05-27" slug="4" >}}
 Recently I was accessing my BeagleBone Black's logs through the serial debug console. Everything working great. Then on the second attempt, I opened minicom but nothing appeared. No boot messages, no login prompt.
 
@@ -72,6 +90,7 @@ What's inside:
 
 Read the full blog here: [Link](https://www.ankitkdev.com/blog/configure-uboot-bbb/)
 {{< /kf >}}
+
 
 
 {{< kf title="Started learning Device Driver Dev" date="2026-04-11" slug="1" >}}
