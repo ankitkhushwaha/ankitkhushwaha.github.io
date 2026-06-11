@@ -43,14 +43,6 @@
   {{- end }}
 
   {{- partial "extend_post_content.html" . }}
-  
-<center>
-  <iframe
-    src="https://ankitkdev.substack.com/embed?transparent=1"
-    style="width:100%;max-width:480px;height:150px;border:0;background:transparent;"
-    scrolling="no">
-  </iframe>
-</center>
 
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
@@ -66,11 +58,10 @@
     {{- partial "share_icons.html" . -}}
     {{- end }}
   </footer>
-  
+
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
 
 {{- end }}{{/* end main */}}
-
