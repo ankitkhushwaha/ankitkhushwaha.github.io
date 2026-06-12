@@ -46,6 +46,11 @@ params:
     - ""
   env: production
 
+  editPost:
+      URL: "https://github.com/ankitkhushwaha/ankitkhushwaha.github.io/edit/main/content"
+      Text: "Suggest Edit"
+      appendFilePath: true
+
   defaultTheme: auto
   ShowReadingTime: true
   ShowToc: true
