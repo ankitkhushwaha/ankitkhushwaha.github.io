@@ -10,6 +10,7 @@ categories:
 > I'll mainly focus on code snippet rather than the explanation. 
 > Again! this blog may not be fully correct. You're expected to "check the facts/code" before applying.
 > Please correct me, if i'm wrong. I'll be more happy to accept the changes.
+> This Blog is not beginner friendly.
 
 ## Kernel MODULE MACRO
 
