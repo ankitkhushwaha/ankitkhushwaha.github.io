@@ -2,3 +2,9 @@ public/
 .env
 todo.txt
 klog-template.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
