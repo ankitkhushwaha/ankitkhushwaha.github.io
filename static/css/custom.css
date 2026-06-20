@@ -157,6 +157,8 @@ li > ul {
 .kf-bubble[data-type="patch"] { border-left-color: #4aff91; }
 .kf-bubble[data-type="warn"]  { border-left-color: #ffaa4a; }
 
+/* Klog Block(homepage) */
+
 .klog h4 {
   display:inline
 }
@@ -165,3 +167,5 @@ li > ul {
   text-decoration: underline;
   font-style: italic
 }
+
+/* end Klog Block(homepage) */
