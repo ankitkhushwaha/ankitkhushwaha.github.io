@@ -2,20 +2,21 @@
 {{- $type := .Get "type" | default "note" -}}
 {{- $title := .Get "title" -}}
 {{- $slug := .Get "slug" | default ($date | replaceRE "[^0-9]" "") -}}
-<div class="kf-note" id="note-{{ $slug }}">
-  <div class="kf-header">
-    <span class="kf-tux">🐧{{ if $date }}: <time class="kf-date" datetime="{{ $date }}">{{ dateFormat "Jan 02, 2006" $date }}</time>{{ end }}</span>
-    <a class="kf-anchor" href="#note-{{ $slug }}" title="Link to this note">#</a>
-  </div>
-  <div class="kf-body">
-    <div class="kf-bubble" data-type="{{ $type }}">
-      {{ if $title }}
-      <h3 class="kf-title">{{ $title }}</h3>
-      {{ end }}
-      <div class="kf-text">{{ .Inner | markdownify }}</div>
-    </div>
-  </div>
-</div>
-<div class="kf-spacer">
-  <div class="kf-spacer-line"></div>
-</div>
+{{- $labels := dict "note" "INFO" "bug" "BUG" "patch" "PATCH" "warn" "WARN" "debug" "DEBUG" "event" "EVENT" -}}
+{{- $label := index $labels $type | default "INFO" -}}
+<details class="kf-note" id="note-{{ $slug }}" data-type="{{ $type }}">
+  <summary class="kf-button">
+    <span class="kf-meta">
+      <span class="kf-chevron"></span>
+      {{ if $date }}<time class="kf-date" datetime="{{ $date }}">{{ dateFormat "Jan 02, 2006" $date }}</time>{{ end }}
+      <a class="kf-anchor" href="#note-{{ $slug }}" title="Link to this note" onclick="event.stopPropagation()">#</a>
+      <span class="kf-badge">{{ $label }}</span>
+    </span>
+    <span class="kf-cmd">
+      <span class="kf-prompt">$</span>
+      {{ if $title }}<span class="kf-title">{{ $title }}</span>{{ end }}
+      <span class="kf-cursor"></span>
+    </span>
+  </summary>
+  <div class="kf-text">{{ .Inner | markdownify }}</div>
+</details>

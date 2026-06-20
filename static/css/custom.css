@@ -67,95 +67,85 @@ li > ul {
   margin-top: 16px;
 }
 
-.kf-bubble {
-  flex: 1;
-  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-  border-left: 3px solid #4a9eff;
-  border-radius: 4px;
-  padding: 8px 14px;
-  background-color: color-mix(in srgb, currentColor 4%, transparent); /* near-transparent tint */
-}
-
-.kf-text {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 0.9em;
-  line-height: 1.5;
-  /* no hardcoded color — inherits from theme */
-}
-
-.kf-tux {
-  font-size: 0.78em;
-  white-space: nowrap;
-  font-family: monospace;
-  color: currentColor;             /* inherits theme text color */
-}
+/* kf.html */
 
 .kf-note {
+  --kf-accent: #4a9eff;
+  margin-bottom: 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+.kf-note[data-type="bug"]   { --kf-accent: #ff4a4a; }
+.kf-note[data-type="patch"] { --kf-accent: #4aff91; }
+.kf-note[data-type="warn"]  { --kf-accent: #ffaa4a; }
+.kf-note[data-type="debug"] { --kf-accent: #9499a3; }
+
+.kf-button {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0;
+  gap: 4px;
+  cursor: pointer;
+  list-style: none;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-left: 3px solid var(--kf-accent);
+  border-radius: 4px;
+  padding: 10px 14px;
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-.kf-header {
+.kf-button::-webkit-details-marker { display: none; }
+
+.kf-meta {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding-left: 18px;
-  margin-bottom: 4px;
+  gap: 8px;
+  font-size: 0.78em;
+  opacity: 0.75;
+}
+
+.kf-chevron {
+  color: var(--kf-accent);
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.kf-note[open] .kf-chevron { transform: rotate(90deg); }
+
+.kf-date::before { content: "["; }
+.kf-date::after  { content: "]"; }
+
+.kf-badge {
+  margin-left: auto;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--kf-accent);
+  border: 1px solid color-mix(in srgb, var(--kf-accent) 40%, transparent);
+  border-radius: 3px;
+  padding: 1px 6px;
 }
 
 .kf-anchor {
-  opacity: 0;
-  font-size: 0.75em;
-  color: #4a9eff;
+  color: var(--kf-accent);
   text-decoration: none;
-  transition: opacity 0.2s;
 }
 
-.kf-header:hover .kf-anchor {
-  opacity: 1;                  /* only shows on hover */
+.kf-title {
+  font-weight: 700;
 }
 
-.kf-note:target .kf-bubble {
-  border-left-color: #ffaa4a;           /* amber highlight */
-  background-color: color-mix(in srgb, #ffaa4a 8%, transparent);
-  transition: background-color 0.3s, border-left-color 0.3s;
+.kf-text {
+  font-size: 0.9em;
+  line-height: 1.6;
+  padding: 10px 14px 4px;
 }
 
-.kf-note.kf-highlighted .kf-bubble {
-  border-left-color: #ffaa4a;
-  background-color: color-mix(in srgb, #ffaa4a 8%, transparent);
-  transition: background-color 0.3s, border-left-color 0.3s;
+.kf-note:target {
+  --kf-accent: #ffaa4a;
+}
+.kf-note:target .kf-button {
+  background-color: color-mix(in srgb, var(--kf-accent) 12%, transparent);
 }
 
-
-.kf-body {
-  display: flex;
-  flex-direction: row;
-  padding-left: 18px;          /* same as spacer padding */
-}
-
-.kf-spacer {
-  display: flex;
-  height: 70px;
-  padding-left: 21px;          /* line aligns with bubble left edge */
-}
-
-.kf-spacer-line {
-  width: 2px;                  /* slightly thicker */
-  height: 100%;
-  background: #4a9eff;         /* solid blue, matches bubble border */
-  opacity: 0.4;                /* subtle but visible on white */
-  border-radius: 1px;
-}
-
-.kf-spacer:last-of-type .kf-spacer-line {
-  display: none;
-}
-
-.kf-bubble[data-type="bug"]   { border-left-color: #ff4a4a; }
-.kf-bubble[data-type="patch"] { border-left-color: #4aff91; }
-.kf-bubble[data-type="warn"]  { border-left-color: #ffaa4a; }
+/* end kf.html */
 
 /* Klog Block(homepage) */
 
