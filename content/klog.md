@@ -1,6 +1,6 @@
 ---
 title: "klog | grep -i me"
-description: "Here I usually write about my work. What i broke, How i detected it & How i Fixed it(Most Imp)"
+description: "Here I usually write about my timeline. Things I'm working on. What I broke, How I detected it & How I Fixed it(Most Imp)"
 draft: false
 comments: false
 ShowReadingTime: false
