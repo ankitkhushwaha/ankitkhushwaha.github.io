@@ -1,0 +1,4 @@
+{{ $file := .Get 0 }}
+<div class="large-code">
+    {{ highlight (readFile $file) "c" "" }}
+</div>
