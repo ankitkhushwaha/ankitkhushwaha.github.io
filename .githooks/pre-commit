@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+if git diff --cached --name-only | grep -q '^static/ccode/'; then
+    echo "Changes detected in static/ccode. Running build_me.sh..."
+    ./build_me.sh static/ccode/me.c
+
+    if ! git diff --quiet; then
+        echo "build_me.sh generated changes. Please review and stage them."
+        exit 1
+    fi
+
+    if [ $? -ne 0 ]; then
+        echo "build_me.sh failed. Aborting commit."
+        exit 1
+    fi
+fi
+
+exit 0
