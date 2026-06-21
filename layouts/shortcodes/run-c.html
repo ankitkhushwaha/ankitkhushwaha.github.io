@@ -1,0 +1,57 @@
+{{- $link := .Get "link" -}}
+{{- $filename := .Get "filename" -}}
+{{- $linkname := .Get "linkname" -}} 
+<div class="c-runner">
+    <a href="{{ $link }}">{{ $linkname }}</a>
+    <br>
+    <button id="run-btn">Run code</button>
+  <pre id="output"></pre>
+</div>
+
+<script>
+  window.Module = {
+    print: function (text) {
+      document.getElementById("output").textContent += text + "\n";
+    },
+
+    printErr: function (text) {
+      document.getElementById("output").textContent += text + "\n";
+    },
+
+    onRuntimeInitialized: function () {
+      document.getElementById("run-btn").disabled = false;
+    },
+  };
+</script>
+
+<script src="/wasm/{{ $filename }}.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const runBtn = document.getElementById("run-btn");
+    const output = document.getElementById("output");
+
+    runBtn.disabled = true;
+
+    let readyToRun = false;
+
+    runBtn.addEventListener("click", function () {
+      if (!readyToRun) {
+        output.textContent = "";
+        runBtn.textContent = "Run code";
+        readyToRun = true;
+      } else {
+        // Second click: run code
+        output.textContent = "";
+        Module.ccall("main", "number", [], []);
+        runBtn.textContent = "Clear Output";
+        readyToRun = false;
+      }
+    });
+
+    Module.onRuntimeInitialized = function () {
+      runBtn.disabled = false;
+      runBtn.textContent = "Clear Output";
+    };
+  });
+</script>
