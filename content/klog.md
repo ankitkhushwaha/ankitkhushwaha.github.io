@@ -9,6 +9,28 @@ ShowBreadCrumbs: false
 hideMeta: true
 ---
 
+{{< kf title="Open Source Summit India'26" date="2026-06-18" type="event" slug="6" >}}
+This Week, I had the opportunity to attend the "Open Source Summit India'26" hosted by 
+"The Linux Foundation" as LFX Mentee.
+
+In the summit there was lot of Kernel folks -- We discussed about the kernel, 
+how they started contributing to "Linux Kernel". 
+Apart from this I met with so many folk from different field, made a lot of connection,
+got so many meaning full insights. Attended many mindfull talks. 
+
+Also I had a chance to ask question from Greg Kroah-Hartman during the "Ask the Experts Session" 
+and opportunity to listen to Linus Torvalds during "Keynote Session". It was Wonderful Experience.
+
+At EOD of 16 june, I presented my work during "Poster showcase session" as "LFX mentee", 
+where i discussed about the #OSS contribution that i did during LFX Mentorship.
+
+I would recommend any guy interested in #OSS to attend these summits. 
+As it's a incredible environment for anyone looking to level up their skills and expand their professional network.
+
+and Lastly, I would like to thanks "The Linux Foundation" for this Opportunity.
+{{< /kf >}}
+
+
 {{< kf title="Debugging the 'GPIO PINS'" date="2026-06-10" type="debug" slug="5" >}}
 Last week, i was working on my JHD659 LCD 16*2 display project. I have connected the display to Beaglebone black(BBB) gpio pins, and analying the pins values using USB Analyzer("heavy wiring!"). Intitally USB Analyzer seem to works fine detecting the pin value. 
 
