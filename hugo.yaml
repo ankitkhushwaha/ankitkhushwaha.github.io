@@ -1,6 +1,6 @@
 baseURL: https://www.ankitkdev.com/
 languageCode: en-us
-title: ankit_kdev
+title: ankit-kdev
 theme: ["PaperMod"]
 
 links:
