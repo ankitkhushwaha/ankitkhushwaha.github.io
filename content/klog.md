@@ -8,6 +8,10 @@ ShowToc: false
 ShowBreadCrumbs: false
 hideMeta: true
 ---
+{{< kf title="Stepping Back from Blog Maintenance" date="2026-06-22" slug="7" >}}
+For the past few days, I feel like I've been over-maintaining this blog. For now, I am shifting my focus to writing device drivers and letting the computer do the heavy lifting of compiling the Linux kernel.
+peace!
+{{< /kf >}}
 
 {{< kf title="Open Source Summit India'26" date="2026-06-18" type="event" slug="6" >}}
 This Week, I had the opportunity to attend the "Open Source Summit India'26" hosted by 
