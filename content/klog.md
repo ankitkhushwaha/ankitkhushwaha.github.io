@@ -8,6 +8,15 @@ ShowToc: false
 ShowBreadCrumbs: false
 hideMeta: true
 ---
+{{< kf title="Suggestion before starting kernel development" date="2026-06-23" type="advice" slug="8" >}}
+Spent hours of debugging a driver bug that was entirely due to incorrect use of pointers with memory allocation.
+
+This reminds me, 
+As a system programmer you have to ace the pointers and struct.
+
+These skill cannot be compromised.
+{{< /kf >}}
+
 {{< kf title="Stepping Back from Blog Maintenance" date="2026-06-22" slug="7" >}}
 For the past few days, I feel like I've been over-maintaining this blog. For now, I am shifting my focus to writing device drivers and letting the computer do the heavy lifting of compiling the Linux kernel.
 peace!
