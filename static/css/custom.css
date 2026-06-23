@@ -78,6 +78,7 @@ li > ul {
 .kf-note[data-type="patch"] { --kf-accent: #4aff91; }
 .kf-note[data-type="warn"]  { --kf-accent: #ffaa4a; }
 .kf-note[data-type="debug"] { --kf-accent: #9499a3; }
+.kf-note[data-type="advice"] { --kf-accent: green; }
 
 .kf-button {
   display: flex;

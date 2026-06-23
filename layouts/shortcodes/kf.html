@@ -2,9 +2,9 @@
 {{- $type := .Get "type" | default "note" -}}
 {{- $title := .Get "title" -}}
 {{- $slug := .Get "slug" | default ($date | replaceRE "[^0-9]" "") -}}
-{{- $labels := dict "note" "INFO" "bug" "BUG" "patch" "PATCH" "warn" "WARN" "debug" "DEBUG" "event" "EVENT" -}}
+{{- $labels := dict "note" "INFO" "bug" "BUG" "patch" "PATCH" "warn" "WARN" "debug" "DEBUG" "event" "EVENT" "advice" "ADVICE" -}}
 {{- $label := index $labels $type | default "INFO" -}}
-<details class="kf-note" id="note-{{ $slug }}" data-type="{{ $type }}">
+<details class="kf-note" id="note-{{ $slug }}" data-type="{{ $type | lower }}">
   <summary class="kf-button">
     <span class="kf-meta">
       <span class="kf-chevron"></span>
