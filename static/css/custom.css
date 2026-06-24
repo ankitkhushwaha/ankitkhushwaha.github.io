@@ -146,9 +146,9 @@ li > ul {
   background-color: color-mix(in srgb, var(--kf-accent) 12%, transparent);
 }
 
-/* end kf.html */
+/* end {{ kf.html }} */
 
-/* Klog Block(homepage) */
+/* single.html */
 
 .klog h4 {
   display:inline
@@ -159,4 +159,4 @@ li > ul {
   font-style: italic
 }
 
-/* end Klog Block(homepage) */
+/* end {{ single.html }} */
