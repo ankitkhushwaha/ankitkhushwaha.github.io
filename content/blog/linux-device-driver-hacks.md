@@ -2,45 +2,103 @@
 date: "2026-06-11T17:26:20+05:30"
 draft: false
 title: 'Linux Device Driver Hacks'
-tags: 
+tags:
+  - Char-Device
+  - Cdev
+  - Module-Parameters
+  - Kernel-Api
 categories:
+  - Linux Kernel
 ---
 
 > This blog will contain the code snippets that are needed to implement particular feature in kernel.
 > I'll mainly focus on code snippet rather than the explanation. 
 > Again! this blog may not be fully correct. You're expected to "check the facts/code" before applying.
 > Please correct me, if i'm wrong. I'll be more happy to accept the changes.
-> This Blog is not beginner friendly.
 
-## Kernel MODULE MACRO
+## Macros
 
-### Handling module parameters
+### `container_of()`
+
+#### Accessing a custom struct from `struct inode` via `struct cdev`
+
+`container_of()` lets you walk backward from an embedded member (here, `struct cdev`) to the containing struct. This is how a driver recovers its private device context inside `file_operations` callbacks.
+
 ```c
-#include <linux/moduleparam.h>  // No need to include this. 'linux/module.h' included it.
+#include <linux/kernel.h>   /* container_of() */
+#include <linux/fs.h>       /* struct inode, struct file */
+#include <linux/cdev.h>     /* struct cdev */
 
-module_param(name, type, perm);
-MODULE_PARM_DESC(myarr,"this is my array of int");
+struct scull_dev {
+	/* ... */
+	struct cdev cdev;
+};
+
+int scull_open(struct inode *inode, struct file *filp)
+{
+	struct scull_dev *dev;
+
+	dev = container_of(inode->i_cdev, struct scull_dev, cdev);
+	filp->private_data = dev;
+
+	/* ... */
+}
+
+ssize_t scull_read(struct file *filp, char __user *buff, size_t count,
+		    loff_t *f_pos)
+{
+	struct scull_dev *dev = filp->private_data;
+
+	/* ... */
+}
 ```
 
-```
-inmod module.ko param=value
-```
+> Pattern: stash the recovered pointer in `filp->private_data` on `open()` so every later callback (`read`, `write`, `ioctl`, `release`, ...) can grab it back in one line.
+
 ---
 
-## Char Device
+## Kernel Module
 
-> There are 2 way to create char device.
-> Creating the device node through 'kernel module' or using `mknod`
+### Module Parameters
 
-We will go through both way.
+```c
+#include <linux/module.h>
+#include <linux/moduleparam.h>  /* not strictly needed, linux/module.h already pulls it in */
+#include <linux/kernel.h>
 
-> Note: you have to populate the `strcut file_operations` before binding it `struct cdev`.
+module_param(name, type, perm);
+MODULE_PARM_DESC(myarr, "this is my array of int");
+```
+
+Pass the value at load time:
+
+```bash
+insmod module.ko param=value
+```
+
+---
+
+## Char Devices
+
+> There are 2 ways to create a char device node:
+> 1. Automatically, via `class_create()` / `device_create()` (udev creates the `/dev` entry).
+> 2. Manually, via the `mknod` command.
+
+We'll go through both.
+
+> **Note:** you must populate `struct file_operations` *before* binding it to `struct cdev` (i.e. before calling `cdev_init()`).
 > See [example](https://github.com/niekiran/linux-device-driver-1/blob/54e818e345cc507730fe02008749f89eda262121/custom_drivers/002pseudo_char_driver/pcd.c#L146)
 
-### Kernel Module
+### Method 1 - `class_create()` / `device_create()` (udev)
 
-> **TODO**: Add header files. 
 ```c
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/cdev.h>
+#include <linux/device.h>
+#include <linux/err.h>      /* IS_ERR(), PTR_ERR() */
 
 static dev_t device_number;
 struct cdev pcd_cdev;
@@ -54,50 +112,52 @@ static int __init func_init(void)
 {
 	int ret;
 
-	/*1. Dynamically allocate a device number */
-	ret = alloc_chrdev_region(&device_number,0,1,"pcd_devices");
-	if(ret < 0){
+	/* 1. Dynamically allocate a device number */
+	ret = alloc_chrdev_region(&device_number, 0, 1, "pcd_devices");
+	if (ret < 0) {
 		pr_err("Alloc chrdev failed\n");
 		goto out;
 	}
 
-	pr_info("Device number <major>:<minor> = %d:%d\n",MAJOR(device_number),MINOR(device_number));
+	pr_info("Device number <major>:<minor> = %d:%d\n",
+		 MAJOR(device_number), MINOR(device_number));
 
-	cdev_init(&pcd_cdev,&pcd_fops);
+	/* 2. Initialize the cdev structure with fops */
+	cdev_init(&pcd_cdev, &pcd_fops);
 	pcd_cdev.owner = THIS_MODULE;
 
-	/* 3. Register a device (cdev structure) with VFS */
-	ret = cdev_add(&pcd_cdev,device_number,1);
-	if(ret < 0){
+	/* 3. Register the device (cdev structure) with the VFS */
+	ret = cdev_add(&pcd_cdev, device_number, 1);
+	if (ret < 0) {
 		pr_err("Cdev add failed\n");
 		goto unreg_chrdev;
 	}
-	/*4. create device class under /sys/class/ */
-	class_pcd = class_create(THIS_MODULE,"pcd_class");
-	if(IS_ERR(class_pcd)){
+
+	/* 4. Create a device class under /sys/class/ */
+	class_pcd = class_create(THIS_MODULE, "pcd_class");
+	if (IS_ERR(class_pcd)) {
 		pr_err("Class creation failed\n");
 		ret = PTR_ERR(class_pcd);
 		goto cdev_del;
 	}
 
-	/*5.  populate the sysfs with device information */
-	device_pcd = device_create(class_pcd,NULL,device_number,NULL,"pcd");
-	if(IS_ERR(device_pcd)){
+	/* 5. Populate sysfs with device information -> triggers udev to create /dev/pcd */
+	device_pcd = device_create(class_pcd, NULL, device_number, NULL, "pcd");
+	if (IS_ERR(device_pcd)) {
 		pr_err("Device create failed\n");
 		ret = PTR_ERR(device_pcd);
 		goto class_del;
 	}
 
 	pr_info("Module init was successful\n");
-
 	return 0;
 
 class_del:
 	class_destroy(class_pcd);
 cdev_del:
-	cdev_del(&pcd_cdev);	
+	cdev_del(&pcd_cdev);
 unreg_chrdev:
-	unregister_chrdev_region(device_number,1);
+	unregister_chrdev_region(device_number, 1);
 out:
 	pr_info("Module insertion failed\n");
 	return ret;
@@ -106,22 +166,90 @@ out:
 /* Cleanup function */
 static void __exit func_cleanup(void)
 {
-	device_destroy(class_pcd,device_number);
+	device_destroy(class_pcd, device_number);
 	class_destroy(class_pcd);
 	cdev_del(&pcd_cdev);
-	unregister_chrdev_region(device_number,1);
+	unregister_chrdev_region(device_number, 1);
 	pr_info("module unloaded\n");
 }
 ```
 
-### Using `MKNOD`
+### Method 2 - Manual node creation via `mknod`
 
-> See [example]().
-> **TODO**: Add header files. 
+No use of `class_create()` / `device_create()` here, the driver only reserves the major/minor and registers the `cdev`. You create the `/dev` entry yourself afterward, using the major/minor printed in `dmesg`.
 
 ```c
-```
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/cdev.h>
 
+static dev_t device_number;
+struct cdev pcd_cdev;
+
+struct file_operations pcd_fops;
+
+/* Init function */
+static int __init func_init(void)
+{
+	int ret;
+
+	/* 1. Dynamically allocate a device number */
+	ret = alloc_chrdev_region(&device_number, 0, 1, "pcd_devices");
+	if (ret < 0) {
+		pr_err("Alloc chrdev failed\n");
+		goto out;
+	}
+
+	pr_info("Device number <major>:<minor> = %d:%d\n",
+		 MAJOR(device_number), MINOR(device_number));
+
+	/* 2. Initialize the cdev structure with fops */
+	cdev_init(&pcd_cdev, &pcd_fops);
+	pcd_cdev.owner = THIS_MODULE;
+
+	/* 3. Register the device (cdev structure) with the VFS */
+	ret = cdev_add(&pcd_cdev, device_number, 1);
+	if (ret < 0) {
+		pr_err("Cdev add failed\n");
+		goto unreg_chrdev;
+	}
+
+	pr_info("Module init was successful\n");
+	return 0;
+
+unreg_chrdev:
+	unregister_chrdev_region(device_number, 1);
+out:
+	pr_info("Module insertion failed\n");
+	return ret;
+}
+
+/* Cleanup function */
+static void __exit func_cleanup(void)
+{
+	cdev_del(&pcd_cdev);
+	unregister_chrdev_region(device_number, 1);
+	pr_info("module unloaded\n");
+}
+```
 
 ```bash
+# Load the module, then check the major number it was assigned
+insmod pcd.ko
+cat /proc/devices | grep pcd_devices
+dmesg | tail   # also prints <major>:<minor> from pr_info above
+
+# Manually create the device node (replace <major>/<minor> with the printed values)
+sudo mknod /dev/pcd c <major> <minor>
+sudo chmod 666 /dev/pcd      # optional: open up permissions for testing
+
+# Clean up
+sudo rm /dev/pcd
+rmmod pcd
 ```
+
+> See: [embetronicx - Device File Creation for Character Drivers](https://embetronicx.com/tutorials/linux/device-drivers/device-file-creation-for-character-drivers/)
+
+**Trade-off:** `mknod` is quick for bring-up/testing but the node doesn't survive a reboot and isn't reproducible across machines (major number can shift). `class_create()`/`device_create()` lets udev manage the node automatically and is what real drivers use.
