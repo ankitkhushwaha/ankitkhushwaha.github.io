@@ -279,3 +279,66 @@ rmmod pcd
 > See: [embetronicx - Device File Creation for Character Drivers](https://embetronicx.com/tutorials/linux/device-drivers/device-file-creation-for-character-drivers/)
 
 **Trade-off:** `mknod` is quick for bring-up/testing but the node doesn't survive a reboot and isn't reproducible across machines (major number can shift). `class_create()`/`device_create()` lets udev manage the node automatically and is what real drivers use.
+
+## C Tricks
+
+### The Structural Wrapper: `do { ... } while (0)`
+
+Standard macro design pattern. Forces the macro to behave like a single C statement, so it can't break syntax when used inside an `if/else` without braces.
+
+```c
+#define LOG_DEBUG(msg) do { \
+    printk(KERN_DEBUG msg); \
+    debug_count++; \
+} while (0)
+
+if (tmp)
+    LOG_DEBUG("checking condition\n");
+else
+    do_something();
+```
+
+> Two statements is where this trick stops being a nice-to-have and becomes necessary. Without the wrapper:
+> ```c
+> #define LOG_DEBUG(msg) printk(KERN_DEBUG msg); debug_count++;
+> ```
+> expands the `if` branch into two separate statements, only the first one belongs to the `if`, the second runs unconditionally regardless of `tmp`. Wrap braces `{ }` around it instead and you hit the classic dangling-`;` problem: the trailing `;` after the macro call becomes an empty statement, and the `else` ends up with no matching `if`.
+
+The `do { } while (0)` fixes both: it groups any number of statements into one block, and swallows the semicolon you put after the macro call. `while (0)` never loops, so the compiler optimizes it away, zero runtime cost.
+
+
+### Error Handling
+
+Standard kernel pattern for unwinding partial allocations when a loop fails mid-way.
+
+```c
+int ret;
+int i;
+
+for (i = 0; i < count; i++)
+{
+    arr1[i] = kmalloc(size1, GFP_KERNEL);
+    if (!arr1[i]) {
+        ret = -ENOMEM;
+        goto err;
+    }
+    arr2[i] = kmalloc(size2, GFP_KERNEL);
+    if (!arr2[i]) {
+		/* error handling in mid-way loop */
+        kfree(arr1[i]);
+        arr1[i] = NULL;
+        ret = -ENOMEM;
+        goto err;
+    }
+}
+
+	return 0;
+
+err:
+	while (--i >= 0)
+	{
+		kfree(arr2[i]);
+		kfree(arr1[i]);
+	}
+	return ret;
+```
