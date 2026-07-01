@@ -1,4 +1,5 @@
 {{ $file := .Get 0 }}
+{{ $lang := .Get 1 | default "c" }}
 <div class="large-code">
-    {{ highlight (readFile $file) "c" "" }}
+    {{ highlight (readFile $file) $lang "linenos=table,linenostart=1,lineanchors=lc" }}
 </div>

@@ -1,0 +1,6 @@
+{{ $n := .Get "n" }}
+{{ $id := .Get "id" | default "kf" }}
+<div class="kline" data-kcode-id="{{ $id }}" data-line="{{ $n }}">
+  <a href="#{{ $id }}-{{ $n }}" class="kline-badge">L{{ $n }}</a>
+  <div class="kline-text">{{ .Inner | markdownify }}</div>
+</div>

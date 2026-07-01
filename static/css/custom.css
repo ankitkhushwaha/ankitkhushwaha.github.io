@@ -160,3 +160,228 @@ li > ul {
 }
 
 /* end {{ single.html }} */
+
+/* {{ kcode.html }} */
+
+.kcode-block {
+  margin: 1.5em 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.kcode-meta {
+  display: flex;
+  gap: 0.75em;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5em 1em;
+  background: var(--entry);
+  border-bottom: 1px solid var(--border);
+  font-size: 1em;
+  font-family: monospace;
+}
+
+.kcode-func {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.kcode-file {
+  color: var(--secondary);
+  font-size: 0.9em;
+}
+
+.kcode-version {
+  margin-left: auto;
+  color: var(--secondary);
+  opacity: 0.8;
+  font-size: 0.8em;
+}
+
+.kcode-pre {
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+.kcode-pre pre,
+.kcode-pre code,
+.kcode-pre .chroma {
+  font-size: 1.05em !important;
+  line-height: inherit !important;
+}
+
+.kcode-pre table {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.kcode-pre td {
+  padding: 0;
+  vertical-align: top;
+}
+
+.kcode-pre .lntd:first-child {
+  width: 1%;
+  white-space: nowrap;
+  user-select: none;
+  color: var(--secondary);
+  opacity: 0.55;
+  text-align: right;
+  padding-right: 1em;
+  border-right: 1px solid var(--border);
+}
+
+.kcode-pre .lntd:first-child pre {
+  padding: 0.75em 0;
+  margin: 0;
+}
+
+.kcode-pre .lntd:last-child pre {
+  padding: 0.75em 1em;
+  margin: 0;
+}
+
+.kcode-line {
+  display: block;
+  scroll-margin-top: 4em;
+  transition: background-color 0.15s ease;
+}
+
+.kcode-line:target,
+.kcode-line.kcode-active {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* end {{ kcode.html }} */
+
+/* {{ kline.html }} */
+
+.kline {
+  display: flex;
+  gap: 0.75em;
+  padding: 0.5em 0.75em;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease;
+}
+
+.kline + .kline {
+  margin-top: 0.15em;
+}
+
+.kline.kline-active {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.kline-badge {
+  flex-shrink: 0;
+  height: fit-content;
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  color: var(--primary);
+  font-family: monospace;
+  font-size: 0.85em;
+  text-decoration: none;
+}
+
+.kline-badge:hover { border-color: var(--primary); }
+
+.kline-text {
+  font-size: 1em;
+  line-height: 1.55;
+}
+
+.kline-text code {
+  font-size: 0.95em;
+}
+
+/* ---------- active-recall toggle ---------- */
+
+.krecall {
+  margin: 1em 0;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 0.6em 1em;
+}
+
+.krecall summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+/* end {{ kline.html }} */
+
+/* {{ codeblock.html }} */
+
+.large-code {
+  margin: 1.5em 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 1.7;
+  background: var(--code-bg, var(--entry));
+}
+
+.large-code pre,
+.large-code code,
+.large-code .chroma {
+  font-size: 1em !important;
+  line-height: inherit !important;
+}
+
+.large-code table {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.large-code td {
+  padding: 0;
+  vertical-align: top;
+}
+
+.large-code .lntd:first-child {
+  width: 1%;
+  white-space: nowrap;
+  user-select: none;
+  color: var(--secondary);
+  opacity: 0.55;
+  text-align: right;
+  padding-right: 1em;
+  border-right: 1px solid var(--border);
+}
+
+.large-code .lntd:first-child pre {
+  padding: 0.75em 0;
+}
+
+.large-code .lntd:last-child pre {
+  padding: 0.75em 1em;
+  margin: 0;
+}
+
+.large-code .lntd:last-child .line {
+  display: block;
+  padding: 0 0.25em;
+}
+
+.large-code .lntd:last-child .line:nth-child(odd) {
+  background: color-mix(in srgb, var(--entry) 60%, var(--primary) 4%);
+}
+
+.large-code .lntd:last-child .line:nth-child(even) {
+  background: transparent;
+}
+
+.large-code .line:target,
+.large-code .line.lc-active {
+  background: color-mix(in srgb, var(--primary) 18%, transparent) !important;
+}
+
+/* end {{ codeblock.html }} */

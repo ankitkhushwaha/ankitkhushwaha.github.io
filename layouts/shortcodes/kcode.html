@@ -1,0 +1,24 @@
+{{ $id := .Get "id" | default "kf" }}
+{{ $file := .Get "file" }}
+{{ $func := .Get "func" }}
+{{ $version := .Get "version" }}
+{{ $lang := .Get "lang" | default "c" }}
+
+<div class="kcode-block" data-kcode-id="{{ $id }}">
+  {{ if or $file $func $version }}
+  <div class="kcode-meta">
+    {{ with $func }}<span class="kcode-func">{{ . }}()</span>{{ end }}
+    {{ with $file }}<span class="kcode-file">{{ . }}</span>{{ end }}
+    {{ with $version }}<span class="kcode-version">{{ . }}</span>{{ end }}
+  </div>
+  {{ end }}
+  {{ $code := trim .Inner "\n" }}
+  {{ $opts := printf "linenos=table,linenostart=1,lineanchors=%s" $id }}
+  {{ $html := highlight $code $lang $opts }}
+  {{/* inject data-kcode-id / data-line onto each Chroma line span,
+       keyed off the id="{id}-N" anchor Chroma already generates */}}
+  {{ $idPattern := $id }}
+  {{ $html = replaceRE (printf `id="%s-([0-9]+)"` $idPattern) (printf `id="%s-$1" data-kcode-id="%s" data-line="$1"` $idPattern $idPattern) $html }}
+  {{ $html = replaceRE `class="line"` `class="line kcode-line"` $html }}
+  <div class="kcode-pre">{{ $html | safeHTML }}</div>
+</div>
