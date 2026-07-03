@@ -1,7 +1,7 @@
 ---
 date: "2026-06-11T17:26:20+05:30"
 draft: false
-title: 'Linux Device Driver Hacks'
+title: "Linux Device Driver Hacks"
 tags:
   - Char-Device
   - Cdev
@@ -12,7 +12,7 @@ categories:
 ---
 
 > This blog will contain the code snippets that are needed to implement particular feature in kernel.
-> I'll mainly focus on code snippet rather than the explanation. 
+> I'll mainly focus on code snippet rather than the explanation.
 > Again! this blog may not be fully correct. You're expected to "check the facts/code" before applying.
 > Please correct me, if i'm wrong. I'll be more happy to accept the changes.
 
@@ -73,6 +73,7 @@ static int func(void)
 	return -1;
 }
 ```
+
 `pr_fmt()` line auto-adjusts to whichever function it's expanded in.
 
 Expands to roughly:
@@ -86,6 +87,7 @@ Without `pr_fmt()`, every `pr_*()` line falls back to the default `"%s"`, no mod
 ```
 [   12.482103] module_name:func: hello-world
 ```
+
 > Default fallback is `#define pr_fmt(fmt) fmt`, just the format string, untouched, if you never define your own.
 > and only affects the `pr_*()` family, not raw `printk(KERN_WARNING ...)` calls.
 
@@ -128,7 +130,7 @@ obj-m := proc_fs_basic.o
 
 - **`CFLAGS_main.o`** - per-object compiler flags. Only `main.o` gets `-DDEBUG`; if you had `main.o` and `helper.o`, only the first sees the macro. Useful for debug-gating one file without recompiling the whole module noisily.
 
-- **`ccflags-y`** - flags applied to *every* `.o` in this Makefile (the module-wide equivalent of `CFLAGS`). Here it forces `gnu99` and defines `ENABLE_DEBUG` globally.
+- **`ccflags-y`** - flags applied to _every_ `.o` in this Makefile (the module-wide equivalent of `CFLAGS`). Here it forces `gnu99` and defines `ENABLE_DEBUG` globally.
 
 - **`proc_fs_basic-objs`** - when a module is built from more than one source file, this lists what gets linked into the final `.ko`. Pattern is `<module_name>-objs := a.o b.o c.o` (Kbuild also accepts `-y` instead of `-objs` in newer trees).
 
@@ -141,12 +143,13 @@ obj-m := proc_fs_basic.o
 ## Char Devices
 
 > There are 2 ways to create a char device node:
+>
 > 1. Automatically, via `class_create()` / `device_create()` (udev creates the `/dev` entry).
 > 2. Manually, via the `mknod` command.
 
 We'll go through both.
 
-> **Note:** you must populate `struct file_operations` *before* binding it to `struct cdev` (i.e. before calling `cdev_init()`).
+> **Note:** you must populate `struct file_operations` _before_ binding it to `struct cdev` (i.e. before calling `cdev_init()`).
 > See [example](https://github.com/niekiran/linux-device-driver-1/blob/54e818e345cc507730fe02008749f89eda262121/custom_drivers/002pseudo_char_driver/pcd.c#L146)
 
 ### Method 1 - `class_create()` / `device_create()` (udev)
@@ -503,14 +506,14 @@ Start (open) -> next -> show -> next -> show -> next -> show -> End (close)
 
 > **Why does `proc_seq_start` get invoked twice at the end?**
 > `read()` on a `/proc` file isn't a single call. `cat` keeps calling `read()` until it gets 0 bytes back, since that's the EOF signal. So after the iterator exhausts `data[]` and `stop()` runs, userspace issues one more `read()`, which reopens the sequence at the last `*pos` (here, 7) just to confirm there's really nothing left. `start()` returns `NULL`, `seq_read()` returns 0, and only then does `cat` stop calling.
-Putting the three side by side:
+> Putting the three side by side:
 
-| | `file_operations` | `single_show` | `seq_operations` |
-|---|---|---|---|
-| Random access (`llseek`) | Yes | No (single blob) | No, sequential only |
-| State management | Manual (own position tracking) | None needed | `start`/`next`/`stop` cursor |
-| Use case | Legacy, arbitrary seek/read | Fixed, one-shot output | Iterating kernel object lists |
-| Error surface | High, positions/offsets by hand | Low | Low, but iterator logic must be correct |
+|                          | `file_operations`               | `single_show`          | `seq_operations`                        |
+| ------------------------ | ------------------------------- | ---------------------- | --------------------------------------- |
+| Random access (`llseek`) | Yes                             | No (single blob)       | No, sequential only                     |
+| State management         | Manual (own position tracking)  | None needed            | `start`/`next`/`stop` cursor            |
+| Use case                 | Legacy, arbitrary seek/read     | Fixed, one-shot output | Iterating kernel object lists           |
+| Error surface            | High, positions/offsets by hand | Low                    | Low, but iterator logic must be correct |
 
 **Rule of thumb**: if the output is a single formatted string, `single_show` is the least code for the same result. Use `seq_operations` only when you're iterating over data structure that userspace expects to read top to bottom.
 
@@ -533,13 +536,14 @@ else
 ```
 
 > Two statements is where this trick stops being a nice-to-have and becomes necessary. Without the wrapper:
+>
 > ```c
 > #define LOG_DEBUG(msg) printk(KERN_DEBUG msg); debug_count++;
 > ```
+>
 > expands the `if` branch into two separate statements, only the first one belongs to the `if`, the second runs unconditionally regardless of `tmp`. Wrap braces `{ }` around it instead and you hit the classic dangling-`;` problem: the trailing `;` after the macro call becomes an empty statement, and the `else` ends up with no matching `if`.
 
 The `do { } while (0)` fixes both: it groups any number of statements into one block, and swallows the semicolon you put after the macro call. `while (0)` never loops, so the compiler optimizes it away, zero runtime cost.
-
 
 ### Error Handling
 

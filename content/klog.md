@@ -8,10 +8,11 @@ ShowToc: false
 ShowBreadCrumbs: false
 hideMeta: true
 ---
+
 {{< kf title="Suggestion before starting kernel development" date="2026-06-23" type="advice" slug="8" >}}
 Spent hours of debugging a driver bug that was entirely due to incorrect use of pointers with memory allocation.
 
-This reminds me, 
+This reminds me,
 As a system programmer you have to ace the pointers and struct.
 
 These skill cannot be compromised.
@@ -23,29 +24,28 @@ peace!
 {{< /kf >}}
 
 {{< kf title="Open Source Summit India'26" date="2026-06-18" type="event" slug="6" >}}
-This Week, I had the opportunity to attend the "Open Source Summit India'26" hosted by 
+This Week, I had the opportunity to attend the "Open Source Summit India'26" hosted by
 "The Linux Foundation" as LFX Mentee.
 
-In the summit there was lot of Kernel folks -- We discussed about the kernel, 
-how they started contributing to "Linux Kernel". 
+In the summit there was lot of Kernel folks -- We discussed about the kernel,
+how they started contributing to "Linux Kernel".
 Apart from this I met with so many folk from different field, made a lot of connection,
-got so many meaning full insights. Attended many mindfull talks. 
+got so many meaning full insights. Attended many mindfull talks.
 
-Also I had a chance to ask question from Greg Kroah-Hartman during the "Ask the Experts Session" 
+Also I had a chance to ask question from Greg Kroah-Hartman during the "Ask the Experts Session"
 and opportunity to listen to Linus Torvalds during "Keynote Session". It was Wonderful Experience.
 
-At EOD of 16 june, I presented my work during "Poster showcase session" as "LFX mentee", 
+At EOD of 16 june, I presented my work during "Poster showcase session" as "LFX mentee",
 where i discussed about the #OSS contribution that i did during LFX Mentorship.
 
-I would recommend any guy interested in #OSS to attend these summits. 
+I would recommend any guy interested in #OSS to attend these summits.
 As it's a incredible environment for anyone looking to level up their skills and expand their professional network.
 
 and Lastly, I would like to thanks "The Linux Foundation" for this Opportunity.
 {{< /kf >}}
 
-
 {{< kf title="Debugging the 'GPIO PINS'" date="2026-06-10" type="debug" slug="5" >}}
-Last week, i was working on my JHD659 LCD 16*2 display project. I have connected the display to Beaglebone black(BBB) gpio pins, and analying the pins values using USB Analyzer("heavy wiring!"). Intitally USB Analyzer seem to works fine detecting the pin value. 
+Last week, i was working on my JHD659 LCD 16\*2 display project. I have connected the display to Beaglebone black(BBB) gpio pins, and analying the pins values using USB Analyzer("heavy wiring!"). Intitally USB Analyzer seem to works fine detecting the pin value.
 
 But While ago, i noticed a strange pattern, even after changing the pin value from low to high or vice-versa. USB Analyzer was detecting value as high of all pins. Out of curiosity i checked "ground pin" of BBB, which was giving minor shock. ;-
 
@@ -58,8 +58,6 @@ The actual problem turned out the current leakage for the barrel jack power supp
 
 tl'dr: If u think gpio pins of hardware not working or faulty, check its voltage of related pin. Leakage current might be the issue.
 {{< /kf >}}
-
-
 
 {{< kf title="Reading logs through serial debug console" date="2026-05-27" type="debug" slug="4" >}}
 Recently I was accessing my BeagleBone Black's logs through the serial debug console. Everything working great. Then on the second attempt, I opened minicom but nothing appeared. No boot messages, no login prompt.
@@ -92,8 +90,6 @@ Picocom, however, locked the resource properly after accessing it.
 tl'dr: Close the processes respectfully in Linux. Learned this the hard way.
 {{< /kf >}}
 
-
-
 {{< kf title="C Memory Layout--Understanding through Linux Kernel Patch" date="2026-05-05" slug="3"  >}}
 One of the biggest advantages of contributing to the Linux kernel is the rigor it demands. Every patch requires rock-solid reasoning, clear documentation, and thorough review. During the Linux kernel mentorship program, I submitted a patch for the IPsec selftest that forced me to think deeply about C memory layout, structs, unions, and flexible array members.
 
@@ -103,8 +99,6 @@ I've written a comprehensive blog post breaking down the fundamentals and walkin
 
 If you've ever wondered how structs actually sit in memory, what flexible array members really are, or why the compiler complains about variable-sized types. This post is for you.
 {{< /kf >}}
-
-
 
 {{< kf title="Setup Uboot For Beaglebone Black" date="2026-04-23" slug="2" >}}
 most of embedded devs surely went through this situtation:
@@ -116,6 +110,7 @@ The culprit sometimes can be the U-Boot itself. Older versions simply don't supp
 So I wrote an end-to-end guide on building and installing U-Boot from source for the BeagleBone Black, covering everything from cross-compilation to autoboot via uEnv.txt.
 
 What's inside:
+
 - Cross-compiling U-Boot for the AM335x SoC
 - SD card partition layout (FAT32 boot + ext4 rootfs)
 - Installing MLO and u-boot.img correctly into the boot partition
@@ -125,8 +120,6 @@ What's inside:
 
 Read the full blog here: [Link](https://www.ankitkdev.com/blog/configure-uboot-bbb/)
 {{< /kf >}}
-
-
 
 {{< kf title="Started learning Device Driver Dev" date="2026-04-11" slug="1" >}}
 Recently started learning driver development on the BeagleBone Black (TI AM335x, Cortex-A8).
@@ -143,7 +136,7 @@ The real problem was the SD card. Extremely slow write speeds were causing the i
 
 That small detail cost me a lot of time, but it forced me to approach debugging more systematically instead of relying on guesses.
 
-Compiling and installing the Linux kernel was another challenge. Things rarely worked on the first try, and errors didn’t always point to the real issue. Over time, though, the process started to make sense. 
+Compiling and installing the Linux kernel was another challenge. Things rarely worked on the first try, and errors didn’t always point to the real issue. Over time, though, the process started to make sense.
 I’ve written about that here: [Link](https://www.ankitkdev.com/blog/build-linux-kernel-bbb/)
 
 This experience changed how I debug:
@@ -154,4 +147,3 @@ This experience changed how I debug:
 
 Working close to the system teaches you a simple rule: the system is consistent, you just haven’t understood it yet.
 {{< /kf >}}
-
