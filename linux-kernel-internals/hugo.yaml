@@ -1,0 +1,12 @@
+baseURL: 'https://ankitkdev.com/linux-kernel-internals'
+title: 'Linux-Kernel-Internals'
+
+theme: 'hugo-book'
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  BookSection: '*'
