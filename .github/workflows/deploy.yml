@@ -32,14 +32,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.148.2
+      HUGO_VERSION: 0.163.3
     steps:
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
-        run: sudo snap install dart-sass
+        run: npm install -g sass
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -60,6 +60,21 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+          pushd linux-kernel-internals
+
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/linux-kernel-internals/"
+
+          popd
+
+      - name: Merge outputs
+        run: |
+          mkdir -p public/linux-kernel-internals
+          cp -a linux-kernel-internals/public/. public/linux-kernel-internals/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
