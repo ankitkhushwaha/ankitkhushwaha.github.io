@@ -61,19 +61,19 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-          pushd linux-kernel-internals
+          pushd kblog
 
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/linux-kernel-internals/"
+            --baseURL "${{ steps.pages.outputs.base_url }}/kblog/"
 
           popd
 
       - name: Merge outputs
         run: |
-          mkdir -p public/linux-kernel-internals
-          cp -a linux-kernel-internals/public/. public/linux-kernel-internals/
+          mkdir -p public/kblog
+          cp -a kblog/public/. public/kblog/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

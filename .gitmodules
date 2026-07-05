@@ -1,6 +1,6 @@
 [submodule "themes/PaperMod"]
 	path = themes/PaperMod
 	url = https://github.com/adityatelange/hugo-PaperMod
-[submodule "linux-kernel-internals/themes/hugo-book"]
-	path = linux-kernel-internals/themes/hugo-book
+[submodule "kblog/themes/hugo-book"]
+	path = kblog/themes/hugo-book
 	url = https://github.com/alex-shpak/hugo-book

@@ -11,4 +11,4 @@ categories:
   - Linux Kernel
 ---
 
-this blog is migrated [here](/linux-kernel-internals/)
+this blog is migrated [here](/kblog/)
