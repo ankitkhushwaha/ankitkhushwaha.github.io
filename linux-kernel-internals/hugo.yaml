@@ -8,5 +8,48 @@ markup:
     renderer:
       unsafe: true
 
+outputFormats:
+  txt:
+    mediaType: text/plain
+    baseName: source
+    isPlainText: true
+
+outputs:
+  home:
+    - html
+    - txt
+    - rss
+  page:
+    - html
+    - txt
+  section:
+    - html
+    - txt
+
 params:
   BookSection: '*'
+
+  # (Optional, default light) Sets color theme: light, dark or auto.
+  # Theme 'auto' switches between dark and light modes based on browser/os preferences
+  BookTheme: "light"
+  BookToC: true
+  favicon: "/img/favicon.ico"
+
+  BookRepo: https://github.com/ankitkhushwaha/ankitkhushwaha.github.io/
+  BookLastChangeLink: '{{ .Site.Params.BookRepo }}/commit/{{ .GitInfo.Hash }}'
+  BookEditLink: '{{ .Site.Params.BookRepo }}/edit/main/linux-kernel-internals/{{ .Path }}'
+
+  BookDateFormat: 'January 2, 2006'
+
+  # Enable full-text search with fuse.js
+  BookSearch: true
+
+  # Enable comments template on pages
+  # By default uses Disqus; override partials/docs/comments.html for others
+  BookComments: true
+
+# Preserve URL casing (recommended)
+disablePathToLower: true
+
+# Enable git metadata for "Last Modified" footer
+enableGitInfo: true
