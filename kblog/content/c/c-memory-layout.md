@@ -1,21 +1,21 @@
 ---
-date: "2026-05-04T13:30:05+05:30"
-draft: false
-title: "C Memory Layout: Structs, Unions, and a Linux Kernel Patch"
-categories:
-  - C Programming
-  - Linux Kernel
+title: "C Memory Layout"
+# categories:
+#   - C Programming
+#   - Linux Kernel
 
-tags:
-  - structs
-  - unions
-  - flexible-array-member
-  - memory-layout
-  - compiler-warning
-  - kernel-patch
+# tags:
+#   - structs
+#   - unions
+#   - flexible-array-member
+#   - memory-layout
+#   - compiler-warning
+#   - kernel-patch
 ---
 
-# Overview
+# C Memory Layout: Structs, Unions, and a Linux Kernel Patch
+
+## Overview
 
 C memory layout looks simple in isolation: structs store fields sequentially, unions overlap memory, and flexible array members allow variable-sized trailing storage. But combining these features can create subtle layout issues.
 
@@ -25,7 +25,7 @@ This article tackles an unusual case: **what happens when you place variable-siz
 
 We will start by understanding how structs, unions, and flexible array members are laid out in memory, then use a real Linux kernel patch to see how these rules interact in practice.
 
-# 1. Struct Memory Layout
+## 1. Struct Memory Layout
 
 In C, a `struct` lays out its fields **sequentially** in memory, from top to bottom.
 The compiler may insert invisible **padding bytes** between fields to satisfy alignment
@@ -57,7 +57,7 @@ offsetof(struct example, b)  // -> 4
 offsetof(struct example, c)  // -> 8
 ```
 
-# 2. Union Memory Layout
+## 2. Union Memory Layout
 
 A `union` is different. All members **share the same starting address** (offset 0).
 The union is sized to fit the **largest** member.
@@ -94,7 +94,7 @@ printf("%d\n", d.bytes[0]); // interpret as first byte
 
 All union members begin at offset 0, so the same memory can be interpreted in different ways.
 
-# 3. Flexible Array Members (FAMs)
+## 3. Flexible Array Members (FAMs)
 
 A **flexible array member** is a zero-length array declared as the **last field** of a struct.
 It acts as a variable-length tail allowing you to allocate extra memory beyond the struct's fixed size and access it through the FAM.

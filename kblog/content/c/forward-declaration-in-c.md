@@ -1,17 +1,17 @@
 ---
-date: "2026-05-17T17:00:31+05:30"
-draft: false
-title: "Understanding Forward Declarations in C"
-tags:
-  - forward-declaration
-  - c-programming
-  - compiler
-  - kernel-api
-categories:
-  - C Programming
-  - Linux Kernel
-  - Embedded Systems
+title: "Forward Declarations"
+# tags:
+#   - forward-declaration
+#   - c-programming
+#   - compiler
+#   - kernel-api
+# categories:
+#   - C Programming
+#   - Linux Kernel
+#   - Embedded Systems
 ---
+
+# Understanding Forward Declarations in C
 
 One of the best ways to learn systems programming is by reading real-world code. Recently, while reading the Linux kernel source, I noticed something interesting inside `drivers/pinctrl/core.h`:
 
