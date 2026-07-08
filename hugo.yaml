@@ -23,15 +23,6 @@ menu:
       url: *resume_path
       weight: 2
 
-    - identifier: categories
-      name: categories
-      url: /categories/
-      weight: 10
-    - identifier: tags
-      name: tags
-      url: /tags/
-      weight: 20
-
 params:
   author: "Ankit"
   mainSections:
