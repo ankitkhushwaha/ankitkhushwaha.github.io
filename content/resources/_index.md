@@ -15,3 +15,7 @@ weight: 2
 **A Linux Kernel Developer’s Notes[Moon Hee Lee]** - https://www.linkedin.com/pulse/linux-kernel-developers-notes-moon-hee-lee-xzs6c
 
 **Embetronicx Linux Device Driver Tutorials** - https://embetronicx.com/linux-device-driver-tutorials/
+
+**elixir-bootlin**- https://elixir.bootlin.com/linux
+
+**kernel-config** - https://www.kernelconfig.io/index.html
