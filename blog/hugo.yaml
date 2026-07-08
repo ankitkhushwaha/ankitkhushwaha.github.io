@@ -1,4 +1,4 @@
-baseURL: 'https://ankitkdev.com/kblog'
+baseURL: 'https://ankitkdev.com/blog'
 title: 'Linux-Kernel-Internals'
 
 theme: 'hugo-book'
@@ -37,7 +37,7 @@ params:
 
   BookRepo: https://github.com/ankitkhushwaha/ankitkhushwaha.github.io/
   BookLastChangeLink: '{{ .Site.Params.BookRepo }}/commit/{{ .GitInfo.Hash }}'
-  BookEditLink: '{{ .Site.Params.BookRepo }}/edit/main/kblog/{{ .Path }}'
+  BookEditLink: '{{ .Site.Params.BookRepo }}/edit/main/blog/{{ .Path }}'
 
   BookDateFormat: 'January 2, 2006'
 

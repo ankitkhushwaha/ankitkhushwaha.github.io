@@ -61,19 +61,19 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-          pushd kblog
+          pushd blog
 
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/kblog/"
+            --baseURL "${{ steps.pages.outputs.base_url }}/blog/"
 
           popd
 
       - name: Merge outputs
         run: |
-          mkdir -p public/kblog
-          cp -a kblog/public/. public/kblog/
+          mkdir -p public/blog
+          cp -a blog/public/. public/blog/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
