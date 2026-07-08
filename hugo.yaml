@@ -13,11 +13,6 @@ menu:
       url: /me/
       weight: 30
 
-    - identifier: "Search"
-      name: "Search"
-      url: /search
-      weight: 1
-
     - identifier: Blog
       name: Blog
       url: /blog/
