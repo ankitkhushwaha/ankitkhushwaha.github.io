@@ -1,0 +1,38 @@
+{{ $src := .Get "src" }}
+{{ $res := resources.Get $src }}
+{{ if not $res }}
+  {{ $res = .Page.Resources.GetMatch $src }}
+{{ end }}
+
+{{ if $res }}
+  <div style="
+    max-width: {{ .Get "width" | default "100%" }};
+    margin: {{ .Get "margin" | default "0 auto" }};
+  ">
+    <video
+      style="width:100%; height:auto;"
+      {{ with .Get "poster" }}poster="{{ . }}"{{ end }}
+      {{ with .Get "preload" }}preload="{{ . }}"{{ else }}preload="auto"{{ end }}
+      {{ if ne (.Get "controls") "false" }}controls{{ end }}
+      {{ with .Get "autoplay" }}autoplay{{ end }}
+      {{ with .Get "muted" }}muted{{ end }}
+      {{ with .Get "loop" }}loop{{ end }}
+      {{ with .Get "playsinline" }}playsinline{{ end }}
+      {{ with .Get "crossorigin" }}crossorigin="{{ . }}"{{ end }}
+    >
+      <source src="{{ $res.RelPermalink }}" type="{{ $res.MediaType }}">
+
+      {{/* Fallback source (e.g. webm alongside mp4) */}}
+      {{ with .Get "fallback" }}
+        {{ $fb := resources.Get . }}
+        {{ if $fb }}
+          <source src="{{ $fb.RelPermalink }}" type="{{ $fb.MediaType }}">
+        {{ end }}
+      {{ end }}
+
+      Your browser does not support the video tag.
+    </video>
+  </div>
+{{ else }}
+  {{ errorf "Video resource not found in assets/ or page bundle: %s" $src }}
+{{ end }}
