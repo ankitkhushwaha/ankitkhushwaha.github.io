@@ -1,21 +1,21 @@
 ---
-date: "2026-02-04T16:45:19+05:30"
-draft: False
-title: "Basics of debugging slab memory corruption via SLUB debug"
-categories:
-  - Linux Kernel
-  - Debugging
+title: "SLUB debug"
+# categories:
+#   - Linux Kernel
+#   - Debugging
 
-tags:
-  - slab
-  - slub
-  - memory-corruption
-  - uaf
-  - debugging
-  - allocator
+# tags:
+#   - slab
+#   - slub
+#   - memory-corruption
+#   - uaf
+#   - debugging
+#   - allocator
 ---
 
-# Introduction
+# Basics of debugging slab memory corruption via SLUB debug
+
+## Introduction
 
 Memory corruption can occur due to various bugs or defects: Uninitialized Memory
 Reads (UMR), Use After Free (UAF), Use After Return (UAR), double-free, memory
@@ -38,26 +38,26 @@ SLUB debug → adds metadata + checks
 
 This blog will explain to basics of debugging a slab memory corruption via SLUB debug.
 
-# Requirements
+## Requirements
 
 We will be using the code example from
 `https://github.com/ankitkhushwaha/Linux-Kernel-Debugging-tutorials`
 So make sure to clone it.
 
-# Enable CONFIG_SLUB_DEBUG
+## Enable CONFIG_SLUB_DEBUG
 
 Following configs are needed to use this feature.
 
 ```
 $ grep SLUB_DEBUG /boot/config-6.18.7-200.fc43.x86_64
 CONFIG_SLUB_DEBUG=y
-# CONFIG_SLUB_DEBUG_ON is not set
+## CONFIG_SLUB_DEBUG_ON is not set
 ```
 
 This config implies that SLUB debugging is available but disabled by default (as CONFIG\_
 SLUB_DEBUG_ON is off). It is Usually disabled in production due to overhead; enable only for debugging.
 
-# The slub_debug Kernel Parameter
+## The slub_debug Kernel Parameter
 
 To leverage SLUB debug features we need to boot the kernel with slub_debug parameter.
 
@@ -75,7 +75,7 @@ To leverage SLUB debug features we need to boot the kernel with slub_debug param
 
 Note - Kernel also provides way to enable flags for Specific slub inside '/sys/kernel/slab/slabname' folder.
 
-# Understanding the SLUB layer's poison flags
+## Understanding the SLUB layer's poison flags
 
 The poison flags defined by the kernel are defined as follows:
 
@@ -92,7 +92,7 @@ The poison flags defined by the kernel are defined as follows:
 - The POISON_INUSE value (0x5a equals ASCII Z) is used to denote padding zones, before or after red zones.
 - The last legal byte of the slab memory object is set to POISON_END, 0xa5.
 
-# Boot the Kernel
+## Boot the Kernel
 
 Boot the kernel with `slub_debug=FZPU`
 
@@ -106,14 +106,14 @@ BOOT_IMAGE=(hd0,gpt2)/vmlinuz-6.18.7-200.fc43.x86_64 root=UUID=94fc6fde-521c-4d2
 Note: if kernel is build with KASAN support then it will catch the bug[discussed below] first.
 Try this in Production kernel built without KASAN support.
 
-# Reproduce the bug
+## Reproduce the bug
 
 All test cases are defined in: `ch5/kmembugs_test/kmembugs_test.c`
 
 ```
 $ cd ch5/kmembugs_test
-$ sudo ./load_testmod     # build & load the kernel module
-$ sudo ./run_tests        # input the test number
+$ sudo ./load_testmod     ## build & load the kernel module
+$ sudo ./run_tests        ## input the test number
 5.2
 [  160.928464] testcase to run: 5.2
 [  160.928479] [Right Redzone overwritten] 0xffff8de137751680-0xffff8de137751683 @offset=1664. First byte 0x78 instead of 0xcc
@@ -223,15 +223,16 @@ The last byte was initialized with POISON_END bit (0xa5) and the value 0x78 is o
 This tell us that Right redzone of concerned memory was being overwritten with value '0x78' in ascii 'x'.
 In last Lines of logs We can see that Slab framework corrected the memory by restoring it to previous POISON_FLAG.
 
-# Conclusion
+## Conclusion
 
 while the kernel SLUB debug framework seems to catch most of the memory corruption issues on slab memory,
 it doesn't seem to catch the read OOB accesses on slab memory. Though it is reliable tool to detect memory corruption in production kernels.
 
 It can catch the following bugs-
-![alt text](/slab-memory-detect.png)
 
-# References
+{{< image src="slab-memory-detect.png" alt="Description" title="slab-memory-detect" loading="lazy" >}}
+
+## References
 
 - https://www.kernel.org/doc/Documentation/vvm/slub.txt
 - https://www.oreilly.com/library/view/linux-kernel-debugging/9781801075039/

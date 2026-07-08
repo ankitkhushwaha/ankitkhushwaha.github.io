@@ -1,20 +1,20 @@
 ---
-date: "2026-04-08T22:31:16+05:30"
-draft: false
-title: "Build and Install Linux Kernel For Beaglebone Black"
-categories:
-  - Linux Kernel
-  - Embedded Systems
+title: "Build & Install Linux Kernel for BBB"
+# categories:
+#   - Linux Kernel
+#   - Embedded Systems
 
-tags:
-  - kernel-build
-  - beaglebone-black
-  - arm
-  - cross-compilation
-  - deployment
+# tags:
+#   - kernel-build
+#   - beaglebone-black
+#   - arm
+#   - cross-compilation
+#   - deployment
 ---
 
-# Overview
+# Build and Install Linux Kernel For Beaglebone Black
+
+## Overview
 
 The BeagleBone Black (BBB) uses an ARM Cortex-A8 32 bit processor, so the kernel must be cross-compiled on an x86 machine and then deployed to the board. This blog will assume that you already have a os[debian/ubuntu] installed on your sd card.
 

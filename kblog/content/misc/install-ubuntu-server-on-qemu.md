@@ -1,20 +1,20 @@
 ---
-date: "2025-08-16T14:30:04+05:30"
-draft: False
 title: "Install Ubuntu Server on Qemu"
-categories:
-  - Virtualization
-  - Linux
+# categories:
+#   - Virtualization
+#   - Linux
 
-tags:
-  - qemu
-  - ubuntu-server
-  - virtual-machine
-  - buildroot
-  - testing
+# tags:
+#   - qemu
+#   - ubuntu-server
+#   - virtual-machine
+#   - buildroot
+#   - testing
 ---
 
-# Installation of ubuntu server on qemu-x86_64
+# Install Ubuntu Server on Qemu
+
+## Installation of ubuntu server on qemu-x86_64
 
 At First I want to run the custom modules on linux. But this is something that is not good to do on host machine. So i searched a lot of stuff. Tinkering with buildroot, after some days i was able to run the build on qemu.
 
@@ -26,11 +26,11 @@ Eventually i decided to leave the arch linux for now -> package dependency in ar
 
 **Note** : Most of cmds used are well explained in article given above. Check out that too!
 
-## Download the iso file
+### Download the iso file
 
 You can download it from [here](https://ubuntu.com/download/server).
 
-## Create qemu image
+### Create qemu image
 
 ```
 qemu-img create -f raw <MY_IMAGE> 10G
@@ -44,7 +44,7 @@ This cmd create the image file with 10 Gb. You can choose according to your requ
 
 Worth mentioning is the alternative qcow2 image format. While slower than a raw formatted image, the qcow2 image size increases during VM usage. You set a limit in gigabytes on the size of the qcow2 image during creation.
 
-## Installting the Distro
+### Installting the Distro
 
 ```
 qemu-system-x86_64 \
@@ -67,7 +67,7 @@ Do not give space between `file=<MY_IMAGE>,format=raw`. Otherwise it will fail.
 
 After complete installtion it asks for reboot and remove the bootable medium -> you can safely kill the process.
 
-## Running the ubuntu-server
+### Running the ubuntu-server
 
 ```
 qemu-system-x86_64 \
@@ -78,4 +78,4 @@ qemu-system-x86_64 \
   -serial stdio
 ```
 
-![alt text](/qemu.png)
+{{< image src="qemu.png" alt="Description" title="qemu" loading="lazy" >}}

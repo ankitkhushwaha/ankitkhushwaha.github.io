@@ -1,25 +1,25 @@
 ---
-date: "2025-12-08T10:35:09+05:30"
-draft: False
 title: "Linux Kernel Mentorship Program"
-categories:
-  - Career
-  - Linux Kernel
+# categories:
+#   - Career
+#   - Linux Kernel
 
-tags:
-  - mentorship
-  - lfx
-  - linux-foundation
-  - open-source
-  - learning
+# tags:
+#   - mentorship
+#   - lfx
+#   - linux-foundation
+#   - open-source
+#   - learning
 ---
 
-### Introduction
+# Linux Kernel Mentorship Program
+
+## Introduction
 
 I have been using Linux for the last two years and gradually developed an interest in systems programming and C. The mentorship prerequisites includes tasks like building and booting the Linux kernel, writing a basic kernel module, decoding stack traces, and modifying and booting a custom kernel build.
 
 Somehow, my application was accepted ;-).
-![alt text](/lfx-acceptance.png)
+{{< image src="lfx-acceptance.png" alt="Description" title="lfx-acceptance" loading="lazy" >}}
 
 At first, the Linux Kernel seemed quite difficult to understand what was going on. We were initially told to choose two subsystems to work on.
 
@@ -36,7 +36,7 @@ When submitting patches, it is important to clearly explain:
 - why the change is needed
 - how it fixes the issue
 
-### The Patch Submission Flow
+## The Patch Submission Flow
 
 1. **Create the Patch:**
 
@@ -85,7 +85,7 @@ make headers_install
 
 see: [discussion](https://lore.kernel.org/all/aRs6EbV2gnkertzA@google.com/)
 
-### Contributions
+## Contributions
 
 During the mentorship total of 8 patch was accepted in mainline kernel.
 
@@ -101,7 +101,7 @@ afb8f6567a5b4bb4e673608048939fef854b8709 selftest: net: fix socklen_t type misma
 de4cbd704731778a2dc833ce5a24b38e5d672c05 ring buffer: Propagate __rb_map_vma return value to caller
 ```
 
-### Tools
+## Tools
 
 **Cscope:**
 

@@ -1,20 +1,20 @@
 ---
-date: "2026-04-22T15:02:44+05:30"
-draft: false
-title: "Configure U-boot For Beaglebone Black"
-categories:
-  - Embedded Systems
-  - Bootloaders
+title: "Configure U-boot for BBB"
+# categories:
+#   - Embedded Systems
+#   - Bootloaders
 
-tags:
-  - u-boot
-  - beaglebone-black
-  - cross-compilation
-  - boot-process
-  - arm
+# tags:
+#   - u-boot
+#   - beaglebone-black
+#   - cross-compilation
+#   - boot-process
+#   - arm
 ---
 
-# Overview
+# Configure U-boot for BeagleBone Black
+
+## Overview
 
 U-Boot (Universal Boot Loader) is the go-to bootloader for embedded Linux systems. If you're working with the BeagleBone Black (BBB), building U-Boot from source gives you full control over the boot process, from initializing hardware to loading your kernel. This guide walks you through cross-compiling and installing U-Boot on the BBB from scratch.
 
@@ -104,7 +104,7 @@ Before building, you can customize U-Boot behavior using the configuration menu:
 make menuconfig
 ```
 
-![U-Boot menuconfig](/uboot_menuconfig.png)
+{{< image src="uboot_menuconfig.png" alt="Description" title="U-Boot menuconfig" loading="lazy" >}}
 
 Navigate to:
 
@@ -219,7 +219,7 @@ To ensure the board boots from the SD card instead of the onboard eMMC, you need
 
 **Press and hold the BOOT button (S2, located near the SD card slot)**, then apply power. Keep it pressed for a couple of seconds until the board starts booting, then release.
 
-![BeagleBone Black boot button](/bbb.png)
+{{< image src="bbb.png" alt="Description" title="BeagleBone Black" loading="lazy" >}}
 
 You should see U-Boot output on the serial console ending with:
 
