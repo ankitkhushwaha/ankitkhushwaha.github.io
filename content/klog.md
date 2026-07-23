@@ -9,6 +9,12 @@ ShowBreadCrumbs: false
 hideMeta: true
 ---
 
+{{< kf title="New Blogs" date="2026-07-23" type="info" slug="9" >}}
+Recently I migrated my blog to new hugo theme to organise my blog content efficiently.
+
+check it out. [link](/blog)
+{{< /kf >}}
+
 {{< kf title="Suggestion before starting kernel development" date="2026-06-23" type="advice" slug="8" >}}
 Spent hours of debugging a driver bug that was entirely due to incorrect use of pointers with memory allocation.
 
