@@ -3,6 +3,13 @@ title: Char Driver
 weight: 1
 ---
 
+## `dev_t`
+32 bit unsigned integer where first 20 used to store minor and rest 12 bit used to store major.
+
+see:
+- `include/linux/kdev_t.h`
+- `include/linux/types.h`
+
 ## Char Devices
 
 > There are 2 ways to create a char device node:
