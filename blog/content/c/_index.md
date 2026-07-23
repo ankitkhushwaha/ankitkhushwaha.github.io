@@ -1,5 +1,5 @@
 ---
 title: C tricks
 BookComments: false
-weight: 20
+weight: 4
 ---
