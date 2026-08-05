@@ -26,3 +26,7 @@ obj-m := proc_fs_basic.o
 - **`obj-m`** - the actual build trigger. `obj-m` = build as a loadable module → `proc_fs_basic.ko`. Swap it for `obj-y` and it'd get compiled directly into the kernel image instead.
 
 > Order of resolution: `obj-m` → Kbuild sees `proc_fs_basic.o` is wanted → checks for `proc_fs_basic-objs` → pulls in `main.o` → applies `CFLAGS_main.o` + `ccflags-y` while compiling it.
+
+
+**references**:
+- https://www.kernel.org/doc/html/latest/kbuild/makefiles.html
