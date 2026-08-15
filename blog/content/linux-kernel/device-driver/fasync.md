@@ -37,9 +37,6 @@ Application receives signal
 *see*: 
 [*code example*](https://github.com/ankitkhushwaha/Linux-Device-Driver/tree/master/eg_11_asynchronous_notification/v7.1.0
 
-## Code explanation
-- 1.
-
 
 ## *Read Method*
 
