@@ -1,6 +1,5 @@
 ---
 title: container_of()
-weight: 2
 ---
 
 ### `container_of()`
@@ -39,4 +38,3 @@ ssize_t scull_read(struct file *filp, char __user *buff, size_t count,
 ```
 
 > Pattern: stash the recovered pointer in `filp->private_data` on `open()` so every later callback (`read`, `write`, `ioctl`, `release`, ...) can grab it back in one line.
-

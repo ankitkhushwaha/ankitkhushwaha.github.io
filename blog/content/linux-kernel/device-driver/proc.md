@@ -1,6 +1,5 @@
 ---
 title: Proc-Interface
-weight: 5
 ---
 
 ## Proc Interface

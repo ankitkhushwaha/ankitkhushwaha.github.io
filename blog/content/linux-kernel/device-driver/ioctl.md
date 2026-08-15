@@ -1,6 +1,5 @@
 ---
 title: Ioctl Interface
-weight: 2
 ---
 
 # ioctl

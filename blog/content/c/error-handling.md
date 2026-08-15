@@ -1,6 +1,5 @@
 ---
 title: Error Handling
-weight: 5
 ---
 
 ### Error Handling for complex cases

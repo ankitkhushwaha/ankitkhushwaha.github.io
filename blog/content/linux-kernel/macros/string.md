@@ -1,6 +1,5 @@
 ---
 title: Stringification
-weight: 2
 ---
 
 ## Stringification
