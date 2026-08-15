@@ -1,6 +1,5 @@
 ---
 title: Error Handling with Pointers
-weight: 2
 ---
 
 ## Error Handling with Pointers in the Kernel

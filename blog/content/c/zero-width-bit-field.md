@@ -1,6 +1,5 @@
 ---
 title: unsigned :\ 0 Bit-Fields in c
-weight: 1
 ---
 
 ### `unsigned : 0` in C Bit-Fields

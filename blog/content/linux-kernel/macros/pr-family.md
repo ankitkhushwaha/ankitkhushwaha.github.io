@@ -1,6 +1,5 @@
 ---
 title: pr_fmt()
-weight: 2
 ---
 ## `pr_fmt()`
 

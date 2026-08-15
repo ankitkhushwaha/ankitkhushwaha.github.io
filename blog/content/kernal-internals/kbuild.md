@@ -1,6 +1,5 @@
 ---
 title: Kbuild Makefile
-weight: 2
 ---
 
 ## Kbuild Makefile

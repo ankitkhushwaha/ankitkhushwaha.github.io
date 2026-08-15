@@ -1,6 +1,5 @@
 ---
 title: Char Driver
-weight: 1
 ---
 
 ## `dev_t`

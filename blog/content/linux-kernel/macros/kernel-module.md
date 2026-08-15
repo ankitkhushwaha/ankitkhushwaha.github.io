@@ -1,6 +1,5 @@
 ---
 title: Module Parameters
-weight: 2
 ---
 
 ## Module Parameters

@@ -1,6 +1,5 @@
 ---
 title: Completion-Variable
-weight: 2
 ---
 
 # Completion-Variable
