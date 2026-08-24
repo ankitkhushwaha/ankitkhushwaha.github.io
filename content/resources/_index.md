@@ -6,6 +6,10 @@ title: "Resources"
 weight: 2
 ---
 
+**LDD3** - https://lwn.net/Kernel/LDD3/
+
+**Lwn.net Kernel Index** - https://lwn.net/Kernel/Index/
+
 **Linux Kernel Study Resources** - https://kernelmeet.com/topic/2/linux-kernel-study-resources
 
 **Kernel Core Analysis** - http://jake.dothome.co.kr/
