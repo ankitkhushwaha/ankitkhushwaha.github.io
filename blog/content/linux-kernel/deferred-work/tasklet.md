@@ -2,7 +2,7 @@
 title: Tasklet
 ---
 
-# _Tasklet_
+# Tasklet
 
 See: [embetronicx tutorial](https://embetronicx.com/tutorials/linux/device-drivers/tasklet-static-method/)
 
@@ -45,7 +45,7 @@ static struct file_operations fops = {
 
 Here u can assume that `wait_queue_head_t` is already initilized.
 
-`tasklet` is linked to read call, when read call is triggered, `tasklet` gets schedule which schedule itself in `print_tasklet`. While read call sleep until `print_tasklet` triggered `loop` times and waked up by `print_tasklet`.
+`tasklet` is linked to read call, when read call is triggered, `tasklet` gets schedule. Which schedule itself in `print_tasklet` and read call sleep until `print_tasklet` triggered `loop` times and then waked up by `print_tasklet`.
 
 ## _References_
 

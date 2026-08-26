@@ -2,7 +2,7 @@
 title: Timers
 ---
 
-# _timer wheel aka kernel timers_
+# Kernel timers
 
 See: [embetronicx tutorial](https://embetronicx.com/tutorials/linux/device-drivers/using-kernel-timer-in-linux-device-driver/)
 
