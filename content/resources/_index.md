@@ -6,11 +6,19 @@ title: "Resources"
 weight: 2
 ---
 
+**Linux Kernel documentation** - https://docs.kernel.org/
+
+**Linux Kernel Teaching** - https://linux-kernel-labs.github.io
+
 **LDD3** - https://lwn.net/Kernel/LDD3/
 
 **Lwn.net Kernel Index** - https://lwn.net/Kernel/Index/
 
 **Linux Kernel Study Resources** - https://kernelmeet.com/topic/2/linux-kernel-study-resources
+
+**Johannes 4GNU_Linux yt** - https://www.youtube.com/@johannes4gnu_linux96/playlists
+
+**LF-Live-Mentorship-Series** - https://events.linuxfoundation.org/lf-live-mentorship-series/
 
 **Kernel Core Analysis** - http://jake.dothome.co.kr/
 
@@ -25,3 +33,5 @@ weight: 2
 **kernel-config** - https://www.kernelconfig.io/index.html
 
 **security** - https://repo.zenk-security.com/
+
+**secure-coding-standards** - https://cmu-sei.github.io/secure-coding-standards/
