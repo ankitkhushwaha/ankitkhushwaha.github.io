@@ -4,7 +4,7 @@ title: ankitkdev
 theme: ["PaperMod"]
 
 links:
-  resume: &resume_path https://docs.google.com/viewerng/viewer?url=https://raw.githubusercontent.com/ankitkhushwaha/resume.tex/main/build/resume.pdf
+  resume: &resume_path https://raw.githubusercontent.com/ankitkhushwaha/resume.tex/main/build/resume.pdf
 
 menu:
   main:
