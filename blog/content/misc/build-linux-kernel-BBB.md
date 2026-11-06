@@ -89,7 +89,7 @@ In our case sda3 has rootfs partition, mount it.
 
 ## 7. Install Modules
 
-    make O=build INSTALL_MOD_PATH=/mnt/rootfs/ -j$(nproc)
+    make O=build INSTALL_MOD_PATH=/mnt/rootfs/ modules_install -j$(nproc)
 
     ➜ $ ls /mnt/rootfs/lib/modules/6.6.6
             build                      modules.dep          modules.weakdep
